@@ -60,9 +60,9 @@ const Hero = () => {
                 <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-transparent to-white/90 dark:from-black/30 dark:via-transparent dark:to-black/90 lg:bg-gradient-to-r lg:from-white/95 lg:via-white/40 lg:to-transparent lg:dark:from-black/95 lg:dark:via-black/40 lg:dark:to-transparent" />
             </motion.div>
 
-            <div className="container mx-auto px-6 relative z-10 pt-20">
+            <div className="container mx-auto px-6 relative z-10 pt-32 lg:pt-40">
                 <div className="max-w-4xl">
-                    <div className="overflow-hidden">
+                    <div className="relative">
                         <motion.div
                             initial={{ opacity: 0, x: -20 }}
                             animate={{ opacity: 1, x: 0 }}
