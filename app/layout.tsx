@@ -19,16 +19,16 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Recanto dos Pássaros | Residencial de Luxo em Bauru",
-  description: "Descubra o Residencial Recanto dos Pássaros: um refúgio exclusivo que redefine o alto padrão e luxo em Bauru. Plantas inteligentes, segurança 24h e localização privilegiada.",
-  keywords: ["Recanto dos Pássaros", "Residencial Bauru", "Apartamento de Luxo Bauru", "Condomínio Bauru", "Imóveis Bauru", "DNL Imóveis", "Daniel Ortega Pereira"],
+  title: "Recanto dos Pássaros | Portal de Informações",
+  description: "Portal oficial de informações do Residencial Recanto dos Pássaros em Bauru. Acesse o regimento interno, convênios e contatos da administração.",
+  keywords: ["Recanto dos Pássaros", "Condomínio Bauru", "Regimento Interno", "Administração Condomínio", "Daniel Ortega Pereira"],
   authors: [{ name: "Daniel Ortega Pereira" }],
   openGraph: {
-    title: "Recanto dos Pássaros | Residencial de Luxo em Bauru",
-    description: "O melhor do alto padrão em Bauru. Conheça as plantas e agende uma visita.",
+    title: "Recanto dos Pássaros | Portal de Informações",
+    description: "Informações essenciais para moradores e administração do Residencial Recanto dos Pássaros.",
     type: "website",
     locale: "pt_BR",
-    url: "https://recantopassaros.vercel.app/", // Exemplo de URL
+    url: "https://recantopassaros.vercel.app/",
   },
   robots: {
     index: true,

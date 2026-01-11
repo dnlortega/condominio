@@ -26,7 +26,7 @@ const Footer = () => {
                             </div>
                         </div>
                         <p className="text-foreground/40 text-[13px] leading-relaxed font-light mb-8">
-                            Um empreendimento de alto padrão projetado para elevar sua qualidade de vida através do design e da exclusividade.
+                            Portal de informações do condomínio projetado para facilitar a comunicação e a transparência entre moradores e administração.
                         </p>
                         <div className="flex items-center gap-6">
                             {[Instagram, Facebook, Linkedin].map((Icon, idx) => (
@@ -40,7 +40,7 @@ const Footer = () => {
                     {/* Navigation Links */}
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-20 gap-y-12">
                         <div className="flex flex-col gap-6">
-                            <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-primary mb-2">Imóvel</span>
+                            <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-primary mb-2">Condomínio</span>
                             <a href="/#about" className="text-[12px] uppercase font-bold tracking-widest text-foreground/50 hover:text-primary transition-colors">O Residencial</a>
                             <a href="/#plans" className="text-[12px] uppercase font-bold tracking-widest text-foreground/50 hover:text-primary transition-colors">Plantas</a>
                             <a href="/#location" className="text-[12px] uppercase font-bold tracking-widest text-foreground/50 hover:text-primary transition-colors">Localização</a>

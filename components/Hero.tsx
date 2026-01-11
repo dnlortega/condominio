@@ -110,7 +110,7 @@ const Hero = () => {
                         transition={{ delay: 1.2, duration: 1 }}
                         className="text-lg md:text-xl text-foreground/60 mb-12 max-w-xl leading-relaxed text-center lg:text-left mx-auto lg:mx-0 font-light"
                     >
-                        Um enclave de sofisticação em Bauru, onde a arquitetura contemporânea encontra a serenidade que sua família merece. Uma realização com o selo de excelência DNL Imóveis.
+                        Central de informações do condomínio em Bauru, onde a transparência e a organização garantem a harmonia que sua família merece.
                     </motion.p>
 
                     <motion.div
@@ -120,7 +120,7 @@ const Hero = () => {
                         className="flex flex-col sm:flex-row gap-5 justify-center lg:justify-start"
                     >
                         <Button className="bg-primary hover:bg-zinc-900 text-white px-10 py-8 rounded-full font-bold transition-all duration-500 flex items-center justify-center gap-3 group shadow-2xl shadow-primary/20 text-xs uppercase tracking-[0.3em] w-full sm:w-auto overflow-hidden relative border border-primary">
-                            <span className="relative z-10">Explorar Plantas</span>
+                            <span className="relative z-10">Ver Regimento</span>
                             <motion.div
                                 animate={{ x: [0, 5, 0] }}
                                 transition={{ duration: 1.5, repeat: Infinity }}
