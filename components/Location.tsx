@@ -21,13 +21,13 @@ const Location = () => {
                     >
                         <div className="flex items-center gap-4 mb-6">
                             <div className="h-px w-8 bg-primary/40" />
-                            <span className="text-primary font-bold uppercase tracking-[0.3em] text-[10px]">Endereço Estratégico</span>
+                            <span className="text-primary font-bold uppercase tracking-[0.3em] text-[10px]">Conexão Urbana</span>
                         </div>
                         <h2 className="text-4xl font-bold text-foreground mb-8 uppercase tracking-tight">
-                            Localização <br /> <span className="text-primary/40 italic font-light">Privilegiada</span>
+                            Eixo de <br /> <span className="text-primary/40 italic font-light">Valorização</span>
                         </h2>
                         <p className="text-foreground/40 text-lg leading-relaxed mb-10 font-light">
-                            O Recanto dos Pássaros está no epicentro de uma região em pleno crescimento em Bauru. Próximo à FIB e com acesso facilitado às principais vias da cidade.
+                            O Residencial está no epicentro de uma das regiões que mais evoluem em Bauru, unindo a conveniência de estar próximo à FIB com a fluidez das principais vias de acesso.
                         </p>
 
                         <div className="space-y-6 mb-10">

@@ -110,7 +110,7 @@ const Hero = () => {
                         transition={{ delay: 1.2, duration: 1 }}
                         className="text-lg md:text-xl text-foreground/60 mb-12 max-w-xl leading-relaxed text-center lg:text-left mx-auto lg:mx-0 font-light"
                     >
-                        Um projeto exclusivo em Bauru que redefine o conceito de bem-estar e sofisticação para sua família. Realização DNL Imóveis.
+                        Um enclave de sofisticação em Bauru, onde a arquitetura contemporânea encontra a serenidade que sua família merece. Uma realização com o selo de excelência DNL Imóveis.
                     </motion.p>
 
                     <motion.div

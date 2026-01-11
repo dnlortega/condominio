@@ -57,6 +57,12 @@
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-geist-sans), Inter, system-ui, sans-serif;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+  }
+
+  body::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
   }
 
   h1,

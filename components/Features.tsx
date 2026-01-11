@@ -67,23 +67,23 @@ const Features = () => {
     const features = [
         {
             icon: <MapPin className="w-5 h-5" />,
-            title: "Localização de Valor",
-            description: "No coração do eixo de crescimento de Bauru, garantindo valorização constante."
+            title: "Localização Estratégica",
+            description: "Situado no vetor de maior crescimento e valorização de Bauru, com acesso facilitado."
         },
         {
             icon: <Shield className="w-5 h-5" />,
-            title: "Sistema de Segurança",
-            description: "Monitoramento 24h e controle de acesso biométrico de última geração."
+            title: "Segurança de Vanguarda",
+            description: "Monitoramento inteligente 24h e sistemas de controle de acesso de alta precisão."
         },
         {
             icon: <Compass className="w-5 h-5" />,
-            title: "Mobilidade Plena",
-            description: "Conexão rápida com as principais artérias da cidade e serviços essenciais."
+            title: "Mobilidade e Conectividade",
+            description: "Conexão imediata com as principais vias expressas e infraestrutura urbana de qualidade."
         },
         {
             icon: <Sparkles className="w-5 h-5" />,
-            title: "Lazer de Resort",
-            description: "Ambientes equipados e decorados para momentos inesquecíveis em família."
+            title: "Lazer e Bem-estar",
+            description: "Áreas comuns assinadas e equipadas para proporcionar experiências memoráveis em família."
         }
     ];
 

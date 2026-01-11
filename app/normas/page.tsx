@@ -30,94 +30,94 @@ const NormasPage = () => {
             title: "Áreas Comuns",
             icon: <Home className="w-6 h-6" />,
             rules: [
-                "Horário de uso (Quiosques, Jogos e Playground): 08:00 às 22:00.",
-                "Salão de Festas: 08:00 às 22:00 (com som ambiente) e 22:01 às 00:00 (sem som).",
-                "Reserva de Quiosques: Via APLICATIVO. Taxa de R$ 20,00 (boleto). Limite de 20 convidados.",
-                "Reserva de Salão de Festas: Na portaria ou WhatsApp (14) 99750-0577. Taxa de R$ 100,00 (Pix: res.recantodospassaros.sindica@gmail.com). Limite de 80 convidados. Limpeza por conta do locador."
+                "O horário de funcionamento dos Quiosques, Sala de Jogos e Playground é das 08h às 22h.",
+                "Salão de Festas: Disponível das 08h às 22h com som ambiente, e das 22h às 00h exclusivamente sem som.",
+                "Reservas de Quiosques: Devem ser realizadas via aplicativo oficial. Taxa de manutenção de R$ 20,00 via boleto. Capacidade máxima de 20 convidados.",
+                "Reservas do Salão de Festas: Solicitações via Portaria ou WhatsApp (14) 99750-0577. Taxa de R$ 100,00 (Pix: res.recantodospassaros.sindica@gmail.com). Limite de 80 convidados. A limpeza é de responsabilidade do locador."
             ]
         },
         {
             title: "Lei do Silêncio",
             icon: <Volume2 className="w-6 h-6" />,
             rules: [
-                "Perturbação de sossego é crime! Respeite o próximo em qualquer horário.",
-                "Após as 22:00: Proibido quaisquer excessos, sujeito a medidas administrativas e criminais."
+                "O respeito ao sossego alheio é dever de todos em qualquer horário. A perturbação do sossego configura infração sujeita a penalidades.",
+                "Após as 22h: É terminantemente proibido qualquer excesso sonoro, sob pena de medidas administrativas e acionamento das autoridades."
             ]
         },
         {
             title: "Garagem e Veículos",
             icon: <Car className="w-6 h-6" />,
             rules: [
-                "Estacionamento permitido apenas dentro da área delimitada (quadrante amarelo).",
-                "Proibido avançar sobre calçadas ou vias de trânsito.",
-                "Proibido armazenar materiais de obra na vaga (exceções urgentes sob avaliação da diretoria).",
-                "Proibido veículos com vazamento de óleo na vaga.",
-                "TAG Eletrônica: Uso obrigatório. Custo de R$ 25,00 (solicitar com a síndica)."
+                "O estacionamento é permitido estritamente dentro da área delimitada (quadrante amarelo).",
+                "É proibido avançar sobre calçadas ou vias de circulação interna.",
+                "Não é permitido o armazenamento de materiais de obra ou outros objetos nas vagas.",
+                "Veículos com vazamento de óleo não devem permanecer nas vagas até o devido reparo.",
+                "Uso obrigatório de TAG Eletrônica para acesso. Solicitação com a síndica mediante custo de R$ 25,00."
             ]
         },
         {
             title: "Gestão de Resíduos",
             icon: <Trash2 className="w-6 h-6" />,
             rules: [
-                "Coleta Orgânica, Reciclagem e Óleo: Terças, Quintas e Sábados.",
-                "Ensaque corretamente o lixo e feche bem as sacolas.",
-                "Descarte dentro das lixeiras, utilizando todo o espaço disponível. Proibido deixar lixo fora.",
-                "Proibido descarte de entulho, móveis ou isopor (utilize Ecopontos ou caçambas)."
+                "Coleta de resíduos (Orgânico, Reciclável e Óleo): Terças, quintas e sábados.",
+                "O lixo deve ser devidamente ensacado e as sacolas bem lacradas.",
+                "Descarte apenas no interior das lixeiras, otimizando o espaço. É proibido deixar resíduos fora dos coletores.",
+                "Não é permitido o descarte de entulho, móveis ou isopor nas lixeiras comuns (utilize Ecopontos ou caçambas particulares)."
             ]
         },
         {
             title: "Acesso e Segurança",
             icon: <ShieldCheck className="w-6 h-6" />,
             rules: [
-                "Delivery: Identificação na portaria. O condômino deve descer para retirar o pedido no bloco.",
-                "Correspondências simples: Retirada nas caixas de correio dos blocos.",
-                "Correspondências registradas (AR) e Encomendas: Retirada na portaria (o morador será avisado).",
-                "Prestadores de Serviço: Entrada permitida Seg-Sex (08h-17h) e Sábado (08h-12h)."
+                "Delivery: Identificação obrigatória na portaria. O condômino deve retirar o pedido pessoalmente no respectivo bloco.",
+                "Correspondências Simples: Serão depositadas nas caixas de correio de cada bloco.",
+                "Correspondências Registradas (AR) e Encomendas: Disponíveis para retirada na portaria após aviso ao morador.",
+                "Prestadores de Serviço: Entrada permitida de segunda a sexta (08h às 17h) e sábados (08h às 12h)."
             ]
         },
         {
             title: "Reformas e Mudanças",
             icon: <Hammer className="w-6 h-6" />,
             rules: [
-                "Agendamento obrigatório na administradora para orientações e horários.",
-                "O morador é responsável por informar as regras do condomínio aos prestadores.",
-                "O morador responde por descumprimentos de regras pelos seus prestadores."
+                "Agendamento prévio obrigatório junto à administradora para alinhamento de horários e diretrizes.",
+                "O condômino é responsável por instruir seus prestadores sobre as normas vigentes do residencial.",
+                "Eventuais danos ou descumprimento de regras por prestadores são de inteira responsabilidade do proprietário/morador."
             ]
         },
         {
             title: "Animais de Estimação",
             icon: <PawPrint className="w-6 h-6" />,
             rules: [
-                "Dono é responsável por qualquer dano físico ao patrimônio ou morador.",
-                "Proibido passeios nas áreas comuns. Apenas percurso de entrada e saída.",
-                "Limpeza imediata de dejetos é obrigatória.",
-                "Uso obrigatório de coleira e guia. Focinheira obrigatória para animais de grande porte."
+                "O tutor é civilmente responsável por qualquer dano ao patrimônio ou a terceiros causado pelo animal.",
+                "É proibida a permanência ou passeios em áreas comuns, exceto no trajeto direto de entrada e saída.",
+                "A higienização imediata de eventuais dejetos é obrigatória em todo o perímetro do condomínio.",
+                "Uso obrigatório de coleira e guia. Focinheira é exigida para animais de porte médio/grande e raças específicas."
             ]
         },
         {
             title: "Regras de Convivência",
             icon: <UserCheck className="w-6 h-6" />,
             rules: [
-                "Zelar e conservar áreas comuns. Sujeiras em áreas comuns/halls devem ser limpas pelo morador.",
-                "Proibido jogar água ou objetos das sacadas para as unidades inferiores.",
-                "Varal: Permitido apenas varal de chão na sacada (sem ultrapassar a grade). Permitido varal de teto/sanfonado na lavanderia.",
-                "Proibido pendurar roupas, toalhas ou objetos na grade da sacada.",
-                "Proibido manter objetos no hall (área comum), como sapatos, vasos ou guarda-chuvas.",
-                "Crianças até 12 anos: Devem estar acompanhadas por responsáveis nas áreas comuns.",
-                "Skate, Bicicleta, Patins: Permitido apenas na área dos quiosques.",
-                "Proibido empinar pipas. Proibido uso de bolas (exceto plástico com acompanhamento)."
+                "É dever de todos preservar as áreas comuns. Sujeiras acidentais em corredores ou elevadores devem ser limpas imediatamente pelo responsável.",
+                "É terminantemente proibido lançar água ou objetos das sacadas para as unidades inferiores ou áreas comuns.",
+                "Varal: Permitido apenas modelo de chão na sacada (sem ultrapassar o limite da grade). Lavanderias comportam modelos de teto ou sanfonados.",
+                "Não é permitido estender roupas, toalhas ou tapetes na grade da sacada.",
+                "Mantenha o hall e áreas de circulação livres de objetos pessoais (calçados, vasos, bicicletas, etc).",
+                "Menores de 12 anos devem estar acompanhados por um responsável nas áreas comuns.",
+                "O uso de Skate, Bicicleta e Patins é restrito à área dos quiosques.",
+                "É proibido empinar pipas e o uso de bolas fora de locais permitidos (exceto bolas de plástico com supervisão)."
             ]
         },
         {
             title: "Fachada e Comunicação",
             icon: <AlertTriangle className="w-6 h-6" />,
             rules: [
-                "Proibido alterações na fachada (cor, adequações).",
-                "Proibido cartazes de venda/aluguel em unidades, áreas comuns ou murais.",
-                "Películas e grama sintética: Apenas conforme deliberado em assembleia.",
-                "Churrasqueiras: Apenas alvenaria/pré-moldada conectada ao duto central.",
-                "Entorpecentes: Uso expressamente proibido. Flagrantes serão reportados à PM!",
-                "Reclamações/Sugestões: Registrar via e-mail: res.recantodospassaros.sindica@gmail.com"
+                "Alterações na fachada (cores, esquadrias, fechamentos) são proibidas sem aprovação assemblear.",
+                "Não é permitido afixar cartazes de venda ou aluguel em unidades ou áreas comuns.",
+                "A instalação de películas e grama sintética deve seguir rigorosamente o padrão deliberado em assembleia.",
+                "Churrasqueiras: Apenas modelos de alvenaria ou pré-moldados conectados ao duto central são autorizados.",
+                "O uso de substâncias ilícitas é expressamente proibido. Infrações serão reportadas às autoridades competentes.",
+                "Sugestões e reclamações formais devem ser encaminhadas ao e-mail: res.recantodospassaros.sindica@gmail.com"
             ]
         }
     ];

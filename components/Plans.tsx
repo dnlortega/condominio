@@ -8,20 +8,23 @@ import { Button } from "@/components/ui/button";
 const plans = [
     {
         type: "Planta Tipo A",
+        title: "Equilíbrio & Conforto",
         size: "45 m²",
-        description: "Equilíbrio perfeito entre eficiência e conforto, com sacada gourmet integrada para momentos de lazer privativo.",
+        description: "Harmonia ideal entre funcionalidade e acolhimento, apresentando sacada gourmet integrada para momentos de lazer privativos e sofisticados.",
         image: "/tipo-a.jpg"
     },
     {
         type: "Planta Tipo B",
+        title: "Design & Amplitude",
         size: "47 m²",
-        description: "Ampla área social integrada, projetada para quem valoriza o convívio e o design em espaços otimizados.",
+        description: "Área social otimizada para máxima amplitude, concebida para quem privilegia o convívio e a estética em espaços inteligentes.",
         image: "/tipo-b.jpg"
     },
     {
         type: "Planta Tipo C",
+        title: "Fluidez & Bem-Estar",
         size: "47 m²",
-        description: "Layout premium com foco na fluidez circulatória e ventilação cruzada, proporcionando conforto térmico superior.",
+        description: "Arquitetura com foco na ventilação cruzada e circulação fluida, garantindo conforto térmico e sensório superior em cada ambiente.",
         image: "/tipo-c.jpg"
     }
 ];
@@ -96,7 +99,7 @@ const Plans = () => {
                                 <span className="text-[10px] font-bold text-primary uppercase tracking-[0.4em]">{plan.type}</span>
                             </div>
 
-                            <h3 className="text-2xl font-bold text-foreground mb-6 uppercase tracking-tight group-hover:text-primary transition-colors duration-500">Living Integrado</h3>
+                            <h3 className="text-2xl font-bold text-foreground mb-6 uppercase tracking-tight group-hover:text-primary transition-colors duration-500">{plan.title}</h3>
                             <p className="text-foreground/40 text-[15px] leading-relaxed mb-10 flex-grow font-light">
                                 {plan.description}
                             </p>

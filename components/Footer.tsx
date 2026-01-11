@@ -40,16 +40,16 @@ const Footer = () => {
                     {/* Navigation Links */}
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-20 gap-y-12">
                         <div className="flex flex-col gap-6">
-                            <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-primary mb-2">Explore</span>
+                            <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-primary mb-2">Imóvel</span>
                             <a href="/#about" className="text-[12px] uppercase font-bold tracking-widest text-foreground/50 hover:text-primary transition-colors">O Residencial</a>
                             <a href="/#plans" className="text-[12px] uppercase font-bold tracking-widest text-foreground/50 hover:text-primary transition-colors">Plantas</a>
                             <a href="/#location" className="text-[12px] uppercase font-bold tracking-widest text-foreground/50 hover:text-primary transition-colors">Localização</a>
                         </div>
                         <div className="flex flex-col gap-6">
-                            <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-primary mb-2">Suporte</span>
-                            <a href="/#services" className="text-[12px] uppercase font-bold tracking-widest text-foreground/50 hover:text-primary transition-colors">Guia de Serviços</a>
-                            <a href="/normas" className="text-[12px] uppercase font-bold tracking-widest text-foreground/50 hover:text-primary transition-colors">Normas de Convivência</a>
-                            <a href="/#contact" className="text-[12px] uppercase font-bold tracking-widest text-foreground/50 hover:text-primary transition-colors">Contato</a>
+                            <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-primary mb-2">Condomínio</span>
+                            <a href="/#services" className="text-[12px] uppercase font-bold tracking-widest text-foreground/50 hover:text-primary transition-colors">Convênios</a>
+                            <a href="/normas" className="text-[12px] uppercase font-bold tracking-widest text-foreground/50 hover:text-primary transition-colors">Regimento Interno</a>
+                            <a href="/#contact" className="text-[12px] uppercase font-bold tracking-widest text-foreground/50 hover:text-primary transition-colors">Atendimento</a>
                         </div>
                         <div className="col-span-2 sm:col-span-1 flex flex-col items-start lg:items-end gap-6 sm:translate-y-0 translate-y-4">
                             <button
@@ -58,20 +58,25 @@ const Footer = () => {
                             >
                                 <ArrowUp className="w-6 h-6 group-hover:-translate-y-1 transition-transform" />
                             </button>
-                            <span className="text-[9px] font-bold uppercase tracking-[0.5em] text-foreground/20 text-right">Back to top</span>
+                            <span className="text-[9px] font-bold uppercase tracking-[0.5em] text-foreground/20 text-right">Voltar ao Topo</span>
                         </div>
                     </div>
                 </div>
 
                 {/* Bottom Bar */}
                 <div className="pt-12 border-t border-border/20 flex flex-col md:flex-row justify-between items-center gap-6">
-                    <p className="text-[9px] font-bold uppercase tracking-[0.5em] text-foreground/20">
-                        © 2026 Recanto dos Pássaros. Developed with excellence.
-                    </p>
+                    <div className="flex flex-col gap-2">
+                        <p className="text-[9px] font-bold uppercase tracking-[0.5em] text-foreground/20">
+                            © 2026 Recanto dos Pássaros. Crafted for luxury living.
+                        </p>
+                        <p className="text-[8px] font-bold uppercase tracking-[0.4em] text-foreground/30">
+                            Criado por <span className="text-primary/60">Daniel Ortega Pereira</span> - <a href="mailto:dnlortega@gmail.com" className="hover:text-primary transition-colors lowercase tracking-normal">dnlortega@gmail.com</a>
+                        </p>
+                    </div>
                     <div className="flex items-center gap-10">
                         <span className="text-[9px] font-bold uppercase tracking-[0.5em] text-foreground/20 decoration-primary hover:text-primary cursor-pointer transition-colors">Bauru - SP</span>
                         <div className="h-px w-8 bg-border" />
-                        <span className="text-[9px] font-bold uppercase tracking-[0.5em] text-foreground/20">All Rights Reserved</span>
+                        <span className="text-[9px] font-bold uppercase tracking-[0.5em] text-foreground/20">Todos os direitos reservados</span>
                     </div>
                 </div>
             </div>

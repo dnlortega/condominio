@@ -59,13 +59,13 @@ const ServiceContacts = () => {
                     >
                         <div className="flex items-center gap-6 mb-8">
                             <div className="h-px w-12 bg-primary/30" />
-                            <span className="text-primary font-bold uppercase tracking-[0.5em] text-[10px]">Soluções para o Residente</span>
+                            <span className="text-primary font-bold uppercase tracking-[0.5em] text-[10px]">Guia de Serviços & Utilidades</span>
                         </div>
                         <h2 className="text-4xl md:text-5xl font-bold text-foreground leading-[1.1] uppercase tracking-tighter mb-8">
-                            Ecossistema de <br /><span className="text-primary/30 font-light italic serif">Facilidades</span>
+                            Rede de Apoio & <br /><span className="text-primary/30 font-light italic serif">Conveniência</span>
                         </h2>
                         <p className="text-foreground/40 text-lg font-light leading-relaxed max-w-lg">
-                            Um guia curado com os principais provedores e serviços internos para garantir a fluidez da sua rotina no Residencial.
+                            Um diretório exclusivo com os principais prestadores e serviços internos, assegurando praticidade e eficiência ao seu cotidiano.
                         </p>
                     </motion.div>
                 </div>

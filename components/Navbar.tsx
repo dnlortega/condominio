@@ -2,7 +2,17 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
-import { Menu, ArrowRight, MessageCircle } from 'lucide-react';
+import {
+    Menu,
+    ArrowRight,
+    MessageCircle,
+    Home,
+    Layout,
+    MapPin,
+    FileText,
+    Handshake,
+    Phone
+} from 'lucide-react';
 import Image from 'next/image';
 import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/ui/mode-toggle";
@@ -34,12 +44,12 @@ const Navbar = () => {
     }, []);
 
     const navLinks = [
-        { name: 'O Residencial', href: '/#about' },
-        { name: 'Plantas', href: '/#plans' },
-        { name: 'Localização', href: '/#location' },
-        { name: 'Normas', href: '/normas' },
-        { name: 'Serviços', href: '/#services' },
-        { name: 'Contato', href: '/#contact' },
+        { name: 'O Residencial', href: '/#about', icon: Home },
+        { name: 'Plantas', href: '/#plans', icon: Layout },
+        { name: 'Localização', href: '/#location', icon: MapPin },
+        { name: 'Regimento', href: '/normas', icon: FileText },
+        { name: 'Convênios', href: '/#services', icon: Handshake },
+        { name: 'Contato', href: '/#contact', icon: Phone },
     ];
 
     const whatsappLink = "https://api.whatsapp.com/send?phone=5514997696946&text=Olá,%20gostaria%20de%20falar%20com%20a%20síndica%20do%20Recanto%20dos%20Pássaros.";
@@ -83,7 +93,7 @@ const Navbar = () => {
 
                 {/* Desktop Menu */}
                 <div className="hidden lg:flex items-center gap-10">
-                    <div className="flex items-center gap-1">
+                    <div className="flex items-center gap-2">
                         {navLinks.map((link, index) => (
                             <motion.a
                                 key={link.name}
@@ -91,9 +101,12 @@ const Navbar = () => {
                                 initial={{ opacity: 0, y: -10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: index * 0.1 + 0.5 }}
-                                className="text-[10px] font-bold uppercase tracking-[0.25em] transition-all relative group px-5 py-2 rounded-full text-foreground/70 hover:bg-primary/10 hover:text-primary"
+                                className="flex items-center gap-0 hover:gap-3 px-4 py-2.5 rounded-full text-foreground/70 hover:bg-primary/10 hover:text-primary transition-all duration-500 group overflow-hidden"
                             >
-                                <span className="relative z-10 transition-colors">
+                                <div className="flex items-center justify-center shrink-0">
+                                    <link.icon className="w-4 h-4" />
+                                </div>
+                                <span className="text-[10px] font-bold uppercase tracking-[0.2em] max-w-0 group-hover:max-w-[150px] opacity-0 group-hover:opacity-100 transition-all duration-500 whitespace-nowrap overflow-hidden">
                                     {link.name}
                                 </span>
                             </motion.a>

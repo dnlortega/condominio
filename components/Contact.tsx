@@ -8,8 +8,8 @@ import { Button } from "@/components/ui/button";
 
 const Contact = () => {
     const contactItems = [
-        { icon: <Phone className="w-5 h-5" />, label: "Telefone de Vendas", val: "(14) 99769-6946", type: "text" },
-        { icon: <Mail className="w-5 h-5" />, label: "E-mail Corporativo", val: "contato@recantodospassaros.com.br", type: "text" },
+        { icon: <Phone className="w-5 h-5" />, label: "Consultoria Exclusiva", val: "(14) 99769-6946", type: "text" },
+        { icon: <Mail className="w-5 h-5" />, label: "Apoio ao Cliente", val: "contato@recantodospassaros.com.br", type: "text" },
         {
             icon: <MapPin className="w-5 h-5" />,
             label: "Localização",
@@ -32,11 +32,11 @@ const Contact = () => {
                     >
                         <div className="flex items-center gap-5 mb-10">
                             <div className="h-px w-12 bg-primary/30" />
-                            <span className="text-primary font-bold uppercase tracking-[0.5em] text-[10px]">Canal de Atendimento</span>
+                            <span className="text-primary font-bold uppercase tracking-[0.5em] text-[10px]">Canais de Relacionamento</span>
                         </div>
 
                         <p className="text-foreground/50 text-xl mb-16 max-w-md font-light leading-relaxed">
-                            Nossa equipe de especialistas está pronta para apresentar todos os detalhes do empreendimento e as condições exclusivas de lançamento.
+                            Nossa equipe de especialistas está à disposição para apresentar todos os diferenciais do empreendimento e as condições exclusivas.
                         </p>
 
                         <div className="space-y-12">
@@ -100,7 +100,7 @@ const Contact = () => {
                                 <Label className="text-[10px] font-bold text-foreground/40 uppercase tracking-[0.4em] group-focus-within/input:text-primary transition-colors">Nome Completo</Label>
                                 <input
                                     type="text"
-                                    placeholder="Como prefere ser chamado?"
+                                    placeholder="Informe seu nome"
                                     className="w-full bg-transparent border-b border-border/60 py-5 text-foreground focus:outline-none focus:border-primary transition-all duration-700 placeholder:text-foreground/30 text-lg font-light"
                                 />
                             </div>
@@ -108,15 +108,15 @@ const Contact = () => {
                                 <Label className="text-[10px] font-bold text-foreground/40 uppercase tracking-[0.4em] group-focus-within/input:text-primary transition-colors">E-mail para Contato</Label>
                                 <input
                                     type="email"
-                                    placeholder="Ex: nome@empresa.com"
+                                    placeholder="Ex: seu-email@exemplo.com"
                                     className="w-full bg-transparent border-b border-border/60 py-5 text-foreground focus:outline-none focus:border-primary transition-all duration-700 placeholder:text-foreground/30 text-lg font-light"
                                 />
                             </div>
                             <div className="space-y-3 group/input">
-                                <Label className="text-[10px] font-bold text-foreground/40 uppercase tracking-[0.4em] group-focus-within/input:text-primary transition-colors">Suas Dúvidas</Label>
+                                <Label className="text-[10px] font-bold text-foreground/40 uppercase tracking-[0.4em] group-focus-within/input:text-primary transition-colors">Mensagem</Label>
                                 <textarea
                                     rows={4}
-                                    placeholder="Descreva brevemente como podemos ajudar..."
+                                    placeholder="Como podemos ajudar no seu próximo passo?"
                                     className="w-full bg-transparent border-b border-border/60 py-5 text-foreground focus:outline-none focus:border-primary transition-all duration-700 resize-none placeholder:text-foreground/30 text-lg font-light"
                                 />
                             </div>
