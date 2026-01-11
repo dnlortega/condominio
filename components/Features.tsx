@@ -34,7 +34,7 @@ const Features = () => {
             opacity: 1,
             transition: { staggerChildren: 0.15 }
         }
-    };
+    } as const;
 
     const itemVariants = {
         hidden: { opacity: 0, y: 30, scale: 0.95 },
@@ -44,7 +44,7 @@ const Features = () => {
             scale: 1,
             transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] as const }
         }
-    };
+    } as const;
 
     const revealVariants = {
         hidden: { x: "-100%" },
@@ -52,7 +52,7 @@ const Features = () => {
             x: "100%",
             transition: { duration: 1.5, ease: [0.22, 1, 0.36, 1] as const }
         }
-    };
+    } as const;
 
     return (
         <section id="about" className="py-32 bg-background transition-colors duration-500 overflow-hidden">

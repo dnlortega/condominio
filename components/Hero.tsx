@@ -37,7 +37,7 @@ const Hero = () => {
                 stiffness: 100,
             },
         },
-    };
+    } as const;
 
     const whatsappLink = "https://api.whatsapp.com/send?phone=5514997696946&text=Olá,%20gostaria%20de%20falar%20com%20a%20síndica%20do%20Recanto%20dos%20Pássaros.";
 
