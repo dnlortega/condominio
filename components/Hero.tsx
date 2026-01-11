@@ -110,7 +110,7 @@ const Hero = () => {
                         transition={{ delay: 1.2, duration: 1 }}
                         className="text-lg md:text-xl text-foreground/60 mb-12 max-w-xl leading-relaxed text-center lg:text-left mx-auto lg:mx-0 font-light"
                     >
-                        Recanto dos Pássaros: Um projeto exclusivo em Bauru que redefine o conceito de bem-estar e sofisticação para sua família.
+                        Um projeto exclusivo em Bauru que redefine o conceito de bem-estar e sofisticação para sua família. Realização DNL Imóveis.
                     </motion.p>
 
                     <motion.div
@@ -182,7 +182,7 @@ const Hero = () => {
                 className="absolute bottom-10 left-12 hidden lg:flex flex-col items-center gap-4"
             >
                 <div className="flex flex-col items-center gap-2">
-                    <span className="text-[8px] font-bold text-primary uppercase tracking-[0.5em] [writing-mode:vertical-lr] rotate-180">Discover More</span>
+                    <span className="text-[8px] font-bold text-primary uppercase tracking-[0.5em] [writing-mode:vertical-lr] rotate-180">Descubra Mais</span>
                     <div className="w-px h-20 bg-gradient-to-b from-primary/60 via-primary/20 to-transparent overflow-hidden relative">
                         <motion.div
                             animate={{ y: ["-100%", "200%"] }}

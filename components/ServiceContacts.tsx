@@ -13,7 +13,7 @@ import {
 
 const services = [
     {
-        category: "Utility Supply",
+        category: "Concessionárias",
         icon: <Flame className="w-5 h-5" />,
         providers: [
             { name: "Ultragaz (Gás)", contact: "0800 7010 123" },
@@ -21,7 +21,7 @@ const services = [
         ],
     },
     {
-        category: "Connectivity",
+        category: "Conectividade",
         icon: <Wifi className="w-5 h-5" />,
         providers: [
             { name: "Vivo Fibra", contact: "103 15" },
@@ -29,7 +29,7 @@ const services = [
         ],
     },
     {
-        category: "Maintenance",
+        category: "Manutenção",
         icon: <Wrench className="w-5 h-5" />,
         providers: [
             { name: "Zeladoria Local", contact: "Ramal 101" },
@@ -37,11 +37,11 @@ const services = [
         ],
     },
     {
-        category: "Operations",
+        category: "Operacional",
         icon: <PhoneCall className="w-5 h-5" />,
         providers: [
-            { name: "Front Desk 24h", contact: "Ramal 100" },
-            { name: "Management", contact: "(14) 3222-1234" }
+            { name: "Portaria 24h", contact: "Ramal 100" },
+            { name: "Administradora", contact: "(14) 3222-1234" }
         ],
     }
 ];
@@ -59,7 +59,7 @@ const ServiceContacts = () => {
                     >
                         <div className="flex items-center gap-6 mb-8">
                             <div className="h-px w-12 bg-primary/30" />
-                            <span className="text-primary font-bold uppercase tracking-[0.5em] text-[10px]">Resident Solutions</span>
+                            <span className="text-primary font-bold uppercase tracking-[0.5em] text-[10px]">Soluções para o Residente</span>
                         </div>
                         <h2 className="text-4xl md:text-5xl font-bold text-foreground leading-[1.1] uppercase tracking-tighter mb-8">
                             Ecossistema de <br /><span className="text-primary/30 font-light italic serif">Facilidades</span>

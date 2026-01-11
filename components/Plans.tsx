@@ -7,19 +7,19 @@ import { Button } from "@/components/ui/button";
 
 const plans = [
     {
-        type: "Residence Type A",
+        type: "Planta Tipo A",
         size: "45 m²",
         description: "Equilíbrio perfeito entre eficiência e conforto, com sacada gourmet integrada para momentos de lazer privativo.",
         image: "/tipo-a.jpg"
     },
     {
-        type: "Residence Type B",
+        type: "Planta Tipo B",
         size: "47 m²",
         description: "Ampla área social integrada, projetada para quem valoriza o convívio e o design em espaços otimizados.",
         image: "/tipo-b.jpg"
     },
     {
-        type: "Residence Type C",
+        type: "Planta Tipo C",
         size: "47 m²",
         description: "Layout premium com foco na fluidez circulatória e ventilação cruzada, proporcionando conforto térmico superior.",
         image: "/tipo-c.jpg"
@@ -39,7 +39,7 @@ const Plans = () => {
                     >
                         <div className="flex items-center justify-center gap-6 mb-8">
                             <div className="h-px w-12 bg-primary/30" />
-                            <span className="text-primary font-bold uppercase tracking-[0.5em] text-[10px]">Architectural Planning</span>
+                            <span className="text-primary font-bold uppercase tracking-[0.5em] text-[10px]">Excelência Arquitetônica</span>
                             <div className="h-px w-12 bg-primary/30" />
                         </div>
                         <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-8 uppercase tracking-tighter">
