@@ -34,11 +34,12 @@ const Navbar = () => {
     }, []);
 
     const navLinks = [
-        { name: 'O Residencial', href: '#about' },
-        { name: 'Plantas', href: '#plans' },
-        { name: 'Localização', href: '#location' },
-        { name: 'Serviços', href: '#services' },
-        { name: 'Contato', href: '#contact' },
+        { name: 'O Residencial', href: '/#about' },
+        { name: 'Plantas', href: '/#plans' },
+        { name: 'Localização', href: '/#location' },
+        { name: 'Normas', href: '/normas' },
+        { name: 'Serviços', href: '/#services' },
+        { name: 'Contato', href: '/#contact' },
     ];
 
     const whatsappLink = "https://api.whatsapp.com/send?phone=5514997696946&text=Olá,%20gostaria%20de%20falar%20com%20a%20síndica%20do%20Recanto%20dos%20Pássaros.";
@@ -57,7 +58,7 @@ const Navbar = () => {
 
             <div className="container mx-auto px-6 flex items-center justify-between">
                 <motion.a
-                    href="#home"
+                    href="/"
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     className="flex items-center gap-4 shrink-0 group"

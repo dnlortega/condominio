@@ -41,15 +41,15 @@ const Footer = () => {
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-20 gap-y-12">
                         <div className="flex flex-col gap-6">
                             <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-primary mb-2">Explore</span>
-                            <a href="#about" className="text-[12px] uppercase font-bold tracking-widest text-foreground/50 hover:text-primary transition-colors">O Residencial</a>
-                            <a href="#plans" className="text-[12px] uppercase font-bold tracking-widest text-foreground/50 hover:text-primary transition-colors">Plantas</a>
-                            <a href="#location" className="text-[12px] uppercase font-bold tracking-widest text-foreground/50 hover:text-primary transition-colors">Localização</a>
+                            <a href="/#about" className="text-[12px] uppercase font-bold tracking-widest text-foreground/50 hover:text-primary transition-colors">O Residencial</a>
+                            <a href="/#plans" className="text-[12px] uppercase font-bold tracking-widest text-foreground/50 hover:text-primary transition-colors">Plantas</a>
+                            <a href="/#location" className="text-[12px] uppercase font-bold tracking-widest text-foreground/50 hover:text-primary transition-colors">Localização</a>
                         </div>
                         <div className="flex flex-col gap-6">
                             <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-primary mb-2">Suporte</span>
-                            <a href="#services" className="text-[12px] uppercase font-bold tracking-widest text-foreground/50 hover:text-primary transition-colors">Guia de Serviços</a>
-                            <a href="#contact" className="text-[12px] uppercase font-bold tracking-widest text-foreground/50 hover:text-primary transition-colors">Contato</a>
-                            <a href="#" className="text-[12px] uppercase font-bold tracking-widest text-foreground/50 hover:text-primary transition-colors">Privacidade</a>
+                            <a href="/#services" className="text-[12px] uppercase font-bold tracking-widest text-foreground/50 hover:text-primary transition-colors">Guia de Serviços</a>
+                            <a href="/normas" className="text-[12px] uppercase font-bold tracking-widest text-foreground/50 hover:text-primary transition-colors">Normas de Convivência</a>
+                            <a href="/#contact" className="text-[12px] uppercase font-bold tracking-widest text-foreground/50 hover:text-primary transition-colors">Contato</a>
                         </div>
                         <div className="col-span-2 sm:col-span-1 flex flex-col items-start lg:items-end gap-6 sm:translate-y-0 translate-y-4">
                             <button
