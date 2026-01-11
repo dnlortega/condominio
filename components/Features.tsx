@@ -2,7 +2,66 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Shield, Users, Trees, MapPin, Compass, Sparkles } from 'lucide-react';
+import { Shield, Users, Trees, MapPin, Compass, Sparkles, ChevronLeft, ChevronRight } from 'lucide-react';
+import { AnimatePresence } from 'framer-motion';
+
+const ImageCarousel = () => {
+    const images = ['/1.jpg', '/2.jpg', '/3.jpg', '/4.jpg', '/5.jpg', '/6.jpg', '/7.jpg'];
+    const [currentIndex, setCurrentIndex] = React.useState(0);
+
+    React.useEffect(() => {
+        const timer = setInterval(() => {
+            setCurrentIndex((prev) => (prev + 1) % images.length);
+        }, 5000);
+        return () => clearInterval(timer);
+    }, [images.length]);
+
+    return (
+        <div className="relative w-full h-[700px]">
+            <AnimatePresence mode="wait">
+                <motion.img
+                    key={currentIndex}
+                    src={images[currentIndex]}
+                    alt={`Condomínio imagem ${currentIndex + 1}`}
+                    initial={{ opacity: 0, scale: 1.1 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 1.5, ease: "easeInOut" }}
+                    className="absolute inset-0 w-full h-full object-cover"
+                />
+            </AnimatePresence>
+
+            {/* Overlay Gradient */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
+
+            {/* Controls */}
+            <div className="absolute bottom-10 right-10 flex gap-4 z-30">
+                <button
+                    onClick={() => setCurrentIndex((prev) => (prev - 1 + images.length) % images.length)}
+                    className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-all active:scale-95"
+                >
+                    <ChevronLeft className="w-5 h-5" />
+                </button>
+                <button
+                    onClick={() => setCurrentIndex((prev) => (prev + 1) % images.length)}
+                    className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-all active:scale-95"
+                >
+                    <ChevronRight className="w-5 h-5" />
+                </button>
+            </div>
+
+            {/* Pagination Indicators */}
+            <div className="absolute bottom-10 left-10 flex gap-2 z-30">
+                {images.map((_, i) => (
+                    <div
+                        key={i}
+                        className={`h-1 transition-all duration-500 rounded-full ${i === currentIndex ? 'w-8 bg-primary' : 'w-2 bg-white/30'}`}
+                    />
+                ))}
+            </div>
+        </div>
+    );
+};
 
 const Features = () => {
     const features = [
@@ -126,16 +185,8 @@ const Features = () => {
                             transition={{ duration: 1.2 }}
                             className="relative z-10"
                         >
-                            <div className="rounded-[4rem] overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.12)] border border-border group relative">
-                                <motion.img
-                                    initial={{ scale: 1.2 }}
-                                    whileInView={{ scale: 1 }}
-                                    viewport={{ once: true }}
-                                    transition={{ duration: 2 }}
-                                    src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?q=80&w=2070&auto=format&fit=crop"
-                                    alt="Recanto dos Pássaros Fachada"
-                                    className="w-full h-[700px] object-cover"
-                                />
+                            <div className="rounded-[4rem] overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.12)] border border-border group relative bg-secondary/20">
+                                <ImageCarousel />
                                 {/* Image Reveal Slide */}
                                 <motion.div
                                     variants={revealVariants}
@@ -144,7 +195,6 @@ const Features = () => {
                                     viewport={{ once: true }}
                                     className="absolute inset-0 bg-background z-20"
                                 />
-                                <div className="absolute inset-0 bg-primary/5 mix-blend-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
                             </div>
                         </motion.div>
 
