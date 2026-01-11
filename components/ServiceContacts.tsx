@@ -55,7 +55,7 @@ const ServiceContacts = () => {
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+                        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] as const }}
                     >
                         <div className="flex items-center gap-6 mb-8">
                             <div className="h-px w-12 bg-primary/30" />
@@ -77,7 +77,7 @@ const ServiceContacts = () => {
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            transition={{ delay: index * 0.1, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                            transition={{ delay: index * 0.1, duration: 0.8, ease: [0.22, 1, 0.36, 1] as const }}
                             className="group"
                         >
                             <div className="flex items-center gap-6 mb-12">

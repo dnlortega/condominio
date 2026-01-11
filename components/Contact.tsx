@@ -28,7 +28,7 @@ const Contact = () => {
                         initial={{ opacity: 0, x: -30 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+                        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] as const }}
                     >
                         <div className="flex items-center gap-5 mb-10">
                             <div className="h-px w-12 bg-primary/30" />
@@ -90,7 +90,7 @@ const Contact = () => {
                         initial={{ opacity: 0, y: 40 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+                        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] as const }}
                         className="bg-secondary/30 p-12 md:p-20 rounded-[4rem] border border-border relative overflow-hidden"
                     >
                         <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[100px]" />

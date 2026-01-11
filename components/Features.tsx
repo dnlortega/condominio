@@ -42,7 +42,7 @@ const Features = () => {
             opacity: 1,
             y: 0,
             scale: 1,
-            transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] }
+            transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] as const }
         }
     };
 
@@ -50,7 +50,7 @@ const Features = () => {
         hidden: { x: "-100%" },
         visible: {
             x: "100%",
-            transition: { duration: 1.5, ease: [0.22, 1, 0.36, 1] }
+            transition: { duration: 1.5, ease: [0.22, 1, 0.36, 1] as const }
         }
     };
 

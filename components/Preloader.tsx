@@ -31,7 +31,7 @@ const Preloader = () => {
                     initial={{ opacity: 1 }}
                     exit={{
                         opacity: 0,
-                        transition: { duration: 1.2, ease: [0.22, 1, 0.36, 1] }
+                        transition: { duration: 1.2, ease: [0.22, 1, 0.36, 1] as const }
                     }}
                     className="fixed inset-0 z-[100] bg-background flex flex-col items-center justify-center p-6"
                 >
@@ -43,7 +43,7 @@ const Preloader = () => {
                                 opacity: 1,
                                 scale: 1,
                                 y: 0,
-                                transition: { duration: 1.5, ease: [0.22, 1, 0.36, 1] }
+                                transition: { duration: 1.5, ease: [0.22, 1, 0.36, 1] as const }
                             }}
                             className="flex flex-col items-center"
                         >

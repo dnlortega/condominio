@@ -35,7 +35,7 @@ const Plans = () => {
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+                        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] as const }}
                     >
                         <div className="flex items-center justify-center gap-6 mb-8">
                             <div className="h-px w-12 bg-primary/30" />
@@ -58,7 +58,7 @@ const Plans = () => {
                             initial={{ opacity: 0, y: 40 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            transition={{ delay: index * 0.2, duration: 1, ease: [0.22, 1, 0.36, 1] }}
+                            transition={{ delay: index * 0.2, duration: 1, ease: [0.22, 1, 0.36, 1] as const }}
                             className="flex flex-col group"
                         >
                             <div className="relative aspect-[4/3] bg-secondary border border-border/60 rounded-[3rem] overflow-hidden mb-10 transition-all duration-1000 group-hover:shadow-[0_40px_80px_-15px_rgba(0,0,0,0.1)]">
