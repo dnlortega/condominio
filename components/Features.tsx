@@ -155,7 +155,7 @@ const Features = () => {
                                         className="group"
                                     >
                                         <div className="mb-6 flex items-center gap-4">
-                                            <div className="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-700 shadow-sm">
+                                            <div className="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-700 shadow-sm">
                                                 {feature.icon}
                                             </div>
                                             <motion.div

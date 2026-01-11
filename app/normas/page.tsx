@@ -201,20 +201,20 @@ const NormasPage = () => {
                     initial={{ opacity: 0, y: 40 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="mt-24 p-12 md:p-20 rounded-[4rem] bg-primary text-white text-center relative overflow-hidden"
+                    className="mt-24 p-12 md:p-20 rounded-[4rem] bg-primary text-primary-foreground text-center relative overflow-hidden"
                 >
                     <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
 
                     <h2 className="text-3xl font-bold uppercase tracking-tighter mb-8 relative z-10">
                         Respeito é a Base <br /> de uma Boa Vizinhança
                     </h2>
-                    <p className="text-white/80 font-light mb-12 max-w-xl mx-auto relative z-10">
+                    <p className="text-primary-foreground/80 font-light mb-12 max-w-xl mx-auto relative z-10">
                         A observância destas normas é fundamental para a valorização do nosso patrimônio e para a qualidade de vida de todas as famílias.
                     </p>
 
                     <Link
                         href="/#contact"
-                        className="inline-flex items-center gap-3 px-12 py-6 bg-white text-primary rounded-full font-bold uppercase tracking-[0.3em] text-[10px] hover:scale-105 transition-all relative z-10"
+                        className="inline-flex items-center gap-3 px-12 py-6 bg-primary-foreground text-primary rounded-full font-bold uppercase tracking-[0.3em] text-[10px] hover:scale-105 transition-all relative z-10"
                     >
                         <span>Contatar Administração</span>
                         <Mail className="w-4 h-4" />

@@ -119,7 +119,7 @@ const Hero = () => {
                         transition={{ delay: 1.5, duration: 0.8 }}
                         className="flex flex-col sm:flex-row gap-5 justify-center lg:justify-start"
                     >
-                        <Button className="bg-primary hover:bg-zinc-900 text-white px-10 py-8 rounded-full font-bold transition-all duration-500 flex items-center justify-center gap-3 group shadow-2xl shadow-primary/20 text-xs uppercase tracking-[0.3em] w-full sm:w-auto overflow-hidden relative border border-primary">
+                        <Button className="bg-primary hover:bg-zinc-900 text-primary-foreground px-10 py-8 rounded-full font-bold transition-all duration-500 flex items-center justify-center gap-3 group shadow-2xl shadow-primary/20 text-xs uppercase tracking-[0.3em] w-full sm:w-auto overflow-hidden relative border border-primary">
                             <span className="relative z-10">Ver Regimento</span>
                             <motion.div
                                 animate={{ x: [0, 5, 0] }}

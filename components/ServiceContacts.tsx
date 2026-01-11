@@ -81,7 +81,7 @@ const ServiceContacts = () => {
                             className="group"
                         >
                             <div className="flex items-center gap-6 mb-12">
-                                <div className="w-14 h-14 rounded-2xl border border-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-700 shadow-sm relative overflow-hidden">
+                                <div className="w-14 h-14 rounded-2xl border border-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-700 shadow-sm relative overflow-hidden">
                                     <div className="relative z-10">{service.icon}</div>
                                     <div className="absolute inset-0 bg-primary translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
                                 </div>
