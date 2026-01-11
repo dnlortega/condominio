@@ -118,20 +118,7 @@ const Plans = () => {
                     ))}
                 </div>
 
-                <div className="mt-24 text-center">
-                    <Button
-                        asChild
-                        className="rounded-full px-12 py-8 bg-primary text-primary-foreground hover:bg-primary/90 transition-all text-[10px] uppercase tracking-[0.3em] font-bold group shadow-xl shadow-primary/20"
-                    >
-                        <a
-                            href="https://api.whatsapp.com/send?phone=5514997696946&text=Olá,%20gostaria%20de%20receber%20o%20book%20digital%20completo%20do%20Recanto%20dos%20Pássaros."
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            Solicitar Catálogo via WhatsApp
-                        </a>
-                    </Button>
-                </div>
+
             </div>
 
             <div className="section-divider mt-32 opacity-20" />
