@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { Maximize2, BedDouble, Sofa, ArrowRight, Download } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 
@@ -28,6 +28,118 @@ const plans = [
         image: "/tipo-c.jpg"
     }
 ];
+
+const PlanCard = ({ plan, index }: { plan: any, index: number }) => {
+    const x = useMotionValue(0);
+    const y = useMotionValue(0);
+
+    const mouseXSpring = useSpring(x);
+    const mouseYSpring = useSpring(y);
+
+    const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["10deg", "-10deg"]);
+    const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-10deg", "10deg"]);
+
+    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const width = rect.width;
+        const height = rect.height;
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+        const xPct = mouseX / width - 0.5;
+        const yPct = mouseY / height - 0.5;
+        x.set(xPct);
+        y.set(yPct);
+    };
+
+    const handleMouseLeave = () => {
+        x.set(0);
+        y.set(0);
+    };
+
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: index * 0.2, duration: 1, ease: [0.22, 1, 0.36, 1] as const }}
+            className="flex flex-col group perspective-1000"
+        >
+            <motion.div
+                onMouseMove={handleMouseMove}
+                onMouseLeave={handleMouseLeave}
+                style={{
+                    rotateY,
+                    rotateX,
+                    transformStyle: "preserve-3d",
+                }}
+                className="relative aspect-[4/3] bg-secondary border border-border/60 rounded-[3rem] overflow-hidden mb-10 transition-all duration-300 group-hover:shadow-[0_40px_80px_-15px_rgba(0,0,0,0.15)]"
+            >
+                {/* Subtle overlay grid */}
+                <div
+                    style={{ transform: "translateZ(50px)" }}
+                    className="absolute inset-0 bg-[radial-gradient(oklch(var(--foreground)/0.1)_1px,transparent_1px)] [background-size:30px_30px] opacity-[0.03]"
+                />
+
+                <div
+                    style={{ transform: "translateZ(75px)" }}
+                    className="absolute inset-0 p-12 flex items-center justify-center pointer-events-none"
+                >
+                    <img
+                        src={plan.image}
+                        alt={plan.type}
+                        className="max-w-full max-h-full object-contain grayscale-[0.2] group-hover:grayscale-0 transition-all duration-[1.5s] ease-out group-hover:scale-105"
+                    />
+                </div>
+
+                <div
+                    style={{ transform: "translateZ(100px)" }}
+                    className="absolute top-8 left-8 bg-card/80 backdrop-blur-md px-6 py-2 rounded-full border border-border shadow-sm transition-colors duration-500"
+                >
+                    <span className="text-[10px] font-bold text-foreground uppercase tracking-widest">{plan.size}</span>
+                </div>
+
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    whileHover={{ opacity: 1 }}
+                    style={{ transform: "translateZ(120px)" }}
+                    className="absolute inset-0 bg-primary/5 flex items-center justify-center pointer-events-none transition-colors duration-700"
+                >
+                    <div className="w-14 h-14 rounded-full bg-card flex items-center justify-center shadow-xl transform scale-0 group-hover:scale-100 transition-transform duration-700 ease-out">
+                        <Maximize2 className="w-6 h-6 text-primary" />
+                    </div>
+                </motion.div>
+            </motion.div>
+
+            <div className="flex items-center gap-4 mb-6 relative z-10">
+                <motion.div
+                    animate={{ opacity: [0.4, 1, 0.4] }}
+                    transition={{ duration: 3, repeat: Infinity }}
+                    className="w-2 h-2 rounded-full bg-primary/60"
+                />
+                <span className="text-[10px] font-bold text-primary uppercase tracking-[0.4em]">{plan.type}</span>
+            </div>
+
+            <h3 className="text-2xl font-bold text-foreground mb-6 uppercase tracking-tight group-hover:text-primary transition-colors duration-500 relative z-10">{plan.title}</h3>
+            <p className="text-foreground/40 text-[15px] leading-relaxed mb-10 flex-grow font-light relative z-10">
+                {plan.description}
+            </p>
+
+            <div className="flex items-center gap-10 pt-10 border-t border-border/40 relative z-10">
+                <div className="flex items-center gap-3 text-foreground/60 transition-colors group-hover:text-foreground">
+                    <BedDouble className="w-4 h-4 text-primary/40" />
+                    <span className="text-[10px] font-bold uppercase tracking-widest">02 Dorms</span>
+                </div>
+                <div className="flex items-center gap-3 text-foreground/60 transition-colors group-hover:text-foreground">
+                    <Sofa className="w-4 h-4 text-primary/40" />
+                    <span className="text-[10px] font-bold uppercase tracking-widest">Varanda Gourmet</span>
+                </div>
+                <button className="ml-auto w-10 h-10 rounded-full border border-border flex items-center justify-center text-primary/40 group-hover:text-primary group-hover:border-primary transition-all duration-500 group-hover:shadow-lg group-hover:shadow-primary/10">
+                    <ArrowRight className="w-4 h-4" />
+                </button>
+            </div>
+        </motion.div>
+    );
+};
 
 const Plans = () => {
     return (
@@ -56,74 +168,10 @@ const Plans = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-24">
                     {plans.map((plan, index) => (
-                        <motion.div
-                            key={plan.type}
-                            initial={{ opacity: 0, y: 40 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: index * 0.2, duration: 1, ease: [0.22, 1, 0.36, 1] as const }}
-                            className="flex flex-col group"
-                        >
-                            <div className="relative aspect-[4/3] bg-secondary border border-border/60 rounded-[3rem] overflow-hidden mb-10 transition-all duration-1000 group-hover:shadow-[0_40px_80px_-15px_rgba(0,0,0,0.1)]">
-                                {/* Subtle overlay grid */}
-                                <div className="absolute inset-0 bg-[radial-gradient(oklch(var(--foreground)/0.1)_1px,transparent_1px)] [background-size:30px_30px] opacity-[0.03]" />
-
-                                <div className="absolute inset-0 p-12 flex items-center justify-center">
-                                    <img
-                                        src={plan.image}
-                                        alt={plan.type}
-                                        className="max-w-full max-h-full object-contain grayscale-[0.2] group-hover:grayscale-0 transition-all duration-[1.5s] ease-out group-hover:scale-105"
-                                    />
-                                </div>
-                                <div className="absolute top-8 left-8 bg-card backdrop-blur-md px-6 py-2 rounded-full border border-border shadow-sm transition-colors duration-500">
-                                    <span className="text-[10px] font-bold text-foreground uppercase tracking-widest">{plan.size}</span>
-                                </div>
-
-                                <motion.div
-                                    initial={{ opacity: 0 }}
-                                    whileHover={{ opacity: 1 }}
-                                    className="absolute inset-0 bg-primary/5 flex items-center justify-center pointer-events-none transition-colors duration-700"
-                                >
-                                    <div className="w-14 h-14 rounded-full bg-card flex items-center justify-center shadow-xl transform scale-0 group-hover:scale-100 transition-transform duration-700 ease-out">
-                                        <Maximize2 className="w-6 h-6 text-primary" />
-                                    </div>
-                                </motion.div>
-                            </div>
-
-                            <div className="flex items-center gap-4 mb-6">
-                                <motion.div
-                                    animate={{ opacity: [0.4, 1, 0.4] }}
-                                    transition={{ duration: 3, repeat: Infinity }}
-                                    className="w-2 h-2 rounded-full bg-primary/60"
-                                />
-                                <span className="text-[10px] font-bold text-primary uppercase tracking-[0.4em]">{plan.type}</span>
-                            </div>
-
-                            <h3 className="text-2xl font-bold text-foreground mb-6 uppercase tracking-tight group-hover:text-primary transition-colors duration-500">{plan.title}</h3>
-                            <p className="text-foreground/40 text-[15px] leading-relaxed mb-10 flex-grow font-light">
-                                {plan.description}
-                            </p>
-
-                            <div className="flex items-center gap-10 pt-10 border-t border-border/40">
-                                <div className="flex items-center gap-3 text-foreground/60 transition-colors group-hover:text-foreground">
-                                    <BedDouble className="w-4 h-4 text-primary/40" />
-                                    <span className="text-[10px] font-bold uppercase tracking-widest">02 Dorms</span>
-                                </div>
-                                <div className="flex items-center gap-3 text-foreground/60 transition-colors group-hover:text-foreground">
-                                    <Sofa className="w-4 h-4 text-primary/40" />
-                                    <span className="text-[10px] font-bold uppercase tracking-widest">Varanda Gourmet</span>
-                                </div>
-                                <button className="ml-auto w-10 h-10 rounded-full border border-border flex items-center justify-center text-primary/40 group-hover:text-primary group-hover:border-primary transition-all duration-500 group-hover:shadow-lg group-hover:shadow-primary/10">
-                                    <ArrowRight className="w-4 h-4" />
-                                </button>
-                            </div>
-                        </motion.div>
+                        <PlanCard key={plan.type} plan={plan} index={index} />
                     ))}
                 </div>
-
-
             </div>
-
             <div className="section-divider mt-32 opacity-20" />
         </section>
     );

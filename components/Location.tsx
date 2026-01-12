@@ -74,18 +74,25 @@ const Location = () => {
 
                             <div className="absolute inset-0 flex items-center justify-center">
                                 <motion.div
-                                    animate={{ y: [0, -15, 0] }}
-                                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                                    animate={{
+                                        y: [0, -15, 0],
+                                        rotateZ: [-2, 2, -2]
+                                    }}
+                                    transition={{
+                                        duration: 4,
+                                        repeat: Infinity,
+                                        ease: "easeInOut"
+                                    }}
                                     className="relative z-10"
                                 >
-                                    <div className="bg-card p-6 rounded-3xl shadow-2xl border border-primary/10 flex flex-col items-center transition-colors duration-500">
-                                        <div className="w-12 h-12 bg-primary rounded-2xl flex items-center justify-center text-primary-foreground mb-4 shadow-lg shadow-primary/30">
-                                            <MapPin className="w-6 h-6" />
+                                    <div className="bg-card/80 backdrop-blur-xl p-8 rounded-[2.5rem] shadow-2xl border border-primary/10 flex flex-col items-center transition-all duration-700 group-hover:scale-110 group-hover:border-primary/30">
+                                        <div className="w-14 h-14 bg-primary rounded-2xl flex items-center justify-center text-primary-foreground mb-4 shadow-lg shadow-primary/30 group-hover:rotate-[360deg] transition-transform duration-1000">
+                                            <MapPin className="w-7 h-7" />
                                         </div>
-                                        <span className="text-xs font-bold text-foreground uppercase tracking-widest text-center">Recanto dos <br /> Pássaros</span>
+                                        <span className="text-[10px] font-bold text-foreground uppercase tracking-[0.3em] text-center leading-relaxed">Recanto dos <br /> Pássaros</span>
                                     </div>
-                                    <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-1">
-                                        <div className="w-4 h-4 bg-card border-r border-b border-primary/10 rotate-45 transition-colors duration-500" />
+                                    <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-1 scale-150">
+                                        <div className="w-4 h-4 bg-card/80 backdrop-blur-xl border-r border-b border-primary/10 rotate-45 transition-colors duration-500" />
                                     </div>
                                 </motion.div>
                             </div>

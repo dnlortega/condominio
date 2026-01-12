@@ -5,16 +5,75 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Star, MessageCircle } from 'lucide-react';
 import Image from 'next/image';
 import { Button } from "@/components/ui/button";
+import { useScroll, useTransform, useSpring, useInView, animate } from 'framer-motion';
+
+const Counter = ({ value, suffix = "" }: { value: string, suffix?: string }) => {
+    const ref = React.useRef<HTMLSpanElement>(null);
+    const inView = useInView(ref, { once: true });
+
+    // Extract numbers from value (e.g., "45-47" -> [45, 47], "24h" -> [24])
+    const nums = value.match(/\d+/g);
+    const targetValue = nums ? parseInt(nums[nums.length - 1]) : 0;
+
+    React.useEffect(() => {
+        if (inView && ref.current) {
+            const node = ref.current;
+            const controls = animate(0, targetValue, {
+                duration: 2,
+                ease: [0.33, 1, 0.68, 1],
+                onUpdate(value) {
+                    node.textContent = Math.round(value).toString().padStart(nums && nums[0].length === 2 ? 2 : 1, '0');
+                }
+            });
+            return () => controls.stop();
+        }
+    }, [inView, targetValue, nums]);
+
+    return <span ref={ref}>00</span>;
+};
+
+const MagneticButton = ({ children, className }: { children: React.ReactNode, className?: string }) => {
+    const ref = React.useRef<HTMLDivElement>(null);
+    const [position, setPosition] = React.useState({ x: 0, y: 0 });
+
+    const handleMouse = (e: React.MouseEvent) => {
+        const { clientX, clientY } = e;
+        const { height, width, left, top } = ref.current!.getBoundingClientRect();
+        const middleX = clientX - (left + width / 2);
+        const middleY = clientY - (top + height / 2);
+        setPosition({ x: middleX * 0.2, y: middleY * 0.2 });
+    };
+
+    const reset = () => setPosition({ x: 0, y: 0 });
+
+    const { x, y } = position;
+
+    return (
+        <motion.div
+            ref={ref}
+            onMouseMove={handleMouse}
+            onMouseLeave={reset}
+            animate={{ x, y }}
+            transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
+            className={className}
+        >
+            {children}
+        </motion.div>
+    );
+};
 
 const Hero = () => {
     const title = "Onde o Luxo Encontra a Paz";
     const words = title.split(" ");
+    const { scrollY } = useScroll();
+    const yParallax = useTransform(scrollY, [0, 500], [0, 200]);
+    const scaleParallax = useTransform(scrollY, [0, 500], [1, 1.1]);
 
     const container = {
         hidden: { opacity: 0 },
         visible: (i = 1) => ({
             opacity: 1,
-            transition: { staggerChildren: 0.12, delayChildren: 0.04 * i },
+            transition: { staggerChildren: 0.1, delayChildren: 0.3 },
         }),
     };
 
@@ -23,19 +82,13 @@ const Hero = () => {
             opacity: 1,
             y: 0,
             transition: {
-                type: "spring",
-                damping: 12,
-                stiffness: 100,
+                duration: 0.8,
+                ease: [0.22, 1, 0.36, 1],
             },
         },
         hidden: {
             opacity: 0,
-            y: 20,
-            transition: {
-                type: "spring",
-                damping: 12,
-                stiffness: 100,
-            },
+            y: 100,
         },
     } as const;
 
@@ -43,11 +96,9 @@ const Hero = () => {
 
     return (
         <section id="home" className="relative min-h-screen w-full flex items-center overflow-hidden z-10">
-            {/* Background Image with Parallax-like movement */}
+            {/* Background Image with Suave Parallax */}
             <motion.div
-                initial={{ scale: 1.1 }}
-                animate={{ scale: 1 }}
-                transition={{ duration: 10, ease: "easeOut" }}
+                style={{ y: yParallax, scale: scaleParallax }}
                 className="absolute inset-0 z-0"
             >
                 <Image
@@ -94,13 +145,14 @@ const Hero = () => {
                         className="text-5xl sm:text-6xl md:text-8xl font-bold text-foreground mb-8 leading-[0.9] uppercase text-center lg:text-left tracking-tighter flex flex-wrap gap-x-4 lg:gap-x-6 justify-center lg:justify-start"
                     >
                         {words.map((word, index) => (
-                            <motion.span
-                                variants={child}
-                                key={index}
-                                className={index >= 3 ? "text-primary/95 italic font-light serif" : ""}
-                            >
-                                {word}
-                            </motion.span>
+                            <div key={index} className="overflow-hidden py-2">
+                                <motion.span
+                                    variants={child}
+                                    className={`inline-block ${index >= 3 ? "text-primary/95 italic font-light serif" : ""}`}
+                                >
+                                    {word}
+                                </motion.span>
+                            </div>
                         ))}
                     </motion.h1>
 
@@ -119,31 +171,36 @@ const Hero = () => {
                         transition={{ delay: 1.5, duration: 0.8 }}
                         className="flex flex-col sm:flex-row gap-5 justify-center lg:justify-start"
                     >
-                        <Button className="bg-primary hover:bg-zinc-900 text-primary-foreground px-10 py-8 rounded-full font-bold transition-all duration-500 flex items-center justify-center gap-3 group shadow-2xl shadow-primary/20 text-xs uppercase tracking-[0.3em] w-full sm:w-auto overflow-hidden relative border border-primary">
-                            <span className="relative z-10">Ver Regimento</span>
-                            <motion.div
-                                animate={{ x: [0, 5, 0] }}
-                                transition={{ duration: 1.5, repeat: Infinity }}
+                        <MagneticButton>
+                            <Button className="bg-primary hover:bg-zinc-900 text-primary-foreground px-10 py-8 rounded-full font-bold transition-all duration-500 flex items-center justify-center gap-3 group shadow-2xl shadow-primary/20 text-xs uppercase tracking-[0.3em] w-full sm:w-auto overflow-hidden relative border border-primary">
+                                <span className="relative z-10">Ver Regimento</span>
+                                <motion.div
+                                    animate={{ x: [0, 5, 0] }}
+                                    transition={{ duration: 1.5, repeat: Infinity }}
+                                >
+                                    <ArrowRight className="w-4 h-4 relative z-10" />
+                                </motion.div>
+                                <motion.div
+                                    className="absolute inset-0 bg-white/10"
+                                    initial={{ x: "-100%" }}
+                                    whileHover={{ x: "100%" }}
+                                    transition={{ duration: 0.6 }}
+                                />
+                            </Button>
+                        </MagneticButton>
+
+                        <MagneticButton>
+                            <Button
+                                asChild
+                                variant="outline"
+                                className="bg-white/10 dark:bg-black/20 hover:bg-white/20 dark:hover:bg-black/40 backdrop-blur-md text-foreground border-border px-10 py-8 rounded-full font-bold transition-all duration-500 flex items-center justify-center gap-3 text-xs uppercase tracking-[0.3em] w-full sm:w-auto shadow-sm group"
                             >
-                                <ArrowRight className="w-4 h-4 relative z-10" />
-                            </motion.div>
-                            <motion.div
-                                className="absolute inset-0 bg-white/10"
-                                initial={{ x: "-100%" }}
-                                whileHover={{ x: "100%" }}
-                                transition={{ duration: 0.6 }}
-                            />
-                        </Button>
-                        <Button
-                            asChild
-                            variant="outline"
-                            className="bg-white/10 dark:bg-black/20 hover:bg-white/20 dark:hover:bg-black/40 backdrop-blur-md text-foreground border-border px-10 py-8 rounded-full font-bold transition-all duration-500 flex items-center justify-center gap-3 text-xs uppercase tracking-[0.3em] w-full sm:w-auto shadow-sm group"
-                        >
-                            <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
-                                <MessageCircle className="w-4 h-4 text-primary group-hover:scale-110 transition-transform" />
-                                <span className="group-hover:text-primary transition-colors">Falar com a Síndica</span>
-                            </a>
-                        </Button>
+                                <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
+                                    <MessageCircle className="w-4 h-4 text-primary group-hover:scale-110 transition-transform" />
+                                    <span className="group-hover:text-primary transition-colors">Falar com a Síndica</span>
+                                </a>
+                            </Button>
+                        </MagneticButton>
                     </motion.div>
 
                     <motion.div
@@ -153,7 +210,7 @@ const Hero = () => {
                         className="mt-16 lg:mt-24 grid grid-cols-3 gap-6 md:gap-16 lg:flex lg:items-center border-t border-border/50 pt-10"
                     >
                         {[
-                            { val: "45-47", label: "Área Privativa" },
+                            { val: "45-47", label: "Área Privativa", suffix: "m²" },
                             { val: "02", label: "Dormitórios" },
                             { val: "24h", label: "Segurança" }
                         ].map((stat, i) => (
@@ -164,7 +221,11 @@ const Hero = () => {
                                     transition={{ delay: 2.2 + (i * 0.2) }}
                                     className="flex flex-col items-center lg:items-start"
                                 >
-                                    <span className="text-3xl md:text-4xl font-bold text-foreground leading-none tracking-tighter mb-2">{stat.val}</span>
+                                    <span className="text-3xl md:text-4xl font-bold text-foreground leading-none tracking-tighter mb-2">
+                                        {i === 0 ? "45-" : ""}
+                                        <Counter value={stat.val} />
+                                        {stat.suffix || (stat.val.includes('h') ? 'h' : '')}
+                                    </span>
                                     <span className="text-foreground/30 text-[9px] uppercase tracking-[0.4em] font-bold">{stat.label}</span>
                                 </motion.div>
                                 {i < 2 && <div className="hidden lg:block w-px h-12 bg-border/60" />}

@@ -1,9 +1,8 @@
 "use client";
 
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue, useMotionTemplate } from 'framer-motion';
 import { Shield, Users, Trees, MapPin, Compass, Sparkles, ChevronLeft, ChevronRight } from 'lucide-react';
-import { AnimatePresence } from 'framer-motion';
 
 const ImageCarousel = () => {
     const images = ['/1.jpg', '/2.jpg', '/3.jpg', '/4.jpg', '/5.jpg', '/6.jpg', '/7.jpg'];
@@ -60,6 +59,59 @@ const ImageCarousel = () => {
                 ))}
             </div>
         </div>
+    );
+};
+
+const FeatureCard = ({ feature, index, variants }: { feature: any, index: number, variants: any }) => {
+    const mouseX = useMotionValue(0);
+    const mouseY = useMotionValue(0);
+
+    function handleMouseMove({ currentTarget, clientX, clientY }: React.MouseEvent) {
+        const { left, top } = currentTarget.getBoundingClientRect();
+        mouseX.set(clientX - left);
+        mouseY.set(clientY - top);
+    }
+
+    return (
+        <motion.div
+            variants={variants}
+            onMouseMove={handleMouseMove}
+            whileHover={{ y: -5 }}
+            className="group relative p-8 rounded-[2.5rem] bg-secondary/5 border border-border/50 overflow-hidden"
+        >
+            <motion.div
+                className="pointer-events-none absolute -inset-px rounded-[2.5rem] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                style={{
+                    background: useMotionTemplate`
+                        radial-gradient(
+                            650px circle at ${mouseX}px ${mouseY}px,
+                            rgba(120, 100, 80, 0.15),
+                            transparent 80%
+                        )
+                    `,
+                }}
+            />
+
+            <div className="relative z-10">
+                <div className="mb-6 flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-700 shadow-sm">
+                        {feature.icon}
+                    </div>
+                    <motion.div
+                        initial={{ scaleX: 0 }}
+                        whileInView={{ scaleX: 1 }}
+                        viewport={{ once: true }}
+                        className="h-px bg-border/40 flex-grow origin-left"
+                    />
+                </div>
+                <h3 className="text-sm font-bold text-foreground uppercase tracking-widest mb-4 group-hover:text-primary transition-colors">
+                    {feature.title}
+                </h3>
+                <p className="text-foreground/40 text-[13px] leading-relaxed font-light">
+                    {feature.description}
+                </p>
+            </div>
+        </motion.div>
     );
 };
 
@@ -145,33 +197,15 @@ const Features = () => {
                                 initial="hidden"
                                 whileInView="visible"
                                 viewport={{ once: true }}
-                                className="grid sm:grid-cols-2 gap-x-16 gap-y-16"
+                                className="grid sm:grid-cols-2 gap-8"
                             >
                                 {features.map((feature, index) => (
-                                    <motion.div
+                                    <FeatureCard
                                         key={index}
+                                        feature={feature}
+                                        index={index}
                                         variants={itemVariants}
-                                        whileHover={{ y: -5 }}
-                                        className="group"
-                                    >
-                                        <div className="mb-6 flex items-center gap-4">
-                                            <div className="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-700 shadow-sm">
-                                                {feature.icon}
-                                            </div>
-                                            <motion.div
-                                                initial={{ scaleX: 0 }}
-                                                whileInView={{ scaleX: 1 }}
-                                                viewport={{ once: true }}
-                                                className="h-px bg-border/40 flex-grow origin-left"
-                                            />
-                                        </div>
-                                        <h3 className="text-sm font-bold text-foreground uppercase tracking-widest mb-4 group-hover:text-primary transition-colors">
-                                            {feature.title}
-                                        </h3>
-                                        <p className="text-foreground/40 text-[13px] leading-relaxed font-light">
-                                            {feature.description}
-                                        </p>
-                                    </motion.div>
+                                    />
                                 ))}
                             </motion.div>
                         </motion.div>
