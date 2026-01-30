@@ -15,6 +15,7 @@ import { Card } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
 import { createCategory, updateCategory, deleteCategory } from '@/app/actions/concessionarias'
 import { useRouter } from 'next/navigation'
+import { toast } from 'sonner'
 
 type Category = {
     id: string
@@ -69,8 +70,10 @@ export function CategoriaView({ categories }: { categories: Category[] }) {
         try {
             if (editingCategory) {
                 await updateCategory(editingCategory.id, categoryName, selectedIcon)
+                toast.success('Categoria atualizada com sucesso!')
             } else {
                 await createCategory(categoryName, selectedIcon)
+                toast.success('Categoria criada com sucesso!')
             }
 
             setCategoryName('')
@@ -79,7 +82,7 @@ export function CategoriaView({ categories }: { categories: Category[] }) {
             router.refresh()
         } catch (error) {
             console.error(error)
-            alert('Erro ao salvar categoria')
+            toast.error('Erro ao salvar categoria. Tente novamente.')
         } finally {
             setIsLoading(false)
         }
@@ -97,6 +100,7 @@ export function CategoriaView({ categories }: { categories: Category[] }) {
         setIsLoading(true)
         try {
             await deleteCategory(id)
+            toast.success('Categoria excluída com sucesso!')
             router.refresh()
             if (editingCategory?.id === id) {
                 setEditingCategory(null)
@@ -104,7 +108,7 @@ export function CategoriaView({ categories }: { categories: Category[] }) {
                 setSelectedIcon('Briefcase')
             }
         } catch (error) {
-            alert('Não foi possível excluir. Verifique se há serviços usando esta categoria.')
+            toast.error('Não foi possível excluir. Verifique se há serviços usando esta categoria.')
         } finally {
             setIsLoading(false)
         }

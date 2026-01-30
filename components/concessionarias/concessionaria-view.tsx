@@ -2,7 +2,12 @@
 
 import { useState } from 'react'
 import {
-    Plus, Pencil, Trash2, Phone, Search
+    Plus, Pencil, Trash2, Phone, Search,
+    Zap, Droplet, Wifi, Flame, Shield,
+    Hammer, Truck, Stethoscope, Briefcase,
+    Smartphone, Lightbulb, Thermometer, Lock, Camera,
+    Flower, PaintBucket, Plug, Tv, Utensils,
+    Car, Bus, ShoppingBag, PawPrint
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -12,7 +17,6 @@ import {
     SheetContent,
     SheetHeader,
     SheetTitle,
-    SheetTrigger,
     SheetFooter,
 } from '@/components/ui/sheet'
 import { Label } from '@/components/ui/label'
@@ -22,6 +26,7 @@ import {
     deleteConcessionaria
 } from '@/app/actions/concessionarias'
 import { useRouter } from 'next/navigation'
+import { toast } from 'sonner'
 
 type Category = {
     id: string
@@ -38,9 +43,39 @@ type Provider = {
     category?: Category
 }
 
+const AVAILABLE_ICONS = [
+    { name: 'Zap', icon: Zap },
+    { name: 'Droplet', icon: Droplet },
+    { name: 'Wifi', icon: Wifi },
+    { name: 'Flame', icon: Flame },
+    { name: 'Smartphone', icon: Smartphone },
+    { name: 'Shield', icon: Shield },
+    { name: 'Hammer', icon: Hammer },
+    { name: 'Truck', icon: Truck },
+    { name: 'Stethoscope', icon: Stethoscope },
+    { name: 'Briefcase', icon: Briefcase },
+    { name: 'Lightbulb', icon: Lightbulb },
+    { name: 'Thermometer', icon: Thermometer },
+    { name: 'Lock', icon: Lock },
+    { name: 'Camera', icon: Camera },
+    { name: 'Flower', icon: Flower },
+    { name: 'PaintBucket', icon: PaintBucket },
+    { name: 'Plug', icon: Plug },
+    { name: 'Tv', icon: Tv },
+    { name: 'Utensils', icon: Utensils },
+    { name: 'Car', icon: Car },
+    { name: 'Bus', icon: Bus },
+    { name: 'ShoppingBag', icon: ShoppingBag },
+    { name: 'PawPrint', icon: PawPrint },
+]
+
+const IconDisplay = ({ name, className }: { name: string, className?: string }) => {
+    const iconDef = AVAILABLE_ICONS.find(i => i.name === name)
+    const Icon = iconDef ? iconDef.icon : Briefcase
+    return <Icon className={className} />
+}
+
 const validatePhone = (phone: string) => {
-    // Basic regex for Brazilian phones: (XX) XXXX-XXXX or (XX) XXXXX-XXXX
-    const phoneRegex = /^(\(?\d{2}\)?\s?)?(\d{4,5}[-\s]?\d{4})$/
     const cleanPhone = phone.replace(/[^0-9]/g, '')
     return cleanPhone.length >= 10 && cleanPhone.length <= 11
 }
@@ -56,9 +91,9 @@ export function ConcessionariaView({
     const [searchTerm, setSearchTerm] = useState('')
     const [isSheetOpen, setIsSheetOpen] = useState(false)
     const [currentProvider, setCurrentProvider] = useState<Provider | null>(null)
+    const [isLoading, setIsLoading] = useState(false)
     const router = useRouter()
 
-    // Form states
     const [formData, setFormData] = useState({
         name: '',
         contact: '',
@@ -102,36 +137,46 @@ export function ConcessionariaView({
             return
         }
 
+        setIsLoading(true)
         try {
             if (currentProvider) {
-                // Remove id from formData if it accidentally got in there, though our state doesn't have it
                 const { name, contact, hasWhatsApp, categoryId } = formData
                 await updateConcessionaria(currentProvider.id, { name, contact, hasWhatsApp, categoryId })
+                toast.success('Serviço atualizado com sucesso!')
             } else {
                 await createConcessionaria(formData)
+                toast.success('Serviço criado com sucesso!')
             }
             setIsSheetOpen(false)
             router.refresh()
         } catch (error) {
             console.error('Failed to save', error)
-            alert('Erro ao salvar')
+            toast.error('Erro ao salvar serviço. Tente novamente.')
+        } finally {
+            setIsLoading(false)
         }
     }
 
     const handleDelete = async (id: string) => {
         if (!confirm('Tem certeza que deseja excluir?')) return
+
+        setIsLoading(true)
         try {
             await deleteConcessionaria(id)
+            toast.success('Serviço excluído com sucesso!')
             router.refresh()
         } catch (error) {
             console.error('Failed to delete', error)
+            toast.error('Erro ao excluir serviço. Tente novamente.')
+        } finally {
+            setIsLoading(false)
         }
     }
 
     return (
         <div className="space-y-6">
-            <div className="flex flex-col md:flex-row justify-between gap-4 items-center">
-                <div className="relative w-full md:w-96">
+            <div className="flex flex-col sm:flex-row justify-between gap-4 items-start sm:items-center">
+                <div className="relative w-full sm:w-96">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                     <Input
                         placeholder="Buscar serviços..."
@@ -140,11 +185,11 @@ export function ConcessionariaView({
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
                 </div>
-                <div className="flex gap-2">
-                    <Button variant="outline" asChild>
+                <div className="flex gap-2 w-full sm:w-auto">
+                    <Button variant="outline" asChild className="flex-1 sm:flex-none">
                         <a href="/admin/categorias">Gerenciar Categorias</a>
                     </Button>
-                    <Button onClick={handleOpenCreate}>
+                    <Button onClick={handleOpenCreate} className="flex-1 sm:flex-none">
                         <Plus className="w-4 h-4 mr-2" />
                         Novo Serviço
                     </Button>
@@ -167,6 +212,7 @@ export function ConcessionariaView({
                                     size="icon"
                                     className="h-8 w-8"
                                     onClick={() => handleOpenEdit(provider)}
+                                    disabled={isLoading}
                                 >
                                     <Pencil className="w-3 h-3" />
                                 </Button>
@@ -175,6 +221,7 @@ export function ConcessionariaView({
                                     size="icon"
                                     className="h-8 w-8 text-destructive hover:text-destructive"
                                     onClick={() => handleDelete(provider.id)}
+                                    disabled={isLoading}
                                 >
                                     <Trash2 className="w-3 h-3" />
                                 </Button>
@@ -185,6 +232,11 @@ export function ConcessionariaView({
                             <Phone className="w-4 h-4" />
                             <span>{provider.contact}</span>
                         </div>
+                        {provider.hasWhatsApp !== undefined && (
+                            <div className="mt-2 text-xs text-muted-foreground">
+                                {provider.hasWhatsApp ? '✓ WhatsApp disponível' : '✗ Apenas telefone'}
+                            </div>
+                        )}
                     </Card>
                 ))}
                 {filteredProviders.length === 0 && (
@@ -196,7 +248,7 @@ export function ConcessionariaView({
 
             {/* Sheet for Service */}
             <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
-                <SheetContent>
+                <SheetContent className="w-full sm:max-w-md overflow-y-auto">
                     <SheetHeader>
                         <SheetTitle>
                             {currentProvider ? 'Editar Serviço' : 'Novo Serviço'}
@@ -212,6 +264,7 @@ export function ConcessionariaView({
                                     setFormData({ ...formData, name: e.target.value })
                                 }
                                 placeholder="Ex: CPFL"
+                                disabled={isLoading}
                             />
                         </div>
                         <div className="space-y-2">
@@ -224,6 +277,7 @@ export function ConcessionariaView({
                                     if (formErrors.contact) setFormErrors({ contact: '' })
                                 }}
                                 placeholder="Ex: (14) 99999-9999"
+                                disabled={isLoading}
                             />
                             {formErrors.contact && (
                                 <span className="text-xs text-destructive">{formErrors.contact}</span>
@@ -232,12 +286,13 @@ export function ConcessionariaView({
                         <div className="space-y-2">
                             <Label>Categoria</Label>
                             <select
-                                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                                 value={formData.categoryId}
                                 onChange={(e) =>
                                     setFormData({ ...formData, categoryId: e.target.value })
                                 }
                                 required
+                                disabled={isLoading}
                             >
                                 <option value="" disabled>Selecione uma categoria</option>
                                 {categories.map((cat) => (
@@ -256,13 +311,16 @@ export function ConcessionariaView({
                                     setFormData({ ...formData, hasWhatsApp: e.target.checked })
                                 }
                                 className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+                                disabled={isLoading}
                             />
                             <Label htmlFor="hasWhatsApp" className="text-sm font-normal cursor-pointer">
                                 Este número tem WhatsApp
                             </Label>
                         </div>
-                        <SheetFooter>
-                            <Button type="submit">Salvar</Button>
+                        <SheetFooter className="gap-2 sm:gap-0">
+                            <Button type="submit" disabled={isLoading} className="w-full sm:w-auto">
+                                {isLoading ? 'Salvando...' : 'Salvar'}
+                            </Button>
                         </SheetFooter>
                     </form>
                 </SheetContent>
