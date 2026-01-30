@@ -52,6 +52,7 @@ export async function getConcessionarias() {
 export async function createConcessionaria(data: {
     name: string
     contact: string
+    hasWhatsApp?: boolean
     categoryId: string
 }) {
     const provider = await prisma.serviceProvider.create({
@@ -67,6 +68,7 @@ export async function updateConcessionaria(
     data: {
         name?: string
         contact?: string
+        hasWhatsApp?: boolean
         categoryId?: string
     }
 ) {

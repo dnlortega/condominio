@@ -21,32 +21,32 @@ const hardcodedServices = [
         category: "Concessionárias",
         icon: <Flame className="w-5 h-5" />,
         providers: [
-            { name: "Ultragaz (Gás)", contact: "0800 7010 123" },
-            { name: "CPFL (Energia)", contact: "0800 010 1010" }
+            { name: "Ultragaz (Gás)", contact: "0800 7010 123", hasWhatsApp: false },
+            { name: "CPFL (Energia)", contact: "0800 010 1010", hasWhatsApp: false }
         ],
     },
     {
         category: "Conectividade",
         icon: <Wifi className="w-5 h-5" />,
         providers: [
-            { name: "Vivo Fibra", contact: "103 15" },
-            { name: "Claro/NET", contact: "0800 721 0027" }
+            { name: "Vivo Fibra", contact: "103 15", hasWhatsApp: false },
+            { name: "Claro/NET", contact: "0800 721 0027", hasWhatsApp: false }
         ],
     },
     {
         category: "Manutenção",
         icon: <Wrench className="w-5 h-5" />,
         providers: [
-            { name: "Zeladoria Local", contact: "Ramal 101" },
-            { name: "Suporte Técnico", contact: "(14) 9988-7766" }
+            { name: "Zeladoria Local", contact: "Ramal 101", hasWhatsApp: false },
+            { name: "Suporte Técnico", contact: "(14) 9988-7766", hasWhatsApp: true }
         ],
     },
     {
         category: "Operacional",
         icon: <PhoneCall className="w-5 h-5" />,
         providers: [
-            { name: "Portaria 24h", contact: "Ramal 100" },
-            { name: "Administradora", contact: "(14) 3222-1234" }
+            { name: "Portaria 24h", contact: "Ramal 100", hasWhatsApp: false },
+            { name: "Administradora", contact: "(14) 3222-1234", hasWhatsApp: true }
         ],
     }
 ];
@@ -55,6 +55,7 @@ type ServiceProvider = {
     id: string;
     name: string;
     contact: string;
+    hasWhatsApp?: boolean;
     category: {
         name: string;
         icon: string | null;
@@ -105,9 +106,9 @@ const ServiceContacts = ({ dbServices }: { dbServices?: ServiceProvider[] }) => 
                 providers: []
             };
         }
-        acc[catName].providers.push({ name: provider.name, contact: provider.contact });
+        acc[catName].providers.push({ name: provider.name, contact: provider.contact, hasWhatsApp: provider.hasWhatsApp });
         return acc;
-    }, {} as Record<string, { category: string, icon: any, providers: { name: string, contact: string }[] }>)) : hardcodedServices;
+    }, {} as Record<string, { category: string, icon: any, providers: { name: string, contact: string, hasWhatsApp?: boolean }[] }>)) : hardcodedServices;
 
 
     return (
@@ -189,16 +190,22 @@ const ServiceContacts = ({ dbServices }: { dbServices?: ServiceProvider[] }) => 
                                                         whileTap={{ scale: 0.9 }}
                                                         href={(() => {
                                                             const cleanNum = provider.contact.replace(/\D/g, '');
-                                                            if (cleanNum.length >= 10 && !cleanNum.startsWith('0800')) {
+                                                            // Check if provider has WhatsApp enabled
+                                                            if (provider.hasWhatsApp !== false && cleanNum.length >= 10 && !cleanNum.startsWith('0800')) {
                                                                 return `https://api.whatsapp.com/send?phone=55${cleanNum}&text=${encodeURIComponent(`Olá ${provider.name}, encontrei seu contato no guia do condomínio.`)}`;
                                                             }
                                                             return `tel:${cleanNum}`;
                                                         })()}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
-                                                        className="w-10 h-10 rounded-full flex items-center justify-center text-white bg-[#25D366] hover:bg-[#20ba5a] shadow-sm transition-all duration-500 hover:scale-110"
+                                                        className={`w-10 h-10 rounded-full flex items-center justify-center text-white shadow-sm transition-all duration-500 hover:scale-110 ${provider.hasWhatsApp !== false ? 'bg-[#25D366] hover:bg-[#20ba5a]' : 'bg-primary hover:bg-primary/90'
+                                                            }`}
                                                     >
-                                                        <MessageCircle className="w-5 h-5 fill-current" />
+                                                        {provider.hasWhatsApp !== false ? (
+                                                            <MessageCircle className="w-5 h-5 fill-current" />
+                                                        ) : (
+                                                            <Phone className="w-5 h-5" />
+                                                        )}
                                                     </motion.a>
                                                 </div>
                                             </div>
