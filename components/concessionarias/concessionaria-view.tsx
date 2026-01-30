@@ -5,7 +5,9 @@ import {
     Plus, Pencil, Trash2, Phone, Search,
     Zap, Droplet, Wifi, Flame, Shield,
     Hammer, Truck, Stethoscope, Briefcase,
-    Smartphone, Lightbulb
+    Smartphone, Lightbulb, Thermometer, Lock, Camera,
+    Flower, PaintBucket, Plug, Tv, Utensils,
+    Car, Bus, ShoppingBag, PawPrint
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -19,7 +21,14 @@ import {
     SheetFooter,
 } from '@/components/ui/sheet'
 import { Label } from '@/components/ui/label'
-import { createConcessionaria, updateConcessionaria, deleteConcessionaria, createCategory } from '@/app/actions/concessionarias'
+import {
+    createConcessionaria,
+    updateConcessionaria,
+    deleteConcessionaria,
+    createCategory,
+    updateCategory,
+    deleteCategory
+} from '@/app/actions/concessionarias'
 import { useRouter } from 'next/navigation'
 
 type Category = {
@@ -48,6 +57,18 @@ const AVAILABLE_ICONS = [
     { name: 'Stethoscope', icon: Stethoscope, label: 'Saúde' },
     { name: 'Briefcase', icon: Briefcase, label: 'Serviços' },
     { name: 'Lightbulb', icon: Lightbulb, label: 'Iluminação' },
+    { name: 'Thermometer', icon: Thermometer, label: 'Climatização' },
+    { name: 'Lock', icon: Lock, label: 'Chaveiro' },
+    { name: 'Camera', icon: Camera, label: 'Monitoramento' },
+    { name: 'Flower', icon: Flower, label: 'Jardinagem' },
+    { name: 'PaintBucket', icon: PaintBucket, label: 'Pintura' },
+    { name: 'Plug', icon: Plug, label: 'Elétrica' },
+    { name: 'Tv', icon: Tv, label: 'TV' },
+    { name: 'Utensils', icon: Utensils, label: 'Alimentação' },
+    { name: 'Car', icon: Car, label: 'Transporte/Carro' },
+    { name: 'Bus', icon: Bus, label: 'Ônibus' },
+    { name: 'ShoppingBag', icon: ShoppingBag, label: 'Entregas' },
+    { name: 'PawPrint', icon: PawPrint, label: 'Pets' },
 ]
 
 const validatePhone = (phone: string) => {
@@ -89,6 +110,7 @@ export function ConcessionariaView({
     })
     const [categoryName, setCategoryName] = useState('')
     const [selectedIcon, setSelectedIcon] = useState('Briefcase')
+    const [editingCategory, setEditingCategory] = useState<Category | null>(null)
 
     const filteredProviders = providers.filter(
         (p) =>
@@ -148,13 +170,51 @@ export function ConcessionariaView({
         }
     }
 
-    const handleCreateCategory = async () => {
+    const handleCreateOrUpdateCategory = async () => {
         if (!categoryName) return;
-        await createCategory(categoryName, selectedIcon)
+
+        try {
+            if (editingCategory) {
+                await updateCategory(editingCategory.id, categoryName, selectedIcon)
+            } else {
+                await createCategory(categoryName, selectedIcon)
+            }
+
+            setCategoryName('')
+            setSelectedIcon('Briefcase')
+            setEditingCategory(null)
+            router.refresh()
+        } catch (error) {
+            console.error(error)
+            alert('Erro ao salvar categoria')
+        }
+    }
+
+    const handleEditCategory = (cat: Category) => {
+        setEditingCategory(cat)
+        setCategoryName(cat.name)
+        setSelectedIcon(cat.icon || 'Briefcase')
+    }
+
+    const handleDeleteCategory = async (id: string) => {
+        if (!confirm('Excluir esta categoria? Se houver serviços vinculados, pode haver erro.')) return
+        try {
+            await deleteCategory(id)
+            router.refresh()
+            if (editingCategory?.id === id) {
+                setEditingCategory(null)
+                setCategoryName('')
+                setSelectedIcon('Briefcase')
+            }
+        } catch (error) {
+            alert('Não foi possível excluir. Verifique se há serviços usando esta categoria.')
+        }
+    }
+
+    const handleNewCategoryReset = () => {
+        setEditingCategory(null)
         setCategoryName('')
         setSelectedIcon('Briefcase')
-        setIsCategorySheetOpen(false)
-        router.refresh()
     }
 
     return (
@@ -285,11 +345,46 @@ export function ConcessionariaView({
 
             {/* Sheet for Category */}
             <Sheet open={isCategorySheetOpen} onOpenChange={setIsCategorySheetOpen}>
-                <SheetContent>
+                <SheetContent className="overflow-y-auto sm:max-w-md">
                     <SheetHeader>
-                        <SheetTitle>Nova Categoria</SheetTitle>
+                        <SheetTitle>Gerenciar Categorias</SheetTitle>
                     </SheetHeader>
-                    <div className="space-y-4 py-4">
+
+                    {/* List of existing categories */}
+                    <div className="py-4 space-y-2 border-b mb-4 max-h-60 overflow-y-auto">
+                        <Label className="text-muted-foreground text-xs uppercase tracking-wider mb-2 block">Categorias Existentes</Label>
+                        {categories.map(cat => (
+                            <div key={cat.id} className="flex items-center justify-between p-2 rounded-md hover:bg-accent group">
+                                <div className="flex items-center gap-3">
+                                    <div className="p-1.5 bg-secondary rounded-md text-secondary-foreground">
+                                        <IconDisplay name={cat.icon || 'Briefcase'} className="w-4 h-4" />
+                                    </div>
+                                    <span className="font-medium text-sm">{cat.name}</span>
+                                </div>
+                                <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => handleEditCategory(cat)}>
+                                        <Pencil className="w-3 h-3" />
+                                    </Button>
+                                    <Button size="icon" variant="ghost" className="h-7 w-7 text-destructive" onClick={() => handleDeleteCategory(cat.id)}>
+                                        <Trash2 className="w-3 h-3" />
+                                    </Button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="space-y-4 pb-4">
+                        <div className="flex items-center justify-between">
+                            <Label className="text-base font-semibold">
+                                {editingCategory ? 'Editar Categoria' : 'Nova Categoria'}
+                            </Label>
+                            {editingCategory && (
+                                <Button size="sm" variant="ghost" onClick={handleNewCategoryReset} className="h-6 text-xs">
+                                    Cancelar Edição
+                                </Button>
+                            )}
+                        </div>
+
                         <div className="space-y-2">
                             <Label>Nome da Categoria</Label>
                             <Input
@@ -300,7 +395,7 @@ export function ConcessionariaView({
                         </div>
                         <div className="space-y-2">
                             <Label>Ícone</Label>
-                            <div className="grid grid-cols-4 gap-2">
+                            <div className="grid grid-cols-5 gap-2 max-h-40 overflow-y-auto p-1 border rounded-md">
                                 {AVAILABLE_ICONS.map((item) => {
                                     const Icon = item.icon
                                     return (
@@ -308,19 +403,22 @@ export function ConcessionariaView({
                                             key={item.name}
                                             type="button"
                                             onClick={() => setSelectedIcon(item.name)}
-                                            className={`p-2 rounded-md border flex flex-col items-center gap-1 hover:bg-accent ${selectedIcon === item.name
-                                                ? 'bg-primary text-primary-foreground border-primary'
-                                                : 'bg-background border-input'
+                                            className={`p-2 rounded-md flex flex-col items-center gap-1 hover:bg-accent transition-colors ${selectedIcon === item.name
+                                                ? 'bg-primary text-primary-foreground ring-1 ring-primary'
+                                                : 'text-muted-foreground'
                                                 }`}
+                                            title={item.label}
                                         >
                                             <Icon className="w-5 h-5" />
-                                            <span className="text-[10px] truncate w-full text-center">{item.label}</span>
                                         </button>
                                     )
                                 })}
                             </div>
+                            <p className="text-[10px] text-muted-foreground text-right">{AVAILABLE_ICONS.find(i => i.name === selectedIcon)?.label}</p>
                         </div>
-                        <Button onClick={handleCreateCategory} className="w-full">Criar Categoria</Button>
+                        <Button onClick={handleCreateOrUpdateCategory} className="w-full">
+                            {editingCategory ? 'Atualizar Categoria' : 'Criar Categoria'}
+                        </Button>
                     </div>
                 </SheetContent>
             </Sheet>

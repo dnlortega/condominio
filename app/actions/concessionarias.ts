@@ -15,7 +15,30 @@ export async function createCategory(name: string, icon?: string) {
         data: { name, icon },
     })
     revalidatePath('/concessionarias')
+    revalidatePath('/')
     return category
+}
+
+export async function updateCategory(id: string, name: string, icon?: string) {
+    const category = await prisma.category.update({
+        where: { id },
+        data: { name, icon },
+    })
+    revalidatePath('/concessionarias')
+    revalidatePath('/')
+    return category
+}
+
+export async function deleteCategory(id: string) {
+    try {
+        await prisma.category.delete({
+            where: { id },
+        })
+        revalidatePath('/concessionarias')
+        revalidatePath('/')
+    } catch (e) {
+        throw new Error('Não é possível excluir categoria em uso.')
+    }
 }
 
 // Concessionarias (Service Providers)
@@ -35,6 +58,7 @@ export async function createConcessionaria(data: {
         data,
     })
     revalidatePath('/concessionarias')
+    revalidatePath('/')
     return provider
 }
 
@@ -51,6 +75,7 @@ export async function updateConcessionaria(
         data,
     })
     revalidatePath('/concessionarias')
+    revalidatePath('/')
     return provider
 }
 
@@ -59,4 +84,5 @@ export async function deleteConcessionaria(id: string) {
         where: { id },
     })
     revalidatePath('/concessionarias')
+    revalidatePath('/')
 }
