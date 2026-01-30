@@ -11,7 +11,8 @@ import {
     ArrowUpRight
 } from 'lucide-react';
 
-const services = [
+
+const hardcodedServices = [
     {
         category: "Concessionárias",
         icon: <Flame className="w-5 h-5" />,
@@ -46,7 +47,37 @@ const services = [
     }
 ];
 
-const ServiceContacts = () => {
+type ServiceProvider = {
+    id: string;
+    name: string;
+    contact: string;
+    category: {
+        name: string;
+        icon: string | null;
+    }
+};
+
+const ServiceContacts = ({ dbServices }: { dbServices?: ServiceProvider[] }) => {
+    // Transform DB services to view structure if available and not empty
+    const services = (dbServices && dbServices.length > 0) ? Object.values(dbServices.reduce((acc, provider) => {
+        const catName = provider.category.name;
+        if (!acc[catName]) {
+            acc[catName] = {
+                category: catName,
+                // Default icon mapping or generic
+                icon: provider.category.icon === 'Wifi' ? <Wifi className="w-5 h-5" /> :
+                    provider.category.icon === 'Flame' ? <Flame className="w-5 h-5" /> :
+                        provider.category.icon === 'Wrench' ? <Wrench className="w-5 h-5" /> :
+                            provider.category.icon === 'PhoneCall' ? <PhoneCall className="w-5 h-5" /> :
+                                <Phone className="w-5 h-5" />,
+                providers: []
+            };
+        }
+        acc[catName].providers.push({ name: provider.name, contact: provider.contact });
+        return acc;
+    }, {} as Record<string, { category: string, icon: any, providers: { name: string, contact: string }[] }>)) : hardcodedServices;
+
+
     return (
         <section id="services" className="py-32 bg-background transition-colors duration-500">
             <div className="container mx-auto px-6">
