@@ -8,7 +8,6 @@ import {
     Wrench,
     PhoneCall,
     Phone,
-    Phone,
     ArrowUpRight,
     MessageCircle
 } from 'lucide-react';
