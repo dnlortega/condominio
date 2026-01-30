@@ -143,9 +143,9 @@ const ServiceContacts = ({ dbServices }: { dbServices?: ServiceProvider[] }) => 
                                                     })()}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    className="w-10 h-10 rounded-full flex items-center justify-center text-primary/40 hover:text-green-600 bg-secondary/50 hover:bg-green-500/10 transition-all duration-500 border border-transparent hover:border-green-500/20"
+                                                    className="w-10 h-10 rounded-full flex items-center justify-center text-white bg-[#25D366] hover:bg-[#20ba5a] shadow-sm transition-all duration-500 hover:scale-110"
                                                 >
-                                                    <MessageCircle className="w-5 h-5" />
+                                                    <MessageCircle className="w-5 h-5 fill-current" />
                                                 </motion.a>
                                             </div>
                                         </div>

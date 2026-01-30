@@ -124,7 +124,9 @@ export function ConcessionariaView({
 
         try {
             if (currentProvider) {
-                await updateConcessionaria(currentProvider.id, formData)
+                // Remove id from formData if it accidentally got in there, though our state doesn't have it
+                const { name, contact, categoryId } = formData
+                await updateConcessionaria(currentProvider.id, { name, contact, categoryId })
             } else {
                 await createConcessionaria(formData)
             }
