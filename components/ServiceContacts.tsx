@@ -8,7 +8,9 @@ import {
     Wrench,
     PhoneCall,
     Phone,
-    ArrowUpRight
+    Phone,
+    ArrowUpRight,
+    MessageCircle
 } from 'lucide-react';
 
 
@@ -129,12 +131,22 @@ const ServiceContacts = ({ dbServices }: { dbServices?: ServiceProvider[] }) => 
                                             <div className="flex items-center justify-between">
                                                 <span className="text-xl font-bold text-foreground/80 tracking-tight group-hover/item:text-primary transition-colors duration-500">{provider.contact}</span>
                                                 <motion.a
-                                                    whileHover={{ scale: 1.1, rotate: 45 }}
+                                                    whileHover={{ scale: 1.1, rotate: 10 }}
                                                     whileTap={{ scale: 0.9 }}
-                                                    href={`tel:${provider.contact.replace(/\D/g, '')}`}
-                                                    className="w-10 h-10 rounded-full flex items-center justify-center text-primary/30 hover:text-primary bg-secondary/50 transition-all duration-500 border border-transparent hover:border-primary/20"
+                                                    href={(() => {
+                                                        const cleanNum = provider.contact.replace(/\D/g, '');
+                                                        // If it looks like a mobile/landline with DDD (10-11 digits), try WA
+                                                        // Otherwise fallback to tel:
+                                                        if (cleanNum.length >= 10 && !cleanNum.startsWith('0800')) {
+                                                            return `https://api.whatsapp.com/send?phone=55${cleanNum}&text=${encodeURIComponent(`Olá ${provider.name}, encontrei seu contato no guia do condomínio.`)}`;
+                                                        }
+                                                        return `tel:${cleanNum}`;
+                                                    })()}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="w-10 h-10 rounded-full flex items-center justify-center text-primary/40 hover:text-green-600 bg-secondary/50 hover:bg-green-500/10 transition-all duration-500 border border-transparent hover:border-green-500/20"
                                                 >
-                                                    <ArrowUpRight className="w-4 h-4" />
+                                                    <MessageCircle className="w-5 h-5" />
                                                 </motion.a>
                                             </div>
                                         </div>
