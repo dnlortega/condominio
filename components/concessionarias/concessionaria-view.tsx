@@ -17,7 +17,6 @@ import {
     SheetTitle,
     SheetTrigger,
     SheetFooter,
-    SheetClose,
 } from '@/components/ui/sheet'
 import { Label } from '@/components/ui/label'
 import { createConcessionaria, updateConcessionaria, deleteConcessionaria, createCategory } from '@/app/actions/concessionarias'
