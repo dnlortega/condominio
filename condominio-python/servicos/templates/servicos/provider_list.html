@@ -1,0 +1,93 @@
+{% extends 'servicos/base.html' %}
+
+{% block title %}Prestadores - Sistema de Condomínio{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <h2 style="color: #667eea; margin: 0;">👥 Prestadores de Serviços</h2>
+        <a href="/admin/servicos/serviceprovider/add/" class="btn">+ Novo Prestador</a>
+    </div>
+
+    <!-- Filtro por Categoria -->
+    <div style="margin-bottom: 2rem; padding: 1rem; background: #f5f7fa; border-radius: 8px;">
+        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #333;">Filtrar por
+            Categoria:</label>
+        <select onchange="window.location.href='?category=' + this.value"
+            style="width: 100%; padding: 0.75rem; border: 2px solid #667eea; border-radius: 6px; font-size: 1rem;">
+            <option value="">Todas as Categorias</option>
+            {% for category in categories %}
+            <option value="{{ category.id }}" {% if request.GET.category==category.id|stringformat:"s" %}selected{%
+                endif %}>
+                {{ category.name }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    {% if providers %}
+    <div style="display: grid; gap: 1rem;">
+        {% for provider in providers %}
+        <div class="card"
+            style="background: linear-gradient(135deg, #ffffff 0%, #f5f7fa 100%); border-left: 4px solid #667eea;">
+            <div style="display: grid; grid-template-columns: auto 1fr auto; gap: 1.5rem; align-items: center;">
+                <div style="font-size: 3rem;">
+                    {% if provider.category.icon %}{{ provider.category.icon }}{% else %}🏢{% endif %}
+                </div>
+
+                <div>
+                    <h3 style="color: #333; margin-bottom: 0.5rem;">{{ provider.name }}</h3>
+                    <p style="color: #667eea; margin-bottom: 0.5rem;">
+                        <strong>Categoria:</strong> {{ provider.category.name }}
+                    </p>
+                    <p style="color: #666; margin: 0;">
+                        <strong>Contato:</strong> {{ provider.contact }}
+                        {% if provider.has_whatsapp %}
+                        <span
+                            style="background: #25D366; color: white; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.85rem; margin-left: 0.5rem;">
+                            📱 WhatsApp
+                        </span>
+                        {% endif %}
+                    </p>
+                </div>
+
+                <div style="display: flex; gap: 0.5rem;">
+                    {% if provider.has_whatsapp %}
+                    <a href="https://wa.me/{{ provider.contact|cut:' '|cut:'-'|cut:'('|cut:')'|cut:'+' }}"
+                        target="_blank"
+                        style="padding: 0.75rem 1rem; background: #25D366; color: white; text-decoration: none; border-radius: 6px; font-weight: 600;">
+                        💬 WhatsApp
+                    </a>
+                    {% endif %}
+                    <a href="/admin/servicos/serviceprovider/{{ provider.id }}/change/"
+                        style="padding: 0.75rem 1rem; background: white; color: #667eea; text-decoration: none; border-radius: 6px; border: 2px solid #667eea;">
+                        ✏️ Editar
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div style="margin-top: 2rem; padding: 1rem; background: #f5f7fa; border-radius: 8px; text-align: center;">
+        <p style="color: #666; margin: 0;">
+            <strong>Total:</strong> {{ providers|length }} prestador{{ providers|length|pluralize:"es" }} encontrado{{
+            providers|length|pluralize:"s" }}
+        </p>
+    </div>
+    {% else %}
+    <div style="text-align: center; padding: 4rem 2rem; color: #666;">
+        <div style="font-size: 4rem; margin-bottom: 1rem;">👥</div>
+        <h3 style="margin-bottom: 1rem;">Nenhum prestador encontrado</h3>
+        <p style="margin-bottom: 2rem;">
+            {% if request.GET.category %}
+            Não há prestadores cadastrados nesta categoria.
+            {% else %}
+            Comece cadastrando seu primeiro prestador de serviços!
+            {% endif %}
+        </p>
+        <a href="/admin/servicos/serviceprovider/add/" class="btn">+ Cadastrar Prestador</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

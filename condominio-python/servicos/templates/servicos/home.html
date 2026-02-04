@@ -1,0 +1,72 @@
+{% extends 'servicos/base.html' %}
+
+{% block title %}Início - Sistema de Condomínio{% endblock %}
+
+{% block content %}
+<div class="hero" style="text-align: center; padding: 3rem 0; color: white;">
+    <h1 style="font-size: 3rem; margin-bottom: 1rem;">🏢 Bem-vindo ao Sistema de Condomínio</h1>
+    <p style="font-size: 1.25rem; margin-bottom: 2rem;">Gerencie prestadores de serviços e categorias com facilidade</p>
+    <a href="{% url 'servicos:provider_list' %}" class="btn" style="font-size: 1.1rem;">Ver Prestadores</a>
+</div>
+
+<div class="stats"
+    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin: 3rem 0;">
+    <div class="card" style="text-align: center;">
+        <div style="font-size: 3rem; margin-bottom: 1rem;">📊</div>
+        <h3 style="color: #667eea; margin-bottom: 0.5rem;">{{ providers_count }}</h3>
+        <p style="color: #666;">Prestadores Cadastrados</p>
+    </div>
+
+    <div class="card" style="text-align: center;">
+        <div style="font-size: 3rem; margin-bottom: 1rem;">📁</div>
+        <h3 style="color: #667eea; margin-bottom: 0.5rem;">{{ categories_count }}</h3>
+        <p style="color: #666;">Categorias Disponíveis</p>
+    </div>
+
+    <div class="card" style="text-align: center;">
+        <div style="font-size: 3rem; margin-bottom: 1rem;">🔧</div>
+        <h3 style="color: #667eea; margin-bottom: 0.5rem;">Django</h3>
+        <p style="color: #666;">Framework Python</p>
+    </div>
+</div>
+
+<div class="card">
+    <h2 style="color: #667eea; margin-bottom: 1.5rem;">📁 Categorias em Destaque</h2>
+
+    {% if categories %}
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;">
+        {% for category in categories %}
+        <div
+            style="padding: 1.5rem; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); border-radius: 8px; text-align: center;">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">
+                {% if category.icon %}{{ category.icon }}{% else %}📌{% endif %}
+            </div>
+            <h4 style="color: #333;">{{ category.name }}</h4>
+            <p style="color: #666; font-size: 0.9rem; margin-top: 0.5rem;">
+                {{ category.providers.count }} prestador{{ category.providers.count|pluralize:"es" }}
+            </p>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p style="text-align: center; color: #666; padding: 2rem;">
+        Nenhuma categoria cadastrada ainda.
+        <a href="/admin/servicos/category/add/" style="color: #667eea;">Cadastre a primeira!</a>
+    </p>
+    {% endif %}
+</div>
+
+<div class="card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+    <h2 style="margin-bottom: 1rem;">🚀 Recursos do Sistema</h2>
+    <ul style="list-style: none; padding: 0;">
+        <li style="padding: 0.75rem 0; border-bottom: 1px solid rgba(255,255,255,0.2);">✅ Cadastro de Categorias de
+            Serviços</li>
+        <li style="padding: 0.75rem 0; border-bottom: 1px solid rgba(255,255,255,0.2);">✅ Cadastro de Prestadores de
+            Serviços</li>
+        <li style="padding: 0.75rem 0; border-bottom: 1px solid rgba(255,255,255,0.2);">✅ Painel Administrativo Completo
+        </li>
+        <li style="padding: 0.75rem 0; border-bottom: 1px solid rgba(255,255,255,0.2);">✅ Filtros e Busca Avançada</li>
+        <li style="padding: 0.75rem 0;">✅ Interface Responsiva e Moderna</li>
+    </ul>
+</div>
+{% endblock %}
