@@ -46,9 +46,9 @@ const Navbar = () => {
     const navLinks = [
         { name: 'O Residencial', href: '/#about', icon: Home },
         { name: 'Plantas', href: '/#plans', icon: Layout },
+        { name: 'Utilidades', href: '/#services', icon: Handshake },
         { name: 'Localização', href: '/#location', icon: MapPin },
         { name: 'Regimento', href: '/normas', icon: FileText },
-        { name: 'Convênios', href: '/#services', icon: Handshake },
         { name: 'Contato', href: '/#contact', icon: Phone },
     ];
 
