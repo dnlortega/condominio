@@ -11,45 +11,10 @@ import {
     Phone,
     MessageCircle,
     ChevronLeft,
-    ChevronRight
+    ChevronRight,
+    Zap
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-
-
-const hardcodedServices = [
-    {
-        category: "Concessionárias",
-        icon: <Flame className="w-5 h-5" />,
-        providers: [
-            { name: "Ultragaz (Gás)", contact: "0800 7010 123", hasWhatsApp: false },
-            { name: "CPFL (Energia)", contact: "0800 010 1010", hasWhatsApp: false }
-        ],
-    },
-    {
-        category: "Conectividade",
-        icon: <Wifi className="w-5 h-5" />,
-        providers: [
-            { name: "Vivo Fibra", contact: "103 15", hasWhatsApp: false },
-            { name: "Claro/NET", contact: "0800 721 0027", hasWhatsApp: false }
-        ],
-    },
-    {
-        category: "Manutenção",
-        icon: <Wrench className="w-5 h-5" />,
-        providers: [
-            { name: "Zeladoria Local", contact: "Ramal 101", hasWhatsApp: false },
-            { name: "Suporte Técnico", contact: "(14) 9988-7766", hasWhatsApp: true }
-        ],
-    },
-    {
-        category: "Operacional",
-        icon: <PhoneCall className="w-5 h-5" />,
-        providers: [
-            { name: "Portaria 24h", contact: "Ramal 100", hasWhatsApp: false },
-            { name: "Administradora", contact: "(14) 3222-1234", hasWhatsApp: true }
-        ],
-    }
-];
 
 type ServiceProvider = {
     id: string;
@@ -91,25 +56,38 @@ const ServiceContacts = ({ dbServices }: { dbServices?: ServiceProvider[] }) => 
         emblaApi.on('reInit', onSelect);
     }, [emblaApi, onSelect]);
 
-    // Transform DB services to view structure if available and not empty
-    const services = (dbServices && dbServices.length > 0) ? Object.values(dbServices.reduce((acc, provider) => {
+    const getIcon = (iconName: string | null) => {
+        switch (iconName) {
+            case 'Flame': return <Flame className="w-5 h-5" />;
+            case 'Wifi': return <Wifi className="w-5 h-5" />;
+            case 'Wrench':
+            case 'Hammer': return <Wrench className="w-5 h-5" />;
+            case 'PhoneCall':
+            case 'Shield': return <PhoneCall className="w-5 h-5" />;
+            case 'Zap': return <Zap className="w-5 h-5" />;
+            default: return <Phone className="w-5 h-5" />;
+        }
+    };
+
+    // Transform DB services to view structure
+    const servicesData = (dbServices && dbServices.length > 0) ? Object.values(dbServices.reduce((acc, provider) => {
         const catName = provider.category.name;
         if (!acc[catName]) {
             acc[catName] = {
                 category: catName,
-                // Default icon mapping or generic
-                icon: provider.category.icon === 'Wifi' ? <Wifi className="w-5 h-5" /> :
-                    provider.category.icon === 'Flame' ? <Flame className="w-5 h-5" /> :
-                        provider.category.icon === 'Wrench' ? <Wrench className="w-5 h-5" /> :
-                            provider.category.icon === 'PhoneCall' ? <PhoneCall className="w-5 h-5" /> :
-                                <Phone className="w-5 h-5" />,
+                icon: getIcon(provider.category.icon),
                 providers: []
             };
         }
-        acc[catName].providers.push({ name: provider.name, contact: provider.contact, hasWhatsApp: provider.hasWhatsApp });
+        acc[catName].providers.push({
+            name: provider.name,
+            contact: provider.contact,
+            hasWhatsApp: provider.hasWhatsApp
+        });
         return acc;
-    }, {} as Record<string, { category: string, icon: any, providers: { name: string, contact: string, hasWhatsApp?: boolean }[] }>)) : hardcodedServices;
+    }, {} as Record<string, { category: string, icon: React.ReactNode, providers: { name: string, contact: string, hasWhatsApp?: boolean }[] }>)) : [];
 
+    if (servicesData.length === 0) return null;
 
     return (
         <section id="services" className="py-32 bg-background transition-colors duration-500 overflow-hidden">
@@ -134,7 +112,6 @@ const ServiceContacts = ({ dbServices }: { dbServices?: ServiceProvider[] }) => 
                     </motion.div>
                 </div>
 
-                {/* Carousel Navigation */}
                 <div className="flex justify-end gap-2 mb-8">
                     <Button
                         variant="outline"
@@ -156,10 +133,9 @@ const ServiceContacts = ({ dbServices }: { dbServices?: ServiceProvider[] }) => 
                     </Button>
                 </div>
 
-                {/* Carousel */}
                 <div className="overflow-hidden" ref={emblaRef}>
                     <div className="flex gap-8">
-                        {services.map((service, index) => (
+                        {servicesData.map((service, index) => (
                             <motion.div
                                 key={index}
                                 initial={{ opacity: 0, y: 30 }}
@@ -190,7 +166,6 @@ const ServiceContacts = ({ dbServices }: { dbServices?: ServiceProvider[] }) => 
                                                         whileTap={{ scale: 0.9 }}
                                                         href={(() => {
                                                             const cleanNum = provider.contact.replace(/\D/g, '');
-                                                            // Check if provider has WhatsApp enabled
                                                             if (provider.hasWhatsApp !== false && cleanNum.length >= 10 && !cleanNum.startsWith('0800')) {
                                                                 return `https://api.whatsapp.com/send?phone=55${cleanNum}&text=${encodeURIComponent(`Olá ${provider.name}, encontrei seu contato no guia do condomínio.`)}`;
                                                             }

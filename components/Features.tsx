@@ -16,7 +16,7 @@ const ImageCarousel = () => {
     }, [images.length]);
 
     return (
-        <div className="relative w-full h-[700px]">
+        <div className="relative w-full h-[400px] md:h-[700px]">
             <AnimatePresence mode="wait">
                 <motion.img
                     key={currentIndex}

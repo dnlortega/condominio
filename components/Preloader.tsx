@@ -16,7 +16,7 @@ const Preloader = () => {
 
         const timer = setTimeout(() => {
             setIsVisible(false);
-        }, 4000);
+        }, 1000);
 
         return () => {
             clearTimeout(timer);
@@ -90,7 +90,7 @@ const Preloader = () => {
                         <motion.div
                             initial={{ x: "-100%" }}
                             animate={{ x: "0%" }}
-                            transition={{ duration: 3.8, ease: "easeInOut" }}
+                            transition={{ duration: 0.8, ease: "easeInOut" }}
                             className="w-full h-full bg-primary"
                         />
                     </motion.div>
