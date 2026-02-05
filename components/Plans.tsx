@@ -143,7 +143,7 @@ const PlanCard = ({ plan, index }: { plan: any, index: number }) => {
 
 const Plans = () => {
     return (
-        <section id="plans" className="py-32 bg-background transition-colors duration-500">
+        <section id="plans" className="py-20 md:py-32 bg-background transition-colors duration-500">
             <div className="container mx-auto px-6">
                 <div className="text-center max-w-3xl mx-auto mb-24">
                     <motion.div
@@ -166,13 +166,13 @@ const Plans = () => {
                     </motion.div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-24">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-12 md:gap-y-24">
                     {plans.map((plan, index) => (
                         <PlanCard key={plan.type} plan={plan} index={index} />
                     ))}
                 </div>
             </div>
-            <div className="section-divider mt-32 opacity-20" />
+            <div className="hidden md:block section-divider mt-8 md:mt-32 opacity-20" />
         </section>
     );
 };

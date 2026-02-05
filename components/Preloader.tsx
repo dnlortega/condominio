@@ -52,8 +52,10 @@ const Preloader = () => {
                                     src="/logo.png"
                                     alt="Recanto dos Pássaros"
                                     fill
+                                    sizes="(max-width: 768px) 192px, 256px"
                                     className="object-contain p-4"
-                                    priority
+                                    loading="eager"
+                                    {...({ fetchPriority: "high" } as any)}
                                 />
                                 {/* Subtle inner glow animation */}
                                 <motion.div

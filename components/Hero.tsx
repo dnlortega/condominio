@@ -95,14 +95,14 @@ const Hero = () => {
     const whatsappLink = "https://api.whatsapp.com/send?phone=5514997696946&text=Olá,%20gostaria%20de%20falar%20com%20a%20síndica%20do%20Recanto%20dos%20Pássaros.";
 
     return (
-        <section id="home" className="relative min-h-screen w-full flex items-center overflow-hidden z-10">
+        <section id="home" className="relative min-h-[85vh] md:min-h-screen w-full flex items-center overflow-hidden z-10">
             {/* Background Image with Suave Parallax */}
             <motion.div
                 style={{ y: yParallax, scale: scaleParallax }}
                 className="absolute inset-0 z-0"
             >
                 <Image
-                    src="https://images.unsplash.com/photo-1545324418-f1d3ac1ef000?q=80&w=2000&auto=format&fit=crop"
+                    src="/hero.png"
                     alt="Recanto dos Pássaros Residencial"
                     fill
                     className="object-cover brightness-100"
@@ -111,7 +111,7 @@ const Hero = () => {
                 <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-transparent to-white/90 dark:from-black/30 dark:via-transparent dark:to-black/90 lg:bg-gradient-to-r lg:from-white/95 lg:via-white/40 lg:to-transparent lg:dark:from-black/95 lg:dark:via-black/40 lg:dark:to-transparent" />
             </motion.div>
 
-            <div className="container mx-auto px-6 relative z-10 pt-32 lg:pt-40">
+            <div className="container mx-auto px-6 relative z-10 pt-28 md:pt-32 lg:pt-40">
                 <div className="max-w-4xl">
                     <div className="relative">
                         <motion.div
@@ -142,7 +142,7 @@ const Hero = () => {
                         variants={container}
                         initial="hidden"
                         animate="visible"
-                        className="text-5xl sm:text-6xl md:text-8xl font-bold text-foreground mb-8 leading-[0.9] uppercase text-center lg:text-left tracking-tighter flex flex-wrap gap-x-4 lg:gap-x-6 justify-center lg:justify-start"
+                        className="text-4xl sm:text-6xl md:text-8xl font-bold text-foreground mb-6 md:mb-8 leading-[0.9] uppercase text-center lg:text-left tracking-tighter flex flex-wrap gap-x-2 md:gap-x-6 justify-center lg:justify-start"
                     >
                         {words.map((word, index) => (
                             <div key={index} className="overflow-hidden py-2">
@@ -160,9 +160,9 @@ const Hero = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 1.2, duration: 1 }}
-                        className="text-lg md:text-xl text-foreground/60 mb-12 max-w-xl leading-relaxed text-center lg:text-left mx-auto lg:mx-0 font-light"
+                        className="text-base md:text-xl text-foreground/60 mb-8 md:mb-12 max-w-xl leading-relaxed text-center lg:text-left mx-auto lg:mx-0 font-light"
                     >
-                        Central de informações do condomínio em Bauru, onde a transparência e a organização garantem a harmonia que sua família merece.
+                        Central de informações do condomínio em Bauru, garantindo transparência e harmonia para sua família.
                     </motion.p>
 
                     <motion.div
@@ -207,7 +207,7 @@ const Hero = () => {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 2, duration: 1.5 }}
-                        className="mt-16 lg:mt-24 grid grid-cols-3 gap-6 md:gap-16 lg:flex lg:items-center border-t border-border/50 pt-10"
+                        className="mt-12 lg:mt-24 grid grid-cols-3 gap-4 md:gap-16 lg:flex lg:items-center border-t border-border/20 pt-8 md:pt-10"
                     >
                         {[
                             { val: "45-47", label: "Área Privativa", suffix: "m²" },

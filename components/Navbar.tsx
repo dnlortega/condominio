@@ -78,7 +78,10 @@ const Navbar = () => {
                             src="/logo.png"
                             alt="Recanto dos Pássaros"
                             fill
+                            sizes="44px"
                             className="object-contain"
+                            loading="eager"
+                            {...({ fetchPriority: "high" } as any)}
                         />
                     </div>
                     <div className="flex flex-col">

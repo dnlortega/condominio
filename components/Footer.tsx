@@ -18,7 +18,7 @@ const Footer = () => {
                     <div className="max-w-xs">
                         <div className="flex items-center gap-4 mb-8">
                             <div className="relative h-12 w-12 bg-white rounded-2xl overflow-hidden shadow-sm p-2.5 border border-border">
-                                <Image src="/logo.png" alt="Logo" fill className="object-contain" />
+                                <Image src="/logo.png" alt="Logo" fill sizes="48px" className="object-contain" />
                             </div>
                             <div className="flex flex-col">
                                 <span className="text-xl font-bold uppercase tracking-tight text-foreground leading-none mb-1">Recanto</span>

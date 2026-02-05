@@ -166,14 +166,14 @@ const Features = () => {
     } as const;
 
     return (
-        <section id="about" className="py-32 bg-background transition-colors duration-500 overflow-hidden">
+        <section id="about" className="py-16 md:py-32 bg-background transition-colors duration-500 overflow-hidden">
             <div className="container mx-auto px-6">
-                <div className="flex flex-col lg:flex-row gap-24 items-center">
+                <div className="flex flex-col lg:flex-row gap-6 lg:gap-24 items-center">
                     <div className="lg:w-1/2">
                         <motion.div
                             initial={{ opacity: 0, x: -40 }}
                             whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
+                            viewport={{ once: true, amount: 0.1 }}
                             transition={{ duration: 1 }}
                         >
                             <div className="flex items-center gap-5 mb-8">
@@ -188,7 +188,7 @@ const Features = () => {
                             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-10 leading-[1.1] uppercase tracking-tighter">
                                 A Harmonia <br /> Entre <span className="text-primary/30 font-light italic serif">Viver e Evoluir</span>
                             </h2>
-                            <p className="text-foreground/50 text-lg leading-relaxed mb-16 font-light max-w-lg">
+                            <p className="text-foreground/50 text-base md:text-lg leading-relaxed mb-10 md:mb-16 font-light max-w-lg">
                                 Cada detalhe do Recanto dos Pássaros foi concebido para proporcionar uma experiência residencial superior, unindo tecnologia, segurança e conforto térmico.
                             </p>
 
@@ -197,7 +197,7 @@ const Features = () => {
                                 initial="hidden"
                                 whileInView="visible"
                                 viewport={{ once: true }}
-                                className="grid sm:grid-cols-2 gap-8"
+                                className="grid sm:grid-cols-2 gap-4 md:gap-8"
                             >
                                 {features.map((feature, index) => (
                                     <FeatureCard
@@ -215,20 +215,12 @@ const Features = () => {
                         <motion.div
                             initial={{ opacity: 0, scale: 0.95 }}
                             whileInView={{ opacity: 1, scale: 1 }}
-                            viewport={{ once: true }}
+                            viewport={{ once: true, amount: 0.1 }}
                             transition={{ duration: 1.2 }}
                             className="relative z-10"
                         >
                             <div className="rounded-[4rem] overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.12)] border border-border group relative bg-secondary/20">
                                 <ImageCarousel />
-                                {/* Image Reveal Slide */}
-                                <motion.div
-                                    variants={revealVariants}
-                                    initial="hidden"
-                                    whileInView="visible"
-                                    viewport={{ once: true }}
-                                    className="absolute inset-0 bg-background z-20"
-                                />
                             </div>
                         </motion.div>
 
@@ -266,7 +258,7 @@ const Features = () => {
                 </div>
             </div>
 
-            <div className="section-divider mt-32 opacity-20" />
+            <div className="hidden md:block section-divider mt-8 md:mt-32 opacity-20" />
         </section>
     );
 };

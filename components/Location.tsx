@@ -9,9 +9,9 @@ const Location = () => {
     const mapsLink = "https://maps.app.goo.gl/X6dXRkss6QoJXis68";
 
     return (
-        <section id="location" className="py-24 bg-background transition-colors duration-500">
+        <section id="location" className="py-16 md:py-24 bg-background transition-colors duration-500">
             <div className="container mx-auto px-6">
-                <div className="flex flex-col lg:flex-row items-center gap-16">
+                <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
                     <motion.div
                         initial={{ opacity: 0, x: -30 }}
                         whileInView={{ opacity: 1, x: 0 }}
@@ -107,7 +107,7 @@ const Location = () => {
                     </motion.div>
                 </div>
 
-                <div className="section-divider opacity-30" />
+                <div className="hidden md:block section-divider opacity-30" />
             </div>
         </section>
     );

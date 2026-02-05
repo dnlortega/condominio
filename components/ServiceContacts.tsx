@@ -93,7 +93,7 @@ const ServiceContacts = ({ dbServices }: { dbServices?: ServiceProvider[] }) => 
     if (servicesData.length === 0) return null;
 
     return (
-        <section id="services" className="py-24 md:py-32 bg-background transition-colors duration-500 overflow-hidden relative">
+        <section id="services" className="py-16 md:py-32 bg-background transition-colors duration-500 overflow-hidden relative">
             {/* Background elements */}
             <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-primary/5 blur-[120px] rounded-full -z-10 translate-x-1/2 -translate-y-1/2" />
 
@@ -103,7 +103,7 @@ const ServiceContacts = ({ dbServices }: { dbServices?: ServiceProvider[] }) => 
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
+                            viewport={{ once: true, amount: 0.1 }}
                             transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
                         >
                             <div className="flex items-center gap-4 mb-6">
