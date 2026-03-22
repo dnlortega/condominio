@@ -1,17 +1,14 @@
 "use client";
 
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform, useInView, animate } from 'framer-motion';
 import { ArrowRight, Star, MessageCircle } from 'lucide-react';
 import Image from 'next/image';
 import { Button } from "@/components/ui/button";
-import { useScroll, useTransform, useSpring, useInView, animate } from 'framer-motion';
 
 const Counter = ({ value, suffix = "" }: { value: string, suffix?: string }) => {
     const ref = React.useRef<HTMLSpanElement>(null);
     const inView = useInView(ref, { once: true });
-
-    // Extract numbers from value (e.g., "45-47" -> [45, 47], "24h" -> [24])
     const nums = value.match(/\d+/g);
     const targetValue = nums ? parseInt(nums[nums.length - 1]) : 0;
 
@@ -19,7 +16,7 @@ const Counter = ({ value, suffix = "" }: { value: string, suffix?: string }) => 
         if (inView && ref.current) {
             const node = ref.current;
             const controls = animate(0, targetValue, {
-                duration: 2,
+                duration: 2.5,
                 ease: [0.33, 1, 0.68, 1],
                 onUpdate(value) {
                     node.textContent = Math.round(value).toString().padStart(nums && nums[0].length === 2 ? 2 : 1, '0');
@@ -28,7 +25,6 @@ const Counter = ({ value, suffix = "" }: { value: string, suffix?: string }) => 
             return () => controls.stop();
         }
     }, [inView, targetValue, nums]);
-
     return <span ref={ref}>00</span>;
 };
 
@@ -46,14 +42,12 @@ const MagneticButton = ({ children, className }: { children: React.ReactNode, cl
 
     const reset = () => setPosition({ x: 0, y: 0 });
 
-    const { x, y } = position;
-
     return (
         <motion.div
             ref={ref}
             onMouseMove={handleMouse}
             onMouseLeave={reset}
-            animate={{ x, y }}
+            animate={{ x: position.x, y: position.y }}
             transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
             className={className}
         >
@@ -62,93 +56,88 @@ const MagneticButton = ({ children, className }: { children: React.ReactNode, cl
     );
 };
 
-const Hero = () => {
+export default function Hero() {
     const title = "Onde o Luxo Encontra a Paz";
     const words = title.split(" ");
     const { scrollY } = useScroll();
-    const yParallax = useTransform(scrollY, [0, 500], [0, 200]);
-    const scaleParallax = useTransform(scrollY, [0, 500], [1, 1.1]);
+    const yParallax = useTransform(scrollY, [0, 800], [0, 300]);
+    const scaleParallax = useTransform(scrollY, [0, 800], [1, 1.15]);
+    const opacityParallax = useTransform(scrollY, [0, 500], [1, 0]);
 
     const container = {
         hidden: { opacity: 0 },
-        visible: (i = 1) => ({
+        visible: {
             opacity: 1,
-            transition: { staggerChildren: 0.1, delayChildren: 0.3 },
-        }),
+            transition: { staggerChildren: 0.1, delayChildren: 0.2 },
+        },
     };
 
     const child = {
-        visible: {
-            opacity: 1,
-            y: 0,
-            transition: {
-                duration: 0.8,
-                ease: [0.22, 1, 0.36, 1],
-            },
-        },
-        hidden: {
-            opacity: 0,
-            y: 100,
-        },
-    } as const;
+        visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } },
+        hidden: { opacity: 0, y: 100 },
+    };
 
     const whatsappLink = "https://api.whatsapp.com/send?phone=5514997696946&text=Olá,%20gostaria%20de%20falar%20com%20a%20síndica%20do%20Recanto%20dos%20Pássaros.";
 
     return (
-        <section id="home" className="relative min-h-[85vh] md:min-h-screen w-full flex items-center overflow-hidden z-10">
-            {/* Background Image with Suave Parallax */}
-            <motion.div
-                style={{ y: yParallax, scale: scaleParallax }}
-                className="absolute inset-0 z-0"
-            >
+        <section id="home" className="relative min-h-[90vh] md:min-h-screen w-full flex items-center overflow-hidden z-10 selection:bg-primary/30">
+            {/* Cinematic Background Wrapper */}
+            <motion.div style={{ y: yParallax, scale: scaleParallax }} className="absolute inset-0 z-0">
                 <Image
                     src="/hero.png"
                     alt="Recanto dos Pássaros Residencial"
                     fill
-                    className="object-cover brightness-100"
+                    className="object-cover scale-105"
                     priority
                 />
-                <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-transparent to-white/90 dark:from-black/30 dark:via-transparent dark:to-black/90 lg:bg-gradient-to-r lg:from-white/95 lg:via-white/40 lg:to-transparent lg:dark:from-black/95 lg:dark:via-black/40 lg:dark:to-transparent" />
+                {/* Advanced Gradients for Premium Look */}
+                <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/40 to-background dark:from-black/90 dark:via-black/50 dark:to-black backdrop-blur-[2px]" />
+
+                {/* Animated Light Orbs */}
+                <motion.div
+                    animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
+                    transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+                    className="absolute top-[10%] left-[10%] w-[40vw] h-[40vw] bg-primary/20 rounded-full blur-[130px] mix-blend-screen pointer-events-none"
+                />
+                <motion.div
+                    animate={{ scale: [1, 1.5, 1], opacity: [0.2, 0.4, 0.2] }}
+                    transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                    className="absolute bottom-[10%] right-[5%] w-[50vw] h-[50vw] bg-accent/20 rounded-full blur-[150px] mix-blend-screen pointer-events-none"
+                />
             </motion.div>
 
-            <div className="container mx-auto px-6 relative z-10 pt-28 md:pt-32 lg:pt-40">
-                <div className="max-w-4xl">
-                    <div className="relative">
-                        <motion.div
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: 0.3, duration: 1 }}
-                            className="flex items-center gap-4 mb-8 justify-center lg:justify-start"
-                        >
-                            <div className="flex -space-x-1.5">
-                                {[1, 2, 3, 4, 5].map((i) => (
-                                    <motion.div
-                                        key={i}
-                                        animate={{ scale: [1, 1.2, 1] }}
-                                        transition={{ duration: 2, repeat: Infinity, delay: i * 0.2 }}
-                                    >
-                                        <Star className="w-3.5 h-3.5 text-primary fill-primary opacity-60" />
-                                    </motion.div>
-                                ))}
-                            </div>
-                            <div className="h-px w-8 bg-primary/20" />
-                            <span className="text-primary font-bold text-[10px] uppercase tracking-[0.4em]">
-                                Residencial de Alto Padrão
-                            </span>
-                        </motion.div>
-                    </div>
+            <div className="container mx-auto px-6 relative z-10 pt-32 pb-20 md:py-40 flex flex-col justify-center min-h-full">
+                <div className="max-w-5xl mx-auto md:mx-0 w-full">
+                    {/* Floating Star Badge */}
+                    <motion.div
+                        initial={{ opacity: 0, y: -20, filter: "blur(10px)" }}
+                        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                        transition={{ delay: 0.3, duration: 1 }}
+                        className="flex items-center gap-4 mb-8 justify-center lg:justify-start"
+                    >
+                        <div className="flex -space-x-1.5 p-2 bg-background/50 dark:bg-white/5 backdrop-blur-xl rounded-full border border-border/50 shadow-sm">
+                            {[1, 2, 3, 4, 5].map((i) => (
+                                <Star key={i} className="w-3.5 h-3.5 text-primary fill-primary" />
+                            ))}
+                        </div>
+                        <div className="h-px w-10 bg-gradient-to-r from-primary/50 to-transparent" />
+                        <span className="text-primary font-bold text-[9px] uppercase tracking-[0.4em] drop-shadow-md">
+                            Residencial de Alto Padrão
+                        </span>
+                    </motion.div>
 
+                    {/* Massive Typography Title */}
                     <motion.h1
                         variants={container}
                         initial="hidden"
                         animate="visible"
-                        className="text-4xl sm:text-6xl md:text-8xl font-bold text-foreground mb-6 md:mb-8 leading-[0.9] uppercase text-center lg:text-left tracking-tighter flex flex-wrap gap-x-2 md:gap-x-6 justify-center lg:justify-start"
+                        className="text-[12vw] sm:text-7xl md:text-[5.5rem] lg:text-[7rem] font-bold text-foreground mb-6 leading-[0.85] uppercase text-center lg:text-left tracking-tighter flex flex-wrap gap-x-3 md:gap-x-6 justify-center lg:justify-start drop-shadow-2xl"
                     >
                         {words.map((word, index) => (
-                            <div key={index} className="overflow-hidden py-2">
+                            <div key={index} className="overflow-hidden pb-3">
                                 <motion.span
                                     variants={child}
-                                    className={`inline-block ${index >= 3 ? "text-primary/95 italic font-light serif" : ""}`}
+                                    className={`inline-block ${index >= 3 ? "text-primary italic font-light serif drop-shadow-[0_0_15px_rgba(var(--primary),0.3)]" : ""}`}
                                 >
                                     {word}
                                 </motion.span>
@@ -159,102 +148,69 @@ const Hero = () => {
                     <motion.p
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 1.2, duration: 1 }}
-                        className="text-base md:text-xl text-foreground/60 mb-8 md:mb-12 max-w-xl leading-relaxed text-center lg:text-left mx-auto lg:mx-0 font-light"
+                        transition={{ delay: 1, duration: 1 }}
+                        className="text-base md:text-xl text-foreground/70 dark:text-zinc-300 mb-10 max-w-xl leading-relaxed text-center lg:text-left mx-auto lg:mx-0 font-light"
                     >
-                        Central de informações do condomínio em Bauru, garantindo transparência e harmonia para sua família.
+                        Central inteligente e moderna de informações do condomínio em Bauru. Transparência, tecnologia e harmonia para a sua família.
                     </motion.p>
 
+                    {/* Action Buttons */}
                     <motion.div
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 1.5, duration: 0.8 }}
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 1.2, duration: 0.8 }}
                         className="flex flex-col sm:flex-row gap-5 justify-center lg:justify-start"
                     >
                         <MagneticButton>
-                            <Button className="bg-primary hover:bg-zinc-900 text-primary-foreground px-10 py-8 rounded-full font-bold transition-all duration-500 flex items-center justify-center gap-3 group shadow-2xl shadow-primary/20 text-xs uppercase tracking-[0.3em] w-full sm:w-auto overflow-hidden relative border border-primary">
+                            <Button className="bg-foreground text-background hover:bg-foreground/90 dark:bg-white dark:text-black dark:hover:bg-zinc-200 px-10 py-8 rounded-[2rem] font-bold transition-all duration-500 flex items-center justify-center gap-3 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.3)] text-xs uppercase tracking-[0.2em] w-full sm:w-auto relative group overflow-hidden">
                                 <span className="relative z-10">Ver Regimento</span>
-                                <motion.div
-                                    animate={{ x: [0, 5, 0] }}
-                                    transition={{ duration: 1.5, repeat: Infinity }}
-                                >
+                                <motion.div animate={{ x: [0, 5, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
                                     <ArrowRight className="w-4 h-4 relative z-10" />
                                 </motion.div>
-                                <motion.div
-                                    className="absolute inset-0 bg-white/10"
-                                    initial={{ x: "-100%" }}
-                                    whileHover={{ x: "100%" }}
-                                    transition={{ duration: 0.6 }}
-                                />
+                                <div className="absolute inset-0 bg-primary opacity-0 group-hover:opacity-10 transition-opacity duration-500" />
                             </Button>
                         </MagneticButton>
 
                         <MagneticButton>
-                            <Button
-                                asChild
-                                variant="outline"
-                                className="bg-white/10 dark:bg-black/20 hover:bg-white/20 dark:hover:bg-black/40 backdrop-blur-md text-foreground border-border px-10 py-8 rounded-full font-bold transition-all duration-500 flex items-center justify-center gap-3 text-xs uppercase tracking-[0.3em] w-full sm:w-auto shadow-sm group"
-                            >
+                            <Button asChild variant="outline" className="bg-background/20 dark:bg-white/5 backdrop-blur-xl border-border/50 dark:border-white/10 text-foreground px-10 py-8 rounded-[2rem] font-bold transition-all duration-500 flex items-center justify-center gap-3 text-xs uppercase tracking-[0.2em] w-full sm:w-auto shadow-sm group">
                                 <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
                                     <MessageCircle className="w-4 h-4 text-primary group-hover:scale-110 transition-transform" />
-                                    <span className="group-hover:text-primary transition-colors">Falar com a Síndica</span>
+                                    <span>Falar com a Síndica</span>
                                 </a>
                             </Button>
                         </MagneticButton>
                     </motion.div>
+                </div>
+            </div>
 
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 2, duration: 1.5 }}
-                        className="mt-12 lg:mt-24 grid grid-cols-3 gap-4 md:gap-16 lg:flex lg:items-center border-t border-border/20 pt-8 md:pt-10"
-                    >
+            {/* Glassmorphic Statistics Bar */}
+            <motion.div
+                style={{ opacity: opacityParallax }}
+                custom={{ delay: 1.8 }}
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1.2, ease: "easeOut" }}
+                className="absolute bottom-6 md:bottom-12 left-6 right-6 md:left-1/2 md:-translate-x-1/2 md:w-auto max-w-5xl z-20"
+            >
+                <div className="bg-background/60 dark:bg-black/40 backdrop-blur-2xl border border-border/50 dark:border-white/10 rounded-[2.5rem] p-6 md:px-12 md:py-8 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)]">
+                    <div className="grid grid-cols-3 gap-4 md:gap-16 divide-x divide-border/30 dark:divide-white/10">
                         {[
                             { val: "45-47", label: "Área Privativa", suffix: "m²" },
                             { val: "02", label: "Dormitórios" },
                             { val: "24h", label: "Segurança" }
                         ].map((stat, i) => (
-                            <React.Fragment key={i}>
-                                <motion.div
-                                    initial={{ opacity: 0, y: 10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: 2.2 + (i * 0.2) }}
-                                    className="flex flex-col items-center lg:items-start"
-                                >
-                                    <span className="text-3xl md:text-4xl font-bold text-foreground leading-none tracking-tighter mb-2">
-                                        {i === 0 ? "45-" : ""}
-                                        <Counter value={stat.val} />
-                                        {stat.suffix || (stat.val.includes('h') ? 'h' : '')}
-                                    </span>
-                                    <span className="text-foreground/30 text-[9px] uppercase tracking-[0.4em] font-bold">{stat.label}</span>
-                                </motion.div>
-                                {i < 2 && <div className="hidden lg:block w-px h-12 bg-border/60" />}
-                            </React.Fragment>
+                            <div key={i} className={`flex flex-col items-center justify-center ${i !== 0 ? 'pl-4 md:pl-16' : ''}`}>
+                                <span className="text-2xl md:text-4xl font-bold tracking-tighter text-foreground mb-1 drop-shadow-sm flex items-center">
+                                    {i === 0 ? "45-" : ""}
+                                    <Counter value={stat.val} />
+                                    {stat.suffix || (stat.val.includes('h') ? 'h' : '')}
+                                </span>
+                                <span className="text-[8px] md:text-[9px] uppercase tracking-[0.3em] font-bold text-foreground/40">{stat.label}</span>
+                            </div>
                         ))}
-                    </motion.div>
-                </div>
-            </div>
-
-            {/* Premium Scroll Indicator */}
-            <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 3, duration: 1.5 }}
-                className="absolute bottom-10 left-12 hidden lg:flex flex-col items-center gap-4"
-            >
-                <div className="flex flex-col items-center gap-2">
-                    <span className="text-[8px] font-bold text-primary uppercase tracking-[0.5em] [writing-mode:vertical-lr] rotate-180">Descubra Mais</span>
-                    <div className="w-px h-20 bg-gradient-to-b from-primary/60 via-primary/20 to-transparent overflow-hidden relative">
-                        <motion.div
-                            animate={{ y: ["-100%", "200%"] }}
-                            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                            className="absolute inset-0 bg-primary w-full h-[50%]"
-                        />
                     </div>
                 </div>
             </motion.div>
         </section>
     );
-};
-
-export default Hero;
+}

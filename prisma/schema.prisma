@@ -7,6 +7,120 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// ------------------------------------
+// USUÁRIOS E AUTENTICAÇÃO
+// ------------------------------------
+enum Role {
+  ADMIN
+  RESIDENT
+}
+
+model User {
+  id            String         @id @default(cuid())
+  name          String
+  email         String         @unique
+  password      String         // Senha hasheada
+  role          Role           @default(RESIDENT)
+  apartment     String?        // Ex: "A-42", "B-12"
+  phone         String?
+  
+  reservations  Reservation[]
+  tickets       Ticket[]
+  visitors      Visitor[]
+  
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+// ------------------------------------
+// AVISOS E COMUNICADOS (ADMIN -> MORADORES)
+// ------------------------------------
+model Announcement {
+  id          String    @id @default(cuid())
+  title       String
+  content     String
+  isUrgent    Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+// ------------------------------------
+// RESERVA DE ÁREAS COMUNS
+// ------------------------------------
+model Amenity {
+  id            String        @id @default(cuid())
+  name          String        @unique // Ex: Churrasqueira, Salão de Festas
+  description   String?
+  capacity      Int           @default(10)
+  reservations  Reservation[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+enum ReservationStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+}
+
+model Reservation {
+  id          String            @id @default(cuid())
+  date        DateTime          // Data reservada
+  status      ReservationStatus @default(CONFIRMED)
+  
+  userId      String
+  user        User              @relation(fields: [userId], references: [id])
+  
+  amenityId   String
+  amenity     Amenity           @relation(fields: [amenityId], references: [id])
+  
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+}
+
+// ------------------------------------
+// CHAMADOS DE MANUTENÇÃO (HELPDESK)
+// ------------------------------------
+enum TicketStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+}
+
+model Ticket {
+  id          String       @id @default(cuid())
+  title       String
+  description String
+  status      TicketStatus @default(OPEN)
+  
+  userId      String
+  user        User         @relation(fields: [userId], references: [id])
+  
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+// ------------------------------------
+// PORTARIA VIRTUAL (VISITANTES/CONVITE)
+// ------------------------------------
+model Visitor {
+  id          String    @id @default(cuid())
+  name        String
+  rg          String?
+  visitDate   DateTime
+  token       String    @unique @default(uuid()) // QR code token
+  isUsed      Boolean   @default(false)
+  
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+// ------------------------------------
+// CONCESSIONÁRIAS E CATEGORIAS (MÓDULOS ANTIGOS)
+// ------------------------------------
 model Category {
   id        String            @id @default(cuid())
   name      String            @unique

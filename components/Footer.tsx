@@ -70,7 +70,7 @@ const Footer = () => {
                             © 2026 Recanto dos Pássaros. Crafted for luxury living.
                         </p>
                         <p className="text-[8px] font-bold uppercase tracking-[0.4em] text-foreground/30">
-                            Criado por <span className="text-primary/60">Daniel Ortega Pereira</span> - <a href="mailto:dnlortega@gmail.com" className="hover:text-primary transition-colors lowercase tracking-normal">dnlortega@gmail.com</a>
+                            Criado por <a href="/sobre" className="text-primary/60 hover:text-primary transition-colors hover:underline">Daniel Ortega Pereira</a> - <a href="mailto:dnlortega@gmail.com" className="hover:text-primary transition-colors lowercase tracking-normal">dnlortega@gmail.com</a>
                         </p>
                     </div>
                     <div className="flex items-center gap-10">

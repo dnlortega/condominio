@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from "next/link";
@@ -9,7 +8,9 @@ import {
     Zap,
     LogOut,
     Settings,
-    Menu
+    Menu,
+    ChevronRight,
+    Home
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -20,19 +21,19 @@ const routes = [
         label: "Dashboard",
         icon: LayoutDashboard,
         href: "/admin",
-        color: "text-sky-500",
+        color: "text-zinc-100",
     },
     {
         label: "Concessionárias",
         icon: Zap,
         href: "/admin/concessionarias",
-        color: "text-violet-500",
+        color: "text-zinc-100",
     },
     {
         label: "Categorias",
         icon: Settings,
         href: "/admin/categorias",
-        color: "text-sky-500",
+        color: "text-zinc-100",
     },
 ];
 
@@ -40,46 +41,66 @@ export function Sidebar() {
     const pathname = usePathname();
 
     return (
-        <div className="space-y-4 py-6 flex flex-col h-full bg-slate-900 text-white selection:bg-primary/20">
-            <div className="px-4 py-2 flex-1">
-                <Link href="/admin" className="flex items-center pl-2 mb-10 group">
-                    <div className="relative w-10 h-10 mr-3 transition-transform group-hover:scale-110">
-                        <div className="bg-primary rounded-xl w-full h-full flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-primary/20">R</div>
+        <div className="space-y-4 py-8 flex flex-col h-full bg-[#0a0a0a] text-zinc-300 selection:bg-primary/20 border-r border-white/5 relative overflow-hidden">
+            {/* Ambient Background Glow */}
+            <div className="absolute top-0 left-0 w-full h-40 bg-gradient-to-b from-primary/10 to-transparent pointer-events-none" />
+
+            <div className="px-6 py-2 flex-1 relative z-10">
+                <Link href="/admin" className="flex items-center group mb-12">
+                    <div className="relative w-10 h-10 mr-4 transition-transform duration-500 group-hover:scale-110">
+                        <div className="absolute inset-0 bg-primary/20 rounded-xl blur-md group-hover:bg-primary/40 transition-colors" />
+                        <div className="relative bg-[#1c1c1c] border border-white/10 rounded-xl w-full h-full flex items-center justify-center text-white font-bold text-xl shadow-lg">R</div>
                     </div>
                     <div className="flex flex-col">
-                        <h1 className="text-xl font-bold leading-none">
+                        <h1 className="text-xl font-bold leading-none text-white tracking-tight">
                             Recanto
                         </h1>
-                        <span className="text-[10px] uppercase tracking-widest text-zinc-500 mt-1">Admin Panel</span>
+                        <span className="text-[9px] uppercase tracking-[0.3em] text-primary mt-1 font-semibold">Workspace</span>
                     </div>
                 </Link>
-                <div className="space-y-2">
-                    {routes.map((route) => (
-                        <Link
-                            key={route.href}
-                            href={route.href}
-                            className={cn(
-                                "text-sm group flex p-4 w-full justify-start font-semibold cursor-pointer hover:text-white hover:bg-white/5 rounded-2xl transition-all duration-300",
-                                pathname === route.href ? "text-white bg-white/10 shadow-sm" : "text-zinc-400"
-                            )}
-                        >
-                            <div className="flex items-center flex-1">
-                                <route.icon className={cn("h-5 w-5 mr-4 transition-colors", route.color)} />
-                                {route.label}
-                            </div>
-                        </Link>
-                    ))}
+
+                <div className="space-y-1">
+                    <p className="text-[10px] uppercase tracking-[0.2em] font-semibold text-zinc-600 mb-4 px-3">Menu Principal</p>
+                    {routes.map((route) => {
+                        const isActive = pathname === route.href;
+                        return (
+                            <Link
+                                key={route.href}
+                                href={route.href}
+                                className={cn(
+                                    "text-sm group flex p-3 w-full justify-start font-medium cursor-pointer rounded-xl transition-all duration-300 relative overflow-hidden",
+                                    isActive ? "text-white bg-white/10" : "text-zinc-400 hover:text-white hover:bg-white/5"
+                                )}
+                            >
+                                {isActive && (
+                                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary rounded-r-full" />
+                                )}
+                                <div className="flex items-center flex-1 z-10">
+                                    <route.icon className={cn("h-4 w-4 mr-3 transition-colors", isActive ? "text-primary" : "text-zinc-500 group-hover:text-zinc-300")} />
+                                    <span className="tracking-wide text-sm">{route.label}</span>
+                                </div>
+                                {isActive && (
+                                    <ChevronRight className="w-4 h-4 text-white/50" />
+                                )}
+                            </Link>
+                        );
+                    })}
                 </div>
             </div>
-            <div className="px-3 py-2">
+
+            <div className="px-6 py-6 pb-4 border-t border-white/5 relative z-10 space-y-2">
+                <Link href="/" className="flex items-center p-3 w-full justify-start rounded-xl text-sm font-medium text-zinc-400 hover:text-white hover:bg-white/5 transition-all">
+                    <Home className="h-4 w-4 mr-3 text-zinc-500" />
+                    Voltar ao Site
+                </Link>
                 <form action={handleLogout}>
                     <Button
                         variant="ghost"
-                        className="w-full justify-start text-zinc-400 hover:text-white hover:bg-white/10"
+                        className="w-full justify-start text-zinc-400 hover:text-white hover:bg-red-500/10 rounded-xl h-auto p-3 font-medium transition-all group"
                         type="submit"
                     >
-                        <LogOut className="h-5 w-5 mr-3 text-red-500" />
-                        Sair
+                        <LogOut className="h-4 w-4 mr-3 text-red-500/70 group-hover:text-red-400 transition-colors" />
+                        Desconectar
                     </Button>
                 </form>
             </div>
@@ -91,11 +112,11 @@ export function MobileSidebar() {
     return (
         <Sheet>
             <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="md:hidden">
+                <Button variant="ghost" size="icon" className="md:hidden text-zinc-400 hover:text-zinc-200">
                     <Menu />
                 </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="p-0 bg-slate-900 border-r-slate-800 text-white w-72">
+            <SheetContent side="left" className="p-0 bg-[#0a0a0a] border-r-white/10 w-80">
                 <Sidebar />
             </SheetContent>
         </Sheet>

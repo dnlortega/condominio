@@ -15,6 +15,7 @@ export async function createCategory(name: string, icon?: string) {
         data: { name, icon },
     })
     revalidatePath('/concessionarias')
+    revalidatePath('/admin/categorias')
     revalidatePath('/')
     return category
 }
@@ -25,6 +26,7 @@ export async function updateCategory(id: string, name: string, icon?: string) {
         data: { name, icon },
     })
     revalidatePath('/concessionarias')
+    revalidatePath('/admin/categorias')
     revalidatePath('/')
     return category
 }
@@ -35,6 +37,7 @@ export async function deleteCategory(id: string) {
             where: { id },
         })
         revalidatePath('/concessionarias')
+        revalidatePath('/admin/categorias')
         revalidatePath('/')
     } catch (e) {
         throw new Error('Não é possível excluir categoria em uso.')
