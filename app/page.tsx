@@ -7,14 +7,12 @@ import ServiceContacts from "@/components/ServiceContacts";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import WhatsAppFloating from "@/components/WhatsAppFloating";
-import Preloader from "@/components/Preloader";
 import { getConcessionarias } from "@/app/actions/concessionarias";
 
 export default async function Home() {
   const concessionarias = await getConcessionarias();
   return (
     <main className="min-h-screen bg-background selection:bg-primary/20 selection:text-primary">
-      <Preloader />
       <Navbar />
       <Hero />
       <Features />

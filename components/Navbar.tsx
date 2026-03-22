@@ -11,7 +11,8 @@ import {
     MapPin,
     FileText,
     Handshake,
-    Phone
+    Phone,
+    Info
 } from 'lucide-react';
 import Image from 'next/image';
 import { Button } from "@/components/ui/button";
@@ -48,6 +49,7 @@ const Navbar = () => {
         { name: 'Utilidades', href: '/#services', icon: Handshake },
         { name: 'Localização', href: '/#location', icon: MapPin },
         { name: 'Regimento', href: '/normas', icon: FileText },
+        { name: 'Sobre', href: '/sobre', icon: Info },
         { name: 'Contato', href: '/#contact', icon: Phone },
     ];
 

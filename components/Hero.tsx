@@ -82,27 +82,31 @@ export default function Hero() {
     return (
         <section id="home" className="relative min-h-[90vh] md:min-h-screen w-full flex items-center overflow-hidden z-10 selection:bg-primary/30">
             {/* Cinematic Background Wrapper */}
-            <motion.div style={{ y: yParallax, scale: scaleParallax }} className="absolute inset-0 z-0">
+            <motion.div style={{ y: yParallax, scale: scaleParallax }} className="absolute inset-0 z-0 bg-background overflow-hidden">
                 <Image
                     src="/hero.png"
                     alt="Recanto dos Pássaros Residencial"
                     fill
-                    className="object-cover scale-105"
+                    className="object-cover scale-105 opacity-20 filter saturate-50"
                     priority
                 />
-                {/* Advanced Gradients for Premium Look */}
-                <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/40 to-background dark:from-black/90 dark:via-black/50 dark:to-black backdrop-blur-[2px]" />
+                
+                {/* Gradients to keep text 100% readable and elegant */}
+                <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-transparent to-background/90" />
+                
+                {/* Elegant Radial Gradient for Depth */}
+                <div className="absolute inset-0 bg-[radial-gradient(circle_800px_at_100%_200px,var(--primary)_0%,transparent_100%)] opacity-10" />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_600px_at_0%_800px,var(--primary)_0%,transparent_100%)] opacity-10" />
 
-                {/* Animated Light Orbs */}
                 <motion.div
-                    animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
+                    animate={{ scale: [1, 1.2, 1], opacity: [0.15, 0.3, 0.15] }}
                     transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute top-[10%] left-[10%] w-[40vw] h-[40vw] bg-primary/20 rounded-full blur-[130px] mix-blend-screen pointer-events-none"
+                    className="absolute top-[10%] left-[10%] w-[40vw] h-[40vw] bg-primary/20 rounded-full blur-[130px] pointer-events-none"
                 />
                 <motion.div
-                    animate={{ scale: [1, 1.5, 1], opacity: [0.2, 0.4, 0.2] }}
+                    animate={{ scale: [1, 1.5, 1], opacity: [0.15, 0.3, 0.15] }}
                     transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                    className="absolute bottom-[10%] right-[5%] w-[50vw] h-[50vw] bg-accent/20 rounded-full blur-[150px] mix-blend-screen pointer-events-none"
+                    className="absolute bottom-[10%] right-[5%] w-[50vw] h-[50vw] bg-accent/40 rounded-full blur-[150px] pointer-events-none"
                 />
             </motion.div>
 
