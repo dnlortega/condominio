@@ -8,9 +8,12 @@ import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import WhatsAppFloating from "@/components/WhatsAppFloating";
 import { getConcessionarias } from "@/app/actions/concessionarias";
+import { getContactSettings } from "@/app/actions/contact";
 
 export default async function Home() {
   const concessionarias = await getConcessionarias();
+  const contactData = await getContactSettings();
+
   return (
     <main className="min-h-screen bg-background selection:bg-primary/20 selection:text-primary">
       <Navbar />
@@ -20,9 +23,9 @@ export default async function Home() {
       <Location />
       <ServiceContacts dbServices={concessionarias} />
 
-      <Contact />
+      <Contact data={contactData} />
       <Footer />
-      <WhatsAppFloating />
+      <WhatsAppFloating data={contactData} />
     </main>
   );
 }

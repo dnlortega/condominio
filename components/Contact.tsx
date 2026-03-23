@@ -5,19 +5,44 @@ import { motion } from 'framer-motion';
 import { Phone, Mail, MapPin, Send } from 'lucide-react';
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { useRouter } from 'next/navigation';
+import { ContactSettingsType } from '@/app/actions/contact';
 
-const Contact = () => {
+import { toast } from 'sonner';
+import { sendMessage } from '@/app/actions/messages';
+
+const Contact = ({ data }: { data: ContactSettingsType }) => {
+    const router = useRouter();
+    const [isPending, setIsPending] = React.useState(false);
+
     const contactItems = [
-        { icon: <Phone className="w-5 h-5" />, label: "Administração", val: "(14) 99769-6946", type: "text" },
-        { icon: <Mail className="w-5 h-5" />, label: "Apoio ao Cliente", val: "contato@recantodospassaros.com.br", type: "text" },
+        { icon: <Phone className="w-5 h-5" />, label: "Administração", val: data.administration, type: "text" },
+        { icon: <Mail className="w-5 h-5" />, label: "Apoio ao Cliente", val: data.customerSupport, type: "text" },
         {
             icon: <MapPin className="w-5 h-5" />,
             label: "Localização",
             val: "Abrir no Google Maps",
             type: "link",
-            href: "https://maps.app.goo.gl/X6dXRkss6QoJXis68"
+            href: data.locationLink
         }
     ];
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setIsPending(true);
+
+        const formData = new FormData(e.currentTarget);
+        
+        try {
+            await sendMessage(formData);
+            toast.success("Mensagem enviada com sucesso! O administrador entrará em contato.");
+            (e.target as HTMLFormElement).reset();
+        } catch (error) {
+            toast.error("Erro ao enviar mensagem. Tente novamente.");
+        } finally {
+            setIsPending(false);
+        }
+    };
 
     return (
         <section id="contact" className="py-20 lg:py-32 bg-background border-t border-border/40 transition-colors duration-500 overflow-hidden">
@@ -96,11 +121,13 @@ const Contact = () => {
                     >
                         <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[100px]" />
 
-                        <form className="space-y-8 lg:space-y-12 relative z-10 w-full">
+                        <form onSubmit={handleSubmit} className="space-y-8 lg:space-y-12 relative z-10 w-full">
                             <div className="space-y-2 group/input">
                                 <Label className="text-[10px] font-bold text-foreground/40 uppercase tracking-[0.4em] group-focus-within/input:text-primary transition-colors">Nome Completo</Label>
                                 <input
                                     type="text"
+                                    name="name"
+                                    required
                                     placeholder="Informe seu nome"
                                     className="w-full bg-transparent border-b border-border/60 py-3 lg:py-5 text-foreground focus:outline-none focus:border-primary transition-all duration-700 placeholder:text-foreground/30 text-base lg:text-lg font-light"
                                 />
@@ -109,6 +136,8 @@ const Contact = () => {
                                 <Label className="text-[10px] font-bold text-foreground/40 uppercase tracking-[0.4em] group-focus-within/input:text-primary transition-colors">E-mail para Contato</Label>
                                 <input
                                     type="email"
+                                    name="email"
+                                    required
                                     placeholder="Ex: seu-email@exemplo.com"
                                     className="w-full bg-transparent border-b border-border/60 py-3 lg:py-5 text-foreground focus:outline-none focus:border-primary transition-all duration-700 placeholder:text-foreground/30 text-base lg:text-lg font-light"
                                 />
@@ -117,13 +146,19 @@ const Contact = () => {
                                 <Label className="text-[10px] font-bold text-foreground/40 uppercase tracking-[0.4em] group-focus-within/input:text-primary transition-colors">Mensagem</Label>
                                 <textarea
                                     rows={4}
+                                    name="content"
+                                    required
                                     placeholder="Como podemos ajudar no seu próximo passo?"
                                     className="w-full bg-transparent border-b border-border/60 py-3 lg:py-5 text-foreground focus:outline-none focus:border-primary transition-all duration-700 resize-none placeholder:text-foreground/30 text-base lg:text-lg font-light"
                                 />
                             </div>
-                            <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90 font-bold py-6 lg:py-10 rounded-xl lg:rounded-2xl transition-all duration-700 flex items-center justify-center gap-3 lg:gap-5 uppercase tracking-[0.4em] text-[10px] shadow-2xl shadow-primary/20 group/btn border border-primary">
-                                <span>Enviar Mensagem</span>
-                                <Send className="w-4 h-4 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform shrink-0" />
+                            <Button 
+                                type="submit" 
+                                disabled={isPending}
+                                className="w-full bg-primary text-primary-foreground hover:bg-primary/90 font-bold py-6 lg:py-10 rounded-xl lg:rounded-2xl transition-all duration-700 flex items-center justify-center gap-3 lg:gap-5 uppercase tracking-[0.4em] text-[10px] shadow-2xl shadow-primary/20 group/btn border border-primary disabled:opacity-50"
+                            >
+                                <span>{isPending ? "Enviando..." : "Enviar Mensagem"}</span>
+                                {!isPending && <Send className="w-4 h-4 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform shrink-0" />}
                             </Button>
                         </form>
                     </motion.div>
@@ -132,5 +167,7 @@ const Contact = () => {
         </section>
     );
 };
+
+
 
 export default Contact;

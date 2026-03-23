@@ -4,8 +4,12 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { MessageCircle } from 'lucide-react';
 
-const WhatsAppFloating = () => {
-    const whatsappUrl = "https://api.whatsapp.com/send?phone=5514997696946&text=Olá,%20gostaria%20de%20falar%20com%20a%20síndica%20do%20Recanto%20dos%20Pássaros.";
+import { ContactSettingsType } from '@/app/actions/contact';
+
+const WhatsAppFloating = ({ data }: { data: ContactSettingsType }) => {
+    // Extract only digits from the phone number
+    const pureNumber = data.administration.replace(/\D/g, '');
+    const whatsappUrl = `https://api.whatsapp.com/send?phone=55${pureNumber}&text=Olá,%20gostaria%20de%20falar%20com%20a%20síndica%20do%20Recanto%20dos%20Pássaros.`;
 
     return (
         <motion.a

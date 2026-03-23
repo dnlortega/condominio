@@ -154,3 +154,20 @@ model AnimationSetting {
   backgroundOrbs  Boolean  @default(true)
   updatedAt       DateTime @updatedAt
 }
+
+model ContactSetting {
+  id              String   @id @default("contact")
+  administration  String   @default("(14) 99769-6946")
+  customerSupport String   @default("contato@recantodospassaros.com.br")
+  locationLink    String   @default("https://maps.app.goo.gl/X6dXRkss6QoJXis68")
+  updatedAt       DateTime @updatedAt
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  content   String
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}

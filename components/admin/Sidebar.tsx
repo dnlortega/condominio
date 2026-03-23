@@ -11,7 +11,9 @@ import {
     Menu,
     ChevronRight,
     Home,
-    Wand2
+    Wand2,
+    Phone,
+    Mail
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -22,6 +24,12 @@ const routes = [
         label: "Dashboard",
         icon: LayoutDashboard,
         href: "/admin",
+        color: "text-zinc-100",
+    },
+    {
+        label: "Mensagens",
+        icon: Mail,
+        href: "/admin/mensagens",
         color: "text-zinc-100",
     },
     {
@@ -40,6 +48,12 @@ const routes = [
         label: "Animações",
         icon: Wand2,
         href: "/admin/animacoes",
+        color: "text-zinc-100",
+    },
+    {
+        label: "Contato",
+        icon: Phone,
+        href: "/admin/contato",
         color: "text-zinc-100",
     },
 ];
