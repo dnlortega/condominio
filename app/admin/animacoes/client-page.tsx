@@ -6,7 +6,7 @@ import { AnimationSettingsType, updateAnimationSettings } from "@/app/actions/se
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
-import { Loader2, Palette, Info, MonitorPlay } from "lucide-react";
+import { Loader2, Palette, Info, MonitorPlay, Save } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function AnimacoesConfig({ initialData }: { initialData: AnimationSettingsType }) {

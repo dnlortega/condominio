@@ -3,11 +3,18 @@
 import { useState } from 'react'
 import {
     Plus, Pencil, Trash2, Phone, Search,
-    Zap, Droplet, Wifi, Flame, Shield,
-    Hammer, Truck, Stethoscope, Briefcase,
-    Smartphone, Lightbulb, Thermometer, Lock, Camera,
-    Flower, PaintBucket, Plug, Tv, Utensils,
-    Car, Bus, ShoppingBag, PawPrint
+    Zap, Droplet, Wifi, Flame, Plug, Lightbulb, Tv, Smartphone, Thermometer,
+    Hammer, Wrench, PaintBucket, Pipette, Cog, Construction, HardHat,
+    Utensils, Bed, Bath, Sofa, Lamp, DoorOpen, Armchair,
+    Car, Bus, Truck, Bike, Plane, Ship,
+    Stethoscope, HeartPulse, Dumbbell, Activity, Cross,
+    Shield, Lock, Camera, Eye, KeyRound, Siren,
+    Briefcase, Building2, Store, Wallet, CreditCard, Receipt, Banknote,
+    Flower, Trees, Sun, CloudRain, Leaf, Sprout,
+    Users, Baby, PawPrint, Accessibility, UserCog,
+    Mail, MessageSquare, Bell, Megaphone,
+    ShoppingBag, ShoppingCart, Package, Gift, Tag,
+    Star, Heart, BookOpen, GraduationCap, Music, Palette, Scissors, Trash, Recycle, MapPin, Clock, Calendar
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
