@@ -140,3 +140,17 @@ model ServiceProvider {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }
+
+// ------------------------------------
+// CONFIGURAÇÕES DO SISTEMA E ANIMAÇÕES
+// ------------------------------------
+model AnimationSetting {
+  id              String   @id @default("settings")
+  fadeAndSlide    Boolean  @default(true)
+  cascadingText   Boolean  @default(true)
+  hoverEffects    Boolean  @default(true)
+  counters        Boolean  @default(true)
+  progressBar     Boolean  @default(true)
+  backgroundOrbs  Boolean  @default(true)
+  updatedAt       DateTime @updatedAt
+}

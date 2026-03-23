@@ -10,7 +10,8 @@ import {
     Settings,
     Menu,
     ChevronRight,
-    Home
+    Home,
+    Wand2
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -33,6 +34,12 @@ const routes = [
         label: "Categorias",
         icon: Settings,
         href: "/admin/categorias",
+        color: "text-zinc-100",
+    },
+    {
+        label: "Animações",
+        icon: Wand2,
+        href: "/admin/animacoes",
         color: "text-zinc-100",
     },
 ];

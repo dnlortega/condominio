@@ -25,8 +25,10 @@ import {
     SheetClose,
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
+import { useAnimationSettings } from '@/app/providers/AnimationProvider';
 
 const Navbar = () => {
+    const { progressBar, hoverEffects } = useAnimationSettings();
     const [isScrolled, setIsScrolled] = useState(false);
     const { scrollYProgress } = useScroll();
     const scaleX = useSpring(scrollYProgress, {
@@ -62,10 +64,12 @@ const Navbar = () => {
             isScrolled ? "py-3" : "py-5"
         )}>
             {/* Scroll Progress Bar */}
-            <motion.div
-                className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-primary to-accent origin-left z-[71]"
-                style={{ scaleX }}
-            />
+            {progressBar && (
+                <motion.div
+                    className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-primary to-accent origin-left z-[71]"
+                    style={{ scaleX }}
+                />
+            )}
 
             <div className="container mx-auto px-6 flex items-center justify-between">
                 <motion.a

@@ -5,6 +5,7 @@ import { motion, useScroll, useTransform, useInView, animate } from 'framer-moti
 import { ArrowRight, Star, MessageCircle } from 'lucide-react';
 import Image from 'next/image';
 import { Button } from "@/components/ui/button";
+import { useAnimationSettings } from '@/app/providers/AnimationProvider';
 
 const Counter = ({ value, suffix = "" }: { value: string, suffix?: string }) => {
     const ref = React.useRef<HTMLSpanElement>(null);
@@ -57,6 +58,7 @@ const MagneticButton = ({ children, className }: { children: React.ReactNode, cl
 };
 
 export default function Hero() {
+    const { cascadingText, backgroundOrbs, fadeAndSlide, hoverEffects, counters } = useAnimationSettings();
     const title = "Onde o Luxo Encontra a Paz";
     const words = title.split(" ");
     const { scrollY } = useScroll();
@@ -64,17 +66,23 @@ export default function Hero() {
     const scaleParallax = useTransform(scrollY, [0, 800], [1, 1.15]);
     const opacityParallax = useTransform(scrollY, [0, 500], [1, 0]);
 
-    const container = {
+    const container = cascadingText ? {
         hidden: { opacity: 0 },
         visible: {
             opacity: 1,
             transition: { staggerChildren: 0.1, delayChildren: 0.2 },
         },
+    } : {
+        hidden: { opacity: 1 },
+        visible: { opacity: 1 },
     };
 
-    const child = {
+    const child = cascadingText ? {
         visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] as any } },
         hidden: { opacity: 0, y: 100 },
+    } : {
+        visible: { opacity: 1, y: 0 },
+        hidden: { opacity: 1, y: 0 },
     };
 
     const whatsappLink = "https://api.whatsapp.com/send?phone=5514997696946&text=Olá,%20gostaria%20de%20falar%20com%20a%20síndica%20do%20Recanto%20dos%20Pássaros.";
@@ -98,16 +106,20 @@ export default function Hero() {
                 <div className="absolute inset-0 bg-[radial-gradient(circle_800px_at_100%_200px,var(--primary)_0%,transparent_100%)] opacity-10" />
                 <div className="absolute inset-0 bg-[radial-gradient(circle_600px_at_0%_800px,var(--primary)_0%,transparent_100%)] opacity-10" />
 
-                <motion.div
-                    animate={{ scale: [1, 1.2, 1], opacity: [0.15, 0.3, 0.15] }}
-                    transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute top-[10%] left-[10%] w-[40vw] h-[40vw] bg-primary/20 rounded-full blur-[130px] pointer-events-none"
-                />
-                <motion.div
-                    animate={{ scale: [1, 1.5, 1], opacity: [0.15, 0.3, 0.15] }}
-                    transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                    className="absolute bottom-[10%] right-[5%] w-[50vw] h-[50vw] bg-accent/40 rounded-full blur-[150px] pointer-events-none"
-                />
+                {backgroundOrbs && (
+                    <>
+                        <motion.div
+                            animate={{ scale: [1, 1.2, 1], opacity: [0.15, 0.3, 0.15] }}
+                            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+                            className="absolute top-[10%] left-[10%] w-[40vw] h-[40vw] bg-primary/20 rounded-full blur-[130px] pointer-events-none"
+                        />
+                        <motion.div
+                            animate={{ scale: [1, 1.5, 1], opacity: [0.15, 0.3, 0.15] }}
+                            transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                            className="absolute bottom-[10%] right-[5%] w-[50vw] h-[50vw] bg-accent/40 rounded-full blur-[150px] pointer-events-none"
+                        />
+                    </>
+                )}
             </motion.div>
 
             <div className="container mx-auto px-6 relative z-10 pt-32 pb-20 md:py-40 flex flex-col justify-center min-h-full">
@@ -160,7 +172,7 @@ export default function Hero() {
 
                     {/* Action Buttons */}
                     <motion.div
-                        initial={{ opacity: 0, y: 30 }}
+                        initial={fadeAndSlide ? { opacity: 0, y: 30 } : { opacity: 1, y: 0 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 1.2, duration: 0.8 }}
                         className="flex flex-col sm:flex-row gap-5 justify-center lg:justify-start"
@@ -189,9 +201,9 @@ export default function Hero() {
 
             {/* Glassmorphic Statistics Bar */}
             <motion.div
-                style={{ opacity: opacityParallax }}
+                style={{ opacity: fadeAndSlide ? opacityParallax : 1 }}
                 custom={{ delay: 1.8 }}
-                initial={{ opacity: 0, y: 50 }}
+                initial={fadeAndSlide ? { opacity: 0, y: 50 } : { opacity: 1, y: 0 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1.2, ease: "easeOut" }}
                 className="absolute bottom-6 md:bottom-12 left-6 right-6 md:left-1/2 md:-translate-x-1/2 md:w-auto max-w-5xl z-20"
@@ -206,7 +218,7 @@ export default function Hero() {
                             <div key={i} className={`flex flex-col items-center justify-center ${i !== 0 ? 'pl-4 md:pl-16' : ''}`}>
                                 <span className="text-2xl md:text-4xl font-bold tracking-tighter text-foreground mb-1 drop-shadow-sm flex items-center">
                                     {i === 0 ? "45-" : ""}
-                                    <Counter value={stat.val} />
+                                    {counters ? <Counter value={stat.val} /> : stat.val.match(/\d+/g)?.pop() || stat.val}
                                     {stat.suffix || (stat.val.includes('h') ? 'h' : '')}
                                 </span>
                                 <span className="text-[8px] md:text-[9px] uppercase tracking-[0.3em] font-bold text-foreground/40">{stat.label}</span>

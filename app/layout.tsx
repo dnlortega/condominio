@@ -4,6 +4,8 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "sonner";
 import SWRegistration from "@/components/SWRegistration";
+import { AnimationProvider } from "@/app/providers/AnimationProvider";
+import { getAnimationSettings } from "@/app/actions/settings";
 
 
 const geistSans = Geist({
@@ -46,11 +48,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const animationSettings = await getAnimationSettings();
+
   return (
     <html lang="pt-BR" className="scroll-smooth" suppressHydrationWarning>
       <body
@@ -62,9 +66,11 @@ export default function RootLayout({
           forcedTheme="light"
           disableTransitionOnChange
         >
-          {children}
-          <SWRegistration />
-          <Toaster position="top-center" richColors closeButton />
+          <AnimationProvider settings={animationSettings}>
+            {children}
+            <SWRegistration />
+            <Toaster position="top-center" richColors closeButton />
+          </AnimationProvider>
         </ThemeProvider>
       </body>
     </html>
