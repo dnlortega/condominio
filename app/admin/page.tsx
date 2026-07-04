@@ -1,11 +1,16 @@
 import Link from 'next/link';
-import { Zap, List, Users, ArrowRight, ShieldCheck, Activity } from "lucide-react";
+import { Zap, List, Users, ArrowRight, ShieldCheck, Activity, Megaphone, CalendarDays, Wrench, UserCheck } from "lucide-react";
 import { prisma } from '@/lib/prisma';
 
 export default async function AdminPage() {
-    const [providerCount, categoryCount] = await Promise.all([
+    const [providerCount, categoryCount, residentCount, announcementCount, pendingReservationCount, openTicketCount, pendingVisitorCount] = await Promise.all([
         prisma.serviceProvider.count(),
         prisma.category.count(),
+        prisma.user.count({ where: { role: 'RESIDENT' } }),
+        prisma.announcement.count(),
+        prisma.reservation.count({ where: { status: 'PENDING' } }),
+        prisma.ticket.count({ where: { status: { not: 'RESOLVED' } } }),
+        prisma.visitor.count({ where: { isUsed: false } }),
     ]);
 
     return (
@@ -87,20 +92,40 @@ export default async function AdminPage() {
                 </Link>
             </div>
 
-            {/* Secção Decorativa Extra */}
-            <div className="w-full bg-white border border-slate-200/60 rounded-[2.5rem] p-8 md:p-10 relative overflow-hidden group mt-10 shadow-sm hover:shadow-md transition-all">
-                <div className="absolute inset-0 bg-gradient-to-r from-primary/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
-                <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
-                    <div className="flex items-center gap-8">
-                        <div className="w-16 h-16 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-400 group-hover:text-primary group-hover:bg-primary/5 transition-all duration-500 shadow-inner">
-                            <Users className="w-7 h-7" />
-                        </div>
-                        <div>
-                            <h3 className="text-xl font-bold tracking-tight text-slate-900 mb-1.5 group-hover:text-primary transition-colors">Portal de Moradores</h3>
-                            <p className="text-sm text-slate-500 font-medium">Área em desenvolvimento para acesso restrito de locatários e proprietários.</p>
-                        </div>
-                    </div>
-                    <span className="px-5 py-2.5 rounded-full bg-slate-50 text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 border border-slate-100 shadow-sm group-hover:bg-primary/5 group-hover:text-primary/70 transition-all">Under Construction</span>
+            {/* Portal do Morador */}
+            <div>
+                <div className="flex items-center justify-between mb-6">
+                    <h2 className="text-xl font-bold tracking-tight text-slate-900">Portal do Morador</h2>
+                    <Link href="/portal" className="text-sm font-semibold text-primary hover:underline flex items-center gap-1">
+                        Acessar portal <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+                </div>
+                <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+                    <Link href="/admin/moradores" className="group bg-white border border-slate-200/60 rounded-3xl p-6 hover:border-primary/20 hover:shadow-lg transition-all hover:-translate-y-1">
+                        <Users className="w-6 h-6 text-primary mb-4" />
+                        <span className="text-3xl font-black text-slate-900 block">{residentCount}</span>
+                        <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Moradores</span>
+                    </Link>
+                    <Link href="/admin/avisos" className="group bg-white border border-slate-200/60 rounded-3xl p-6 hover:border-primary/20 hover:shadow-lg transition-all hover:-translate-y-1">
+                        <Megaphone className="w-6 h-6 text-primary mb-4" />
+                        <span className="text-3xl font-black text-slate-900 block">{announcementCount}</span>
+                        <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Avisos</span>
+                    </Link>
+                    <Link href="/admin/reservas" className="group bg-white border border-slate-200/60 rounded-3xl p-6 hover:border-primary/20 hover:shadow-lg transition-all hover:-translate-y-1">
+                        <CalendarDays className="w-6 h-6 text-primary mb-4" />
+                        <span className="text-3xl font-black text-slate-900 block">{pendingReservationCount}</span>
+                        <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Reservas Pendentes</span>
+                    </Link>
+                    <Link href="/admin/chamados" className="group bg-white border border-slate-200/60 rounded-3xl p-6 hover:border-primary/20 hover:shadow-lg transition-all hover:-translate-y-1">
+                        <Wrench className="w-6 h-6 text-primary mb-4" />
+                        <span className="text-3xl font-black text-slate-900 block">{openTicketCount}</span>
+                        <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Chamados Abertos</span>
+                    </Link>
+                    <Link href="/admin/visitantes" className="group bg-white border border-slate-200/60 rounded-3xl p-6 hover:border-primary/20 hover:shadow-lg transition-all hover:-translate-y-1">
+                        <UserCheck className="w-6 h-6 text-primary mb-4" />
+                        <span className="text-3xl font-black text-slate-900 block">{pendingVisitorCount}</span>
+                        <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Visitantes Aguardando</span>
+                    </Link>
                 </div>
             </div>
         </div>

@@ -1,41 +1,37 @@
-
 import { NextRequest, NextResponse } from "next/server";
-import { decrypt } from "@/lib/auth";
-import { cookies } from "next/headers";
+import { decrypt } from "@/lib/jwt";
 
-// 1. Specify protected and public routes
-const protectedRoutes = ["/admin"];
-const publicRoutes = ["/login", "/", "/normas"];
+export default async function proxy(request: NextRequest) {
+    const { pathname } = request.nextUrl;
 
-export default async function middleware(req: NextRequest) {
-    // 2. Check if the current route is protected or public
-    const path = req.nextUrl.pathname;
-    const isProtectedRoute = protectedRoutes.some((route) => path.startsWith(route));
-    const isPublicRoute = publicRoutes.includes(path);
-
-    // 3. Decrypt the session from the cookie
-    const cookie = (await cookies()).get("session")?.value;
-    const session = cookie ? await decrypt(cookie).catch(() => null) : null;
-
-    // 4. Redirect to /login if the user is not authenticated
-    if (isProtectedRoute && !session) {
-        return NextResponse.redirect(new URL("/login", req.nextUrl));
+    if (pathname.startsWith("/admin")) {
+        const session = request.cookies.get("session")?.value;
+        const valid = session ? await isValid(session) : false;
+        if (!valid) {
+            return NextResponse.redirect(new URL("/login", request.url));
+        }
     }
 
-    // 5. Redirect to /admin if the user is authenticated
-    if (
-        isPublicRoute &&
-        session &&
-        !req.nextUrl.pathname.startsWith("/admin") &&
-        req.nextUrl.pathname === "/login"
-    ) {
-        return NextResponse.redirect(new URL("/admin", req.nextUrl));
+    if (pathname.startsWith("/portal") && pathname !== "/portal/login") {
+        const session = request.cookies.get("resident_session")?.value;
+        const valid = session ? await isValid(session) : false;
+        if (!valid) {
+            return NextResponse.redirect(new URL("/portal/login", request.url));
+        }
     }
 
     return NextResponse.next();
 }
 
-// Routes Middleware should not run on
+async function isValid(token: string) {
+    try {
+        await decrypt(token);
+        return true;
+    } catch {
+        return false;
+    }
+}
+
 export const config = {
-    matcher: ["/((?!api|_next/static|_next/image|.*\\.png$).*)"],
+    matcher: ["/admin/:path*", "/portal/:path*"],
 };
