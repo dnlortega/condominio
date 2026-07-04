@@ -5,7 +5,7 @@ import { revalidatePath } from 'next/cache'
 
 export async function getVisitors() {
     return await prisma.visitor.findMany({
-        include: { user: true },
+        include: { user: { select: { name: true, apartment: true } } },
         orderBy: { visitDate: 'desc' },
     })
 }

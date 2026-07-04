@@ -13,6 +13,13 @@ import {
     LogOut,
     Menu,
     Home,
+    Car,
+    PawPrint,
+    Package,
+    AlertOctagon,
+    FileText,
+    Vote,
+    LayoutGrid,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -24,6 +31,13 @@ const routes = [
     { label: "Reservas", icon: CalendarDays, href: "/portal/reservas" },
     { label: "Chamados", icon: Wrench, href: "/portal/chamados" },
     { label: "Visitantes", icon: UserCheck, href: "/portal/visitantes" },
+    { label: "Veículos", icon: Car, href: "/portal/veiculos" },
+    { label: "Pets", icon: PawPrint, href: "/portal/pets" },
+    { label: "Encomendas", icon: Package, href: "/portal/encomendas" },
+    { label: "Ocorrências", icon: AlertOctagon, href: "/portal/ocorrencias" },
+    { label: "Documentos", icon: FileText, href: "/portal/documentos" },
+    { label: "Enquetes", icon: Vote, href: "/portal/enquetes" },
+    { label: "Mural Social", icon: LayoutGrid, href: "/portal/mural" },
 ];
 
 type ResidentInfo = { name: string; apartment: string | null };

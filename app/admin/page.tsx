@@ -1,9 +1,12 @@
 import Link from 'next/link';
-import { Zap, List, Users, ArrowRight, ShieldCheck, Activity, Megaphone, CalendarDays, Wrench, UserCheck } from "lucide-react";
+import { Zap, List, Users, ArrowRight, ShieldCheck, Activity, Megaphone, CalendarDays, Wrench, UserCheck, Car, PawPrint, Package, AlertOctagon, FileText, Vote, LayoutGrid } from "lucide-react";
 import { prisma } from '@/lib/prisma';
 
 export default async function AdminPage() {
-    const [providerCount, categoryCount, residentCount, announcementCount, pendingReservationCount, openTicketCount, pendingVisitorCount] = await Promise.all([
+    const [
+        providerCount, categoryCount, residentCount, announcementCount, pendingReservationCount, openTicketCount, pendingVisitorCount,
+        vehicleCount, petCount, pendingPackageCount, openIncidentCount, documentCount, openPollCount, activePostCount,
+    ] = await Promise.all([
         prisma.serviceProvider.count(),
         prisma.category.count(),
         prisma.user.count({ where: { role: 'RESIDENT' } }),
@@ -11,6 +14,13 @@ export default async function AdminPage() {
         prisma.reservation.count({ where: { status: 'PENDING' } }),
         prisma.ticket.count({ where: { status: { not: 'RESOLVED' } } }),
         prisma.visitor.count({ where: { isUsed: false } }),
+        prisma.vehicle.count(),
+        prisma.pet.count(),
+        prisma.package.count({ where: { pickedUpAt: null } }),
+        prisma.incident.count({ where: { status: { not: 'RESOLVED' } } }),
+        prisma.document.count(),
+        prisma.poll.count({ where: { isOpen: true } }),
+        prisma.post.count({ where: { isActive: true } }),
     ]);
 
     return (
@@ -125,6 +135,41 @@ export default async function AdminPage() {
                         <UserCheck className="w-6 h-6 text-primary mb-4" />
                         <span className="text-3xl font-black text-slate-900 block">{pendingVisitorCount}</span>
                         <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Visitantes Aguardando</span>
+                    </Link>
+                    <Link href="/admin/veiculos" className="group bg-white border border-slate-200/60 rounded-3xl p-6 hover:border-primary/20 hover:shadow-lg transition-all hover:-translate-y-1">
+                        <Car className="w-6 h-6 text-primary mb-4" />
+                        <span className="text-3xl font-black text-slate-900 block">{vehicleCount}</span>
+                        <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Veículos</span>
+                    </Link>
+                    <Link href="/admin/pets" className="group bg-white border border-slate-200/60 rounded-3xl p-6 hover:border-primary/20 hover:shadow-lg transition-all hover:-translate-y-1">
+                        <PawPrint className="w-6 h-6 text-primary mb-4" />
+                        <span className="text-3xl font-black text-slate-900 block">{petCount}</span>
+                        <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Pets</span>
+                    </Link>
+                    <Link href="/admin/encomendas" className="group bg-white border border-slate-200/60 rounded-3xl p-6 hover:border-primary/20 hover:shadow-lg transition-all hover:-translate-y-1">
+                        <Package className="w-6 h-6 text-primary mb-4" />
+                        <span className="text-3xl font-black text-slate-900 block">{pendingPackageCount}</span>
+                        <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Encomendas Pendentes</span>
+                    </Link>
+                    <Link href="/admin/ocorrencias" className="group bg-white border border-slate-200/60 rounded-3xl p-6 hover:border-primary/20 hover:shadow-lg transition-all hover:-translate-y-1">
+                        <AlertOctagon className="w-6 h-6 text-primary mb-4" />
+                        <span className="text-3xl font-black text-slate-900 block">{openIncidentCount}</span>
+                        <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Ocorrências Abertas</span>
+                    </Link>
+                    <Link href="/admin/documentos" className="group bg-white border border-slate-200/60 rounded-3xl p-6 hover:border-primary/20 hover:shadow-lg transition-all hover:-translate-y-1">
+                        <FileText className="w-6 h-6 text-primary mb-4" />
+                        <span className="text-3xl font-black text-slate-900 block">{documentCount}</span>
+                        <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Documentos</span>
+                    </Link>
+                    <Link href="/admin/enquetes" className="group bg-white border border-slate-200/60 rounded-3xl p-6 hover:border-primary/20 hover:shadow-lg transition-all hover:-translate-y-1">
+                        <Vote className="w-6 h-6 text-primary mb-4" />
+                        <span className="text-3xl font-black text-slate-900 block">{openPollCount}</span>
+                        <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Enquetes Abertas</span>
+                    </Link>
+                    <Link href="/admin/mural" className="group bg-white border border-slate-200/60 rounded-3xl p-6 hover:border-primary/20 hover:shadow-lg transition-all hover:-translate-y-1">
+                        <LayoutGrid className="w-6 h-6 text-primary mb-4" />
+                        <span className="text-3xl font-black text-slate-900 block">{activePostCount}</span>
+                        <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Anúncios no Mural</span>
                     </Link>
                 </div>
             </div>

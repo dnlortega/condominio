@@ -16,45 +16,51 @@ enum Role {
 }
 
 model User {
-  id            String         @id @default(cuid())
-  name          String
-  email         String         @unique
-  password      String         // Senha hasheada
-  role          Role           @default(RESIDENT)
-  apartment     String?        // Ex: "A-42", "B-12"
-  phone         String?
-  
-  reservations  Reservation[]
-  tickets       Ticket[]
-  visitors      Visitor[]
-  
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
+  id        String  @id @default(cuid())
+  name      String
+  email     String  @unique
+  password  String // Senha hasheada
+  role      Role    @default(RESIDENT)
+  apartment String? // Ex: "A-42", "B-12"
+  phone     String?
+
+  reservations Reservation[]
+  tickets      Ticket[]
+  visitors     Visitor[]
+  vehicles     Vehicle[]
+  pets         Pet[]
+  packages     Package[]
+  incidents    Incident[]
+  pollVotes    PollVote[]
+  posts        Post[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 // ------------------------------------
 // AVISOS E COMUNICADOS (ADMIN -> MORADORES)
 // ------------------------------------
 model Announcement {
-  id          String    @id @default(cuid())
-  title       String
-  content     String
-  isUrgent    Boolean   @default(false)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id        String   @id @default(cuid())
+  title     String
+  content   String
+  isUrgent  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 // ------------------------------------
 // RESERVA DE ÁREAS COMUNS
 // ------------------------------------
 model Amenity {
-  id            String        @id @default(cuid())
-  name          String        @unique // Ex: Churrasqueira, Salão de Festas
-  description   String?
-  capacity      Int           @default(10)
-  reservations  Reservation[]
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
+  id           String        @id @default(cuid())
+  name         String        @unique // Ex: Churrasqueira, Salão de Festas
+  description  String?
+  capacity     Int           @default(10)
+  reservations Reservation[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
 }
 
 enum ReservationStatus {
@@ -64,18 +70,18 @@ enum ReservationStatus {
 }
 
 model Reservation {
-  id          String            @id @default(cuid())
-  date        DateTime          // Data reservada
-  status      ReservationStatus @default(CONFIRMED)
-  
-  userId      String
-  user        User              @relation(fields: [userId], references: [id])
-  
-  amenityId   String
-  amenity     Amenity           @relation(fields: [amenityId], references: [id])
-  
-  createdAt   DateTime          @default(now())
-  updatedAt   DateTime          @updatedAt
+  id     String            @id @default(cuid())
+  date   DateTime // Data reservada
+  status ReservationStatus @default(CONFIRMED)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  amenityId String
+  amenity   Amenity @relation(fields: [amenityId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 // ------------------------------------
@@ -92,30 +98,30 @@ model Ticket {
   title       String
   description String
   status      TicketStatus @default(OPEN)
-  
-  userId      String
-  user        User         @relation(fields: [userId], references: [id])
-  
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 // ------------------------------------
 // PORTARIA VIRTUAL (VISITANTES/CONVITE)
 // ------------------------------------
 model Visitor {
-  id          String    @id @default(cuid())
-  name        String
-  rg          String?
-  visitDate   DateTime
-  token       String    @unique @default(uuid()) // QR code token
-  isUsed      Boolean   @default(false)
-  
-  userId      String
-  user        User      @relation(fields: [userId], references: [id])
-  
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id        String   @id @default(cuid())
+  name      String
+  rg        String?
+  visitDate DateTime
+  token     String   @unique @default(uuid()) // QR code token
+  isUsed    Boolean  @default(false)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 // ------------------------------------
@@ -124,35 +130,35 @@ model Visitor {
 model Category {
   id        String            @id @default(cuid())
   name      String            @unique
-  icon      String?           // Name of the lucide-react icon
+  icon      String? // Name of the lucide-react icon
   providers ServiceProvider[]
   createdAt DateTime          @default(now())
   updatedAt DateTime          @updatedAt
 }
 
 model ServiceProvider {
-  id           String   @id @default(cuid())
-  name         String
-  contact      String
-  hasWhatsApp  Boolean  @default(true)
-  categoryId   String
-  category     Category @relation(fields: [categoryId], references: [id])
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id          String   @id @default(cuid())
+  name        String
+  contact     String
+  hasWhatsApp Boolean  @default(true)
+  categoryId  String
+  category    Category @relation(fields: [categoryId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 // ------------------------------------
 // CONFIGURAÇÕES DO SISTEMA E ANIMAÇÕES
 // ------------------------------------
 model AnimationSetting {
-  id              String   @id @default("settings")
-  fadeAndSlide    Boolean  @default(true)
-  cascadingText   Boolean  @default(true)
-  hoverEffects    Boolean  @default(true)
-  counters        Boolean  @default(true)
-  progressBar     Boolean  @default(true)
-  backgroundOrbs  Boolean  @default(true)
-  updatedAt       DateTime @updatedAt
+  id             String   @id @default("settings")
+  fadeAndSlide   Boolean  @default(true)
+  cascadingText  Boolean  @default(true)
+  hoverEffects   Boolean  @default(true)
+  counters       Boolean  @default(true)
+  progressBar    Boolean  @default(true)
+  backgroundOrbs Boolean  @default(true)
+  updatedAt      DateTime @updatedAt
 }
 
 model ContactSetting {
@@ -170,4 +176,164 @@ model Message {
   content   String
   isRead    Boolean  @default(false)
   createdAt DateTime @default(now())
+}
+
+// ------------------------------------
+// VEÍCULOS E GARAGEM
+// ------------------------------------
+enum VehicleType {
+  CAR
+  MOTORCYCLE
+}
+
+model Vehicle {
+  id    String      @id @default(cuid())
+  plate String
+  model String
+  color String?
+  type  VehicleType @default(CAR)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ------------------------------------
+// PETS
+// ------------------------------------
+model Pet {
+  id      String  @id @default(cuid())
+  name    String
+  species String // Ex: Cachorro, Gato
+  breed   String?
+  notes   String?
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ------------------------------------
+// ENCOMENDAS
+// ------------------------------------
+model Package {
+  id          String    @id @default(cuid())
+  description String
+  receivedAt  DateTime  @default(now())
+  pickedUpAt  DateTime?
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ------------------------------------
+// OCORRÊNCIAS E DENÚNCIAS
+// ------------------------------------
+enum IncidentStatus {
+  OPEN
+  IN_REVIEW
+  RESOLVED
+}
+
+model Incident {
+  id          String         @id @default(cuid())
+  title       String
+  description String
+  category    String
+  status      IncidentStatus @default(OPEN)
+  isAnonymous Boolean        @default(false)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ------------------------------------
+// DOCUMENTOS
+// ------------------------------------
+model Document {
+  id          String  @id @default(cuid())
+  title       String
+  description String?
+  category    String?
+  url         String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ------------------------------------
+// ENQUETES
+// ------------------------------------
+model Poll {
+  id       String       @id @default(cuid())
+  question String
+  isOpen   Boolean      @default(true)
+  closesAt DateTime?
+  options  PollOption[]
+  votes    PollVote[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PollOption {
+  id   String @id @default(cuid())
+  text String
+
+  pollId String
+  poll   Poll       @relation(fields: [pollId], references: [id], onDelete: Cascade)
+  votes  PollVote[]
+}
+
+model PollVote {
+  id String @id @default(cuid())
+
+  pollId String
+  poll   Poll   @relation(fields: [pollId], references: [id], onDelete: Cascade)
+
+  pollOptionId String
+  pollOption   PollOption @relation(fields: [pollOptionId], references: [id], onDelete: Cascade)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@unique([pollId, userId])
+}
+
+// ------------------------------------
+// MURAL SOCIAL E CLASSIFICADOS
+// ------------------------------------
+enum PostCategory {
+  VENDA
+  DOACAO
+  PERDIDO_ACHADO
+  SERVICO
+  OUTRO
+}
+
+model Post {
+  id          String       @id @default(cuid())
+  title       String
+  description String
+  price       String?
+  category    PostCategory @default(OUTRO)
+  isActive    Boolean      @default(true)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

@@ -20,7 +20,14 @@ import {
     CalendarDays,
     Wrench,
     UserCheck,
-    Users
+    Users,
+    Car,
+    PawPrint,
+    Package,
+    AlertOctagon,
+    FileText,
+    Vote,
+    LayoutGrid
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -73,6 +80,48 @@ const routes = [
         label: "Visitantes",
         icon: UserCheck,
         href: "/admin/visitantes",
+        color: "text-zinc-100",
+    },
+    {
+        label: "Veículos",
+        icon: Car,
+        href: "/admin/veiculos",
+        color: "text-zinc-100",
+    },
+    {
+        label: "Pets",
+        icon: PawPrint,
+        href: "/admin/pets",
+        color: "text-zinc-100",
+    },
+    {
+        label: "Encomendas",
+        icon: Package,
+        href: "/admin/encomendas",
+        color: "text-zinc-100",
+    },
+    {
+        label: "Ocorrências",
+        icon: AlertOctagon,
+        href: "/admin/ocorrencias",
+        color: "text-zinc-100",
+    },
+    {
+        label: "Documentos",
+        icon: FileText,
+        href: "/admin/documentos",
+        color: "text-zinc-100",
+    },
+    {
+        label: "Enquetes",
+        icon: Vote,
+        href: "/admin/enquetes",
+        color: "text-zinc-100",
+    },
+    {
+        label: "Mural Social",
+        icon: LayoutGrid,
+        href: "/admin/mural",
         color: "text-zinc-100",
     },
     {

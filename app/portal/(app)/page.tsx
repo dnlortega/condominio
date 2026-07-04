@@ -1,14 +1,14 @@
 import Link from "next/link";
 import { getResidentSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { Megaphone, CalendarDays, Wrench, UserCheck, ArrowRight, AlertTriangle } from "lucide-react";
+import { Megaphone, CalendarDays, Wrench, UserCheck, ArrowRight, AlertTriangle, Package, AlertOctagon, Vote, LayoutGrid } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
 export default async function PortalHomePage() {
     const user = await getResidentSession();
 
-    const [urgentAnnouncements, upcomingReservations, openTickets, pendingVisitors] = await Promise.all([
+    const [urgentAnnouncements, upcomingReservations, openTickets, pendingVisitors, pendingPackages, myOpenIncidents, openPolls, activePosts] = await Promise.all([
         prisma.announcement.findMany({
             where: { isUrgent: true },
             orderBy: { createdAt: "desc" },
@@ -22,6 +22,10 @@ export default async function PortalHomePage() {
         }),
         prisma.ticket.count({ where: { userId: user!.id, status: { not: "RESOLVED" } } }),
         prisma.visitor.count({ where: { userId: user!.id, isUsed: false, visitDate: { gte: new Date(new Date().setHours(0, 0, 0, 0)) } } }),
+        prisma.package.count({ where: { userId: user!.id, pickedUpAt: null } }),
+        prisma.incident.count({ where: { userId: user!.id, status: { not: "RESOLVED" } } }),
+        prisma.poll.count({ where: { isOpen: true } }),
+        prisma.post.count({ where: { isActive: true } }),
     ]);
 
     return (
@@ -53,6 +57,29 @@ export default async function PortalHomePage() {
                     <UserCheck className="w-6 h-6 text-primary mb-4" />
                     <span className="text-3xl font-black text-slate-900 block">{pendingVisitors}</span>
                     <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Visitantes esperados hoje</span>
+                </Link>
+            </div>
+
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+                <Link href="/portal/encomendas" className="bg-white border border-slate-200/60 rounded-3xl p-6 hover:border-primary/20 hover:shadow-lg transition-all hover:-translate-y-1">
+                    <Package className="w-6 h-6 text-primary mb-4" />
+                    <span className="text-3xl font-black text-slate-900 block">{pendingPackages}</span>
+                    <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Encomendas aguardando</span>
+                </Link>
+                <Link href="/portal/ocorrencias" className="bg-white border border-slate-200/60 rounded-3xl p-6 hover:border-primary/20 hover:shadow-lg transition-all hover:-translate-y-1">
+                    <AlertOctagon className="w-6 h-6 text-primary mb-4" />
+                    <span className="text-3xl font-black text-slate-900 block">{myOpenIncidents}</span>
+                    <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Minhas ocorrências abertas</span>
+                </Link>
+                <Link href="/portal/enquetes" className="bg-white border border-slate-200/60 rounded-3xl p-6 hover:border-primary/20 hover:shadow-lg transition-all hover:-translate-y-1">
+                    <Vote className="w-6 h-6 text-primary mb-4" />
+                    <span className="text-3xl font-black text-slate-900 block">{openPolls}</span>
+                    <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Enquetes abertas</span>
+                </Link>
+                <Link href="/portal/mural" className="bg-white border border-slate-200/60 rounded-3xl p-6 hover:border-primary/20 hover:shadow-lg transition-all hover:-translate-y-1">
+                    <LayoutGrid className="w-6 h-6 text-primary mb-4" />
+                    <span className="text-3xl font-black text-slate-900 block">{activePosts}</span>
+                    <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Anúncios no mural</span>
                 </Link>
             </div>
 

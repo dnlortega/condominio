@@ -6,7 +6,7 @@ import { ReservationStatus } from '@prisma/client'
 
 export async function getReservations() {
     return await prisma.reservation.findMany({
-        include: { user: true, amenity: true },
+        include: { user: { select: { name: true, apartment: true } }, amenity: true },
         orderBy: { date: 'desc' },
     })
 }

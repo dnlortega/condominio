@@ -6,7 +6,7 @@ import { TicketStatus } from '@prisma/client'
 
 export async function getTickets() {
     return await prisma.ticket.findMany({
-        include: { user: true },
+        include: { user: { select: { name: true, apartment: true } } },
         orderBy: { createdAt: 'desc' },
     })
 }
