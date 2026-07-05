@@ -161,6 +161,16 @@ model AnimationSetting {
   updatedAt      DateTime @updatedAt
 }
 
+// ------------------------------------
+// TEMA SAZONAL (Natal, Páscoa, Carnaval...)
+// ------------------------------------
+model SeasonalThemeSetting {
+  id            String   @id @default("seasonal")
+  enabled       Boolean  @default(true)
+  forcedThemeId String? // null = detectar automaticamente pela data; "none" = forçar desativado
+  updatedAt     DateTime @updatedAt
+}
+
 model ContactSetting {
   id              String   @id @default("contact")
   administration  String   @default("(14) 99769-6946")

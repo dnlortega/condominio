@@ -10,23 +10,18 @@ export type ContactSettingsType = {
 };
 
 export async function getContactSettings(): Promise<ContactSettingsType> {
-  const settings = await prisma.contactSetting.findFirst({
+  // upsert é atômico no banco — evita condição de corrida quando várias páginas
+  // são renderizadas em paralelo (ex: build) e tentam criar a linha ao mesmo tempo.
+  return await prisma.contactSetting.upsert({
     where: { id: "contact" },
+    update: {},
+    create: {
+      id: "contact",
+      administration: "(14) 99769-6946",
+      customerSupport: "contato@recantodospassaros.com.br",
+      locationLink: "https://maps.app.goo.gl/X6dXRkss6QoJXis68",
+    },
   });
-
-  if (!settings) {
-    const defaultSettings = await prisma.contactSetting.create({
-      data: {
-        id: "contact",
-        administration: "(14) 99769-6946",
-        customerSupport: "contato@recantodospassaros.com.br",
-        locationLink: "https://maps.app.goo.gl/X6dXRkss6QoJXis68",
-      },
-    });
-    return defaultSettings;
-  }
-
-  return settings;
 }
 
 export async function updateContactSettings(data: ContactSettingsType) {

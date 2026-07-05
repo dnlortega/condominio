@@ -13,26 +13,21 @@ export type AnimationSettingsType = {
 };
 
 export async function getAnimationSettings(): Promise<AnimationSettingsType> {
-  const settings = await prisma.animationSetting.findFirst({
+  // upsert é atômico no banco — evita condição de corrida quando várias páginas
+  // são renderizadas em paralelo (ex: build) e tentam criar a linha ao mesmo tempo.
+  return await prisma.animationSetting.upsert({
     where: { id: "settings" },
+    update: {},
+    create: {
+      id: "settings",
+      fadeAndSlide: true,
+      cascadingText: true,
+      hoverEffects: true,
+      counters: true,
+      progressBar: true,
+      backgroundOrbs: true,
+    },
   });
-
-  if (!settings) {
-    const defaultSettings = await prisma.animationSetting.create({
-      data: {
-        id: "settings",
-        fadeAndSlide: true,
-        cascadingText: true,
-        hoverEffects: true,
-        counters: true,
-        progressBar: true,
-        backgroundOrbs: true,
-      },
-    });
-    return defaultSettings;
-  }
-
-  return settings;
 }
 
 export async function updateAnimationSettings(data: Partial<AnimationSettingsType>) {

@@ -27,7 +27,8 @@ import {
     AlertOctagon,
     FileText,
     Vote,
-    LayoutGrid
+    LayoutGrid,
+    CalendarHeart
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -140,6 +141,12 @@ const routes = [
         label: "Animações",
         icon: Wand2,
         href: "/admin/animacoes",
+        color: "text-zinc-100",
+    },
+    {
+        label: "Tema Sazonal",
+        icon: CalendarHeart,
+        href: "/admin/temporada",
         color: "text-zinc-100",
     },
     {

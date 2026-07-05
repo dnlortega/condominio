@@ -6,6 +6,7 @@ import { ArrowRight, Star, MessageCircle } from 'lucide-react';
 import Image from 'next/image';
 import { Button } from "@/components/ui/button";
 import { useAnimationSettings } from '@/app/providers/AnimationProvider';
+import SeasonalBadge from '@/components/SeasonalBadge';
 
 const Counter = ({ value, suffix = "" }: { value: string, suffix?: string }) => {
     const ref = React.useRef<HTMLSpanElement>(null);
@@ -124,6 +125,11 @@ export default function Hero() {
 
             <div className="container mx-auto px-6 relative z-10 pt-32 pb-20 md:py-40 flex flex-col justify-center min-h-full">
                 <div className="max-w-5xl mx-auto md:mx-0 w-full">
+                    {/* Seasonal Badge (Natal, Páscoa, etc.) */}
+                    <div className="flex justify-center lg:justify-start mb-4">
+                        <SeasonalBadge />
+                    </div>
+
                     {/* Floating Star Badge */}
                     <motion.div
                         initial={{ opacity: 0, y: -20, filter: "blur(10px)" }}
