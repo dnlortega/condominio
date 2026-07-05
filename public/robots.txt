@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://seu-dominio.com.br/sitemap.xml
+Disallow: /admin
+Disallow: /portal
+
+Sitemap: https://recantopassaros.vercel.app/sitemap.xml

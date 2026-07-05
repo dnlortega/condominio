@@ -24,6 +24,7 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://recantopassaros.vercel.app"),
   title: "Recanto dos Pássaros | Portal de Informações",
   description: "Portal oficial de informações do Residencial Recanto dos Pássaros em Bauru. Acesse o regimento interno, convênios e contatos da administração.",
   keywords: ["Recanto dos Pássaros", "Condomínio Bauru", "Regimento Interno", "Administração Condomínio", "Daniel Ortega Pereira"],
@@ -34,6 +35,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "pt_BR",
     url: "https://recantopassaros.vercel.app/",
+    images: ["/hero.png"],
   },
   robots: {
     index: true,
